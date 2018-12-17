@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Main from './views/Main';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+const appStyle = {
+    boxContainer : {
+        border: '1px solid blue',
+        width: '90%',
+        margin: 'auto',
+    },
+    titleContainer: {
+        padding: '10px 5px 1px 15px',
+        backgroundColor: '#095aa5',
+    },
+    windowTitle: {
+        fontSize: 18,
+        color: '#FFF'
+    }
 }
+
+const App = (props) => (
+    <div style={appStyle.boxContainer}>
+        <div style={appStyle.titleContainer}>
+            <h1 style={appStyle.windowTitle}>Gestión Programas UCO</h1>
+        </div>
+        <div style={{padding: 15}}>
+            <Main {...props} />
+        </div>
+    </div>
+);
 
 export default App;
