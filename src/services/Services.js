@@ -1,4 +1,4 @@
-import RespuestaOtorgamientoService from './RespuestaOtorgamientoService';
+import ProgramsService from './ProgramsService';
 import Settings from '../Settings';
 
-export const respuestaOtorgamientoService = new RespuestaOtorgamientoService(`${Settings.URL_WEBAPI}`);
+export const programsService = new ProgramsService(`${Settings.URL_WEBAPI}`);

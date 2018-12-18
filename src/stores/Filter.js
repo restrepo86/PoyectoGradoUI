@@ -5,12 +5,12 @@ export default class Filter {
   @observable filterDataDTO;
   @observable process;
   @observable expressFormData;
-  @observable respuestaOtorgamientoService;
+  @observable programsService;
 
-  constructor(respuestaOtorgamientoService, process) {
+  constructor(programsService, process) {
     this.process = process;
     this.filterDataDTO = new FilterDataDTO();
-    this.respuestaOtorgamientoService = respuestaOtorgamientoService;
+    this.respuestaOtorgamientoService = programsService;
     this.expressFormData = null;
   }
 
@@ -18,7 +18,7 @@ export default class Filter {
   getExpressFormData = () => {
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'CONSULTANDO...';
-    this.respuestaOtorgamientoService.getRespuestaOtorgamiento(this.filterDataDTO.cedula)
+    this.programsService.getRespuestaOtorgamiento(this.filterDataDTO.cedula)
         .then(response => {
           runInAction(() => {
             const { data } = response;
@@ -27,7 +27,7 @@ export default class Filter {
           });
         })
         .catch(error => {
-          const message = error.response ? error.response.headers.internalerrormessage 
+          const message = error.response ? error.response.headers.internalerrormessage
           : new Error(error).message;
           this.process.showError(message, 'error');
           this.process.processDTO.loading = false;

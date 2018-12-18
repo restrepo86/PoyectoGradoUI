@@ -1,3 +1,3 @@
-export const CONTROL_PACK_URL = 'AdminAprobacionServicesWEB';
+export const PROGRAM_MANAGEMENT_PACK_URL = 'ProgramManagementWeb';
 export const REST = 'rest';
-export const GET_RESPUESTA_OTORGAMIENTO = 'aprobacionOtorgamiento/respuesta/otorgamiento';
+export const GET_PROGRAMS = 'programas';

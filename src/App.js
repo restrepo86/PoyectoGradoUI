@@ -3,13 +3,13 @@ import Main from './views/Main';
 
 const appStyle = {
     boxContainer : {
-        border: '1px solid blue',
+        border: '1px solid green',
         width: '90%',
         margin: 'auto',
     },
     titleContainer: {
         padding: '10px 5px 1px 15px',
-        backgroundColor: '#095aa5',
+        backgroundColor: '#026F35',
     },
     windowTitle: {
         fontSize: 18,
