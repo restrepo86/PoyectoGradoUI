@@ -7,7 +7,7 @@ import { Switch } from 'react-router-dom';
 import SuperDiv from '../../components/SuperDiv';
 import SuperDiv2 from '../../components/SuperDiv2';
 import LogoUco from '../../../image/logo-uco.png';
-
+import './style.css';
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -66,8 +66,7 @@ class LayoutComponent extends React.Component {
           onCollapse={this.onCollapse}
           theme="light"
         >
-          <div className="logo" />
-
+          <img src={LogoUco} className="LogoUco" alt="LogoUco" />
           <Menu style={style.parentMenu} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
             <Menu.Item key="1">
               <Icon type="pie-chart" />
