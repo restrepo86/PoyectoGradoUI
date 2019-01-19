@@ -78,12 +78,17 @@ class LayoutComponent extends React.Component {
               title={<span><Icon type="shop" /><span>Programas</span></span>}
             >
               <SubMenu
-                key="programs" title={<span>Ingeniería de Sistemas</span>}
+                key="systemsEngineer" title={<span>Ingeniería de Sistemas</span>}
                >
-                  <Menu.Item key="3">Tom</Menu.Item>
-                  <Menu.Item key="4">Bill</Menu.Item>
-                  <Menu.Item key="5">Alex</Menu.Item>
+                  <SubMenu
+                    key="inps" title={<span>INP's</span>} 
+                  >
+                    <Menu.Item key="3">Tom</Menu.Item>
+                    <Menu.Item key="4">Bill</Menu.Item>
+                    <Menu.Item key="5">Alex</Menu.Item>
             
+
+                  </SubMenu>
 
                </SubMenu>
              </SubMenu>
