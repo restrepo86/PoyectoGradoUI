@@ -1,13 +1,15 @@
 import React from 'react';
 import {
-  Layout, Menu, Breadcrumb, Icon,
+  Layout, Menu, Icon,
 } from 'antd';
 import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
-import SuperDiv from '../../components/SuperDiv';
 import SuperDiv2 from '../../components/SuperDiv2';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
+import GridCard from '../../components/GridCard';
+import { List } from 'immutable';
+import ListComponent from '../../components/ListComponent';
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -42,6 +44,7 @@ class LayoutComponent extends React.Component {
   onSelectMenuItem(key) {
     const routes = new Map([
       ['2', '/div2'],
+      ['programs', '/programs']
     ]);
 
     window.location.href = routes.get(key);
@@ -69,9 +72,9 @@ class LayoutComponent extends React.Component {
           <img src={LogoUco} className="LogoUco" alt="LogoUco" />
           <Menu style={style.parentMenu} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
             
-            <Menu.Item key="2" onClick={() => this.onSelectMenuItem('2')}>
+            <Menu.Item key="programs" onClick={() => this.onSelectMenuItem('programs')}>
               <Icon type="desktop" />
-              <span>Option 2</span>
+              <span>Programas</span>
             </Menu.Item>
             <SubMenu
               key="programsTitle"
@@ -112,12 +115,16 @@ class LayoutComponent extends React.Component {
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
 
               <Switch>
-                  <Route exact path="/" render={(routeProps) => (
-                    <SuperDiv />
+                  <Route exact path="/programs" render={(routeProps) => (
+                    <ListComponent />
                   )}/>
-                <Route path="/div2" render={(routeProps) => (
-                  <SuperDiv2 />
-                )} />
+                  <Route path="/div2" render={(routeProps) => (
+                    <SuperDiv2 />
+                  )} />
+                  <Route path="/programs/engineer/systems" render={(routeProps) => (
+                    <GridCard />
+                  )} />
+
               </Switch>
             </div>
           </Content>
