@@ -1,10 +1,12 @@
 import React from 'react';
-import LayoutComponent from './containers/LayoutComponent';
+import LoginForm from './components/LoginForm';
 
 const Main = (props) => (
-    <main>
-      <LayoutComponent/>
-    </main>
+   
+   <main>
+      <LoginForm />
+   </main>
+
 );
 
 export default Main;

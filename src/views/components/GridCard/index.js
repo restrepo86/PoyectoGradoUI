@@ -12,7 +12,7 @@ class GridCard extends React.Component {
     render() {
         return(
             <Card title="Programas">
-                <Card.Grid style={gridStyle} onclick>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>

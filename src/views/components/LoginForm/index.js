@@ -1,14 +1,16 @@
 import React from 'react';
 import {
-    Form, Icon, Input, Button, Checkbox,
+    Form, Icon, Input, Button,
   } from 'antd';
   
   class LoginForm extends React.Component {
     handleSubmit = (e) => {
+      console.log(this.props.form)
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          window.location.href = "/main";
         }
       });
     }
@@ -39,6 +41,7 @@ import {
             <a href="">Registrar nuevo usuario!</a>
           </Form.Item>
         </Form>
+        
       );
     }
   }

@@ -8,7 +8,6 @@ import SuperDiv2 from '../../components/SuperDiv2';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
 import GridCard from '../../components/GridCard';
-import { List } from 'immutable';
 import ListComponent from '../../components/ListComponent';
 const {
   Header, Content, Footer, Sider,
@@ -44,7 +43,7 @@ class LayoutComponent extends React.Component {
   onSelectMenuItem(key) {
     const routes = new Map([
       ['2', '/div2'],
-      ['programs', '/programs']
+      ['programs', '/main/programs']
     ]);
 
     window.location.href = routes.get(key);
@@ -115,16 +114,15 @@ class LayoutComponent extends React.Component {
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
 
               <Switch>
-                  <Route exact path="/programs" render={(routeProps) => (
+                  <Route exact path="/main/programs" render={(routeProps) => (
                     <ListComponent />
                   )}/>
                   <Route path="/div2" render={(routeProps) => (
                     <SuperDiv2 />
                   )} />
-                  <Route path="/programs/engineer/systems" render={(routeProps) => (
+                  <Route path="/main/programs/engineer/systems" render={(routeProps) => (
                     <GridCard />
                   )} />
-
               </Switch>
             </div>
           </Content>

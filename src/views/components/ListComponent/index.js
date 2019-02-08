@@ -5,15 +5,15 @@ const data = [
 
   {
     title: 'Ingeniería de Sistemas',
-    url: '/programs/engineer/systems',
+    url: '/main/programs/engineer/systems',
   },
   {
     title: 'Ingeniería Electrónica',
-    url: '/programs/engineer/electronic',
+    url: '/main/programs/engineer/electronic',
   },
   {
     title: 'Derecho',
-    url: '/programs/law',
+    url: '/main/programs/law',
   },
 
 ];

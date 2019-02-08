@@ -1,4 +1,7 @@
 import React from 'react';
+import { Route } from 'react-router';
+import { Switch } from 'react-router-dom';
+import LayoutComponent from './views/containers/LayoutComponent';
 import Main from './views/Main';
 
 const appStyle = {
@@ -23,6 +26,11 @@ const App = (props) => (
             <h1 style={appStyle.windowTitle}>Gestión Programas UCO</h1>
         </div>
         <div style={{padding: 15}}>
+            <Switch>
+                <Route path="/main" render={(routeProps) => (
+                    <LayoutComponent />
+                )} />
+            </Switch>
             <Main {...props} />
         </div>
     </div>
