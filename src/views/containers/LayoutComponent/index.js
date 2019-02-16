@@ -4,7 +4,6 @@ import {
 } from 'antd';
 import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
-import SuperDiv2 from '../../components/SuperDiv2';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
 import GridCard from '../../components/GridCard';

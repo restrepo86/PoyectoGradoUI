@@ -18,6 +18,7 @@ import {
     render() {
       const { getFieldDecorator } = this.props.form;
       return (
+
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
             {getFieldDecorator('userName', {
@@ -26,6 +27,7 @@ import {
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Usuario" />
             )}
           </Form.Item>
+
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Por favor ingrese la contraseña!' }],
@@ -33,13 +35,17 @@ import {
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Contraseña" />
             )}
           </Form.Item>
+
           <Form.Item>
-            <Button type="#026F35" htmlType="submit" className="login-form-button">
+            <Button style={{ backgroundColor: '#026F35', color: '#fff' }}  
+            htmlType="submit" 
+            className="login-form-button">
               Ingresar
             </Button>
             <br/>
-            <a href="">Registrar nuevo usuario!</a>
+            <a href="/login/register" style={{ color: '#026F35' }}> Registrar nuevo usuario!</a>
           </Form.Item>
+
         </Form>
         
       );
