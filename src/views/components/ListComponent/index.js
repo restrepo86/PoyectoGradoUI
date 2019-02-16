@@ -5,7 +5,7 @@ const data = [
 
   {
     title: 'Ingeniería de Sistemas',
-    url: '/main/programs/engineer/systems',
+    url: '/main/programs/engineer/system/study/plan',
   },
   {
     title: 'Ingeniería Electrónica',

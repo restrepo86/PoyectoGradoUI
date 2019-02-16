@@ -9,6 +9,7 @@ import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
 import GridCard from '../../components/GridCard';
 import ListComponent from '../../components/ListComponent';
+import GridGutter from '../../components/GridGutter';
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -117,8 +118,8 @@ class LayoutComponent extends React.Component {
                   <Route exact path="/main/programs" render={(routeProps) => (
                     <ListComponent />
                   )}/>
-                  <Route path="/div2" render={(routeProps) => (
-                    <SuperDiv2 />
+                  <Route path="/main/programs/engineer/system/study/plan" render={(routeProps) => (
+                    <GridGutter />
                   )} />
                   <Route path="/main/programs/engineer/systems" render={(routeProps) => (
                     <GridCard />
