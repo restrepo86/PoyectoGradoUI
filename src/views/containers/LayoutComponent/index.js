@@ -9,6 +9,7 @@ import './style.css';
 import GridCard from '../../components/GridCard';
 import ListComponent from '../../components/ListComponent';
 import GridGutter from '../../components/GridGutter';
+import CardMatter from '../../components/CardMatter';
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -121,7 +122,7 @@ class LayoutComponent extends React.Component {
                     <GridGutter />
                   )} />
                   <Route path="/main/programs/engineer/systems" render={(routeProps) => (
-                    <GridCard />
+                    <CardMatter />
                   )} />
               </Switch>
             </div>
