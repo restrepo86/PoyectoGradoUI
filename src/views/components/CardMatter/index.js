@@ -18,7 +18,7 @@ class CardMatter extends Component {
     render = () => {
         return(
             <Card
-                style={{ width: 150, border: '1px solid black', margin: 'auto' }}
+                style={{ width: 90, border: '1px solid black', margin: 'auto' }}
                 actions={[
                     <h4>{formacionComplementaria}</h4>,
                     <h4>{creditos}</h4>,

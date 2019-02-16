@@ -1,4 +1,16 @@
 .ant-card-actions {
     background: #faad14de;
     border-top: 1px solid rgba(0, 0, 0, 0.96);
+    zoom: 0.8;
+    height: 30px;
+}
+.ant-card-body {
+    padding: 10px;
+    zoom: 0.8;
+}
+.ant-card-actions > li {
+    margin: 5px 0;
+}
+.ant-card-actions > li > span {
+    line-height: 1px;
 }
