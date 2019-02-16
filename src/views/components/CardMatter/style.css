@@ -4,13 +4,26 @@
     zoom: 0.8;
     height: 30px;
 }
+
 .ant-card-body {
     padding: 10px;
     zoom: 0.8;
 }
+
 .ant-card-actions > li {
     margin: 5px 0;
 }
+
 .ant-card-actions > li > span {
     line-height: 1px;
+}
+
+.ant-card-bordered {
+    width: 90px; 
+    border: 1px solid black; 
+    margin: auto;
+}
+
+.ant-card-wider-padding .ant-card-body {
+    padding: 10px 12px;
 }
