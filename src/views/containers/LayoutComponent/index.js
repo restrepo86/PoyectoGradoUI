@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Layout, Menu, Icon,
+  Layout, Menu, Icon, Table
 } from 'antd';
 import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
@@ -21,6 +21,96 @@ const style = {
     color: 'white'
   }
 }
+
+const createAsignatureCardsBySemesters = (asignaturas) => {
+  return asignaturas
+  .map((asignatura, index) => {
+    const cardAsignatura = { key: index, name: asignatura.semestre };
+    cardAsignatura[asignatura.keyIndex] = <CardMatter { ...asignatura } />;
+    return cardAsignatura;
+});
+};
+
+const semestres = [
+  {
+    asignaturas: [{
+        nombreAsignatura: "ÁLGEBRA",
+        codigoAsignatura: "ISM0111",
+        formacionComplementaria: "CB",
+        creditos: 4,
+        horasTeoricas: "4",
+        horasLaboratorio: "0",
+        semestre: "1",
+        keyIndex: 'semestre1'
+    },
+    {
+      nombreAsignatura: "MATEMÁTICAS",
+      codigoAsignatura: "ISM0111",
+      formacionComplementaria: "CB",
+      creditos: 4,
+      horasTeoricas: "4",
+      horasLaboratorio: "0",
+      semestre: "1",
+      keyIndex: 'semestre1'
+  }]
+}, {
+  asignaturas: [{
+      nombreAsignatura: "LÓGICA DE PROGRAMACIÓN",
+      codigoAsignatura: "ISM0111",
+      formacionComplementaria: "CB",
+      creditos: 4,
+      horasTeoricas: "4",
+      horasLaboratorio: "0",
+      semestre: "2",
+      keyIndex: 'semestre2'
+  },
+  {
+    nombreAsignatura: "OOP",
+    codigoAsignatura: "ISM0111",
+    formacionComplementaria: "CB",
+    creditos: 4,
+    horasTeoricas: "4",
+    horasLaboratorio: "0",
+    semestre: "2",
+    keyIndex: 'semestre2'
+}]
+}]; 
+
+//let dataSource = [];
+
+const dataSource = semestres
+  .map(semestre => semestre.asignaturas)
+  .map(createAsignatureCardsBySemesters)
+  .reduce((asignaturas1, asignaturas2) => asignaturas1.concat(asignaturas2));
+  /*.forEach(asignaturaArray => {
+    dataSource = dataSource.concat(asignaturaArray)
+  });*/
+
+console.log(dataSource);
+
+
+const columns = [{
+  dataIndex: 'semestre1',
+  title: 'Semestre 1',
+  key: "1",
+}, {
+  dataIndex: 'semestre2',
+  title: 'Semestre 2',
+  key: "2",
+},{
+  dataIndex: 'semestre3',
+  title: 'Semestre 3',
+  key: "3",
+}, {
+  dataIndex: 'semestre4',
+  title: 'Semestre 4',
+  key: "4",
+}, {
+  dataIndex: 'semestre5',
+  title: 'Semestre 5',
+  key: "5",
+}];
+
 
 class LayoutComponent extends React.Component {
 
@@ -111,7 +201,7 @@ class LayoutComponent extends React.Component {
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
+          <Content style={{ margin: '16px 16px' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
 
               <Switch>
@@ -121,10 +211,11 @@ class LayoutComponent extends React.Component {
                   <Route path="/main/programs/engineer/system/study/plan" render={(routeProps) => (
                     <GridGutter />
                   )} />
-                  <Route path="/main/programs/engineer/systems" render={(routeProps) => (
-                    <CardMatter />
+                  <Route path="/main/programs/engineer/systems" render={(routeProps) => (                    
+                    <Table dataSource={dataSource} columns={columns} />
                   )} />
               </Switch>
+
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

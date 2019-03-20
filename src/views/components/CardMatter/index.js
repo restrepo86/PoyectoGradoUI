@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Card } from "antd";
-import './style.css'
+import './style.css';
 
 const { Meta } = Card;
-
-var nombreAsignatura = "ÁLGEBRA";
-var codigoAsignatura = "ISM0111";
-var formacionComplementaria = "CB";
-var creditos = 4;
-var horasTeoricas = "4";
-var horasLaboratorio = "0";
-
 
 class CardMatter extends Component {
 
@@ -19,15 +11,15 @@ class CardMatter extends Component {
         return(
             <Card
                 actions={[
-                    <h4>{formacionComplementaria}</h4>,
-                    <h4>{creditos}</h4>,
-                    <h4>{horasTeoricas}</h4>,
-                    <h4>{horasLaboratorio}</h4>
+                    <h4>{this.props.formacionComplementaria}</h4>,
+                    <h4>{this.props.creditos}</h4>,
+                    <h4>{this.props.horasTeoricas}</h4>,
+                    <h4>{this.props.horasLaboratorio}</h4>
                 ]}
             >
                 <Meta 
-                    title={nombreAsignatura} 
-                    description={codigoAsignatura} 
+                    title={this.props.nombreAsignatura} 
+                    description={this.props.codigoAsignatura} 
                 />
             </Card>
         );
