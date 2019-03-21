@@ -15,7 +15,7 @@ const Main = (props) => (
                   <LoginForm />
                )} />
                <Route path="/main" render={(routeProps) => (
-                  <LayoutComponent />
+                  <LayoutComponent {...routeProps} {...props}/>
                )} />
             </Switch>
             <Switch>

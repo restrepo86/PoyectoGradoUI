@@ -1,3 +1,2 @@
-export const PROGRAM_MANAGEMENT_PACK_URL = 'ProgramManagementWeb';
-export const REST = 'rest';
-export const GET_PROGRAMS = 'programas';
+export const PROGRAM_MANAGEMENT_PACK_URL = 'pensum';
+export const GET_PROGRAMS = 'programa';

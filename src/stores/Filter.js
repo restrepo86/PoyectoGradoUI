@@ -1,41 +1,41 @@
 import { observable, runInAction, action } from 'mobx';
-import FilterDataDTO from '../dto/FilterDataDTO';
+import ProgramRequestDTO from '../dto/ProgramRequestDTO';
 export default class Filter {
 
-  @observable filterDataDTO;
-  @observable process;
-  @observable expressFormData;
   @observable programsService;
 
-  constructor(programsService, process) {
-    this.process = process;
-    this.filterDataDTO = new FilterDataDTO();
-    this.respuestaOtorgamientoService = programsService;
-    this.expressFormData = null;
+  constructor(programsService) {
+    this.programsService = programsService;
   }
 
   @action
-  getExpressFormData = () => {
-    this.process.processDTO.loading = true;
-    this.process.processDTO.loadingMessage = 'CONSULTANDO...';
-    this.programsService.getRespuestaOtorgamiento(this.filterDataDTO.cedula)
+  getProgramsData = () => {
+    this.programsService.getPrograms()
         .then(response => {
           runInAction(() => {
             const { data } = response;
-            this.expressFormData = data;
-            this.process.processDTO.loading = false;
           });
         })
         .catch(error => {
           const message = error.response ? error.response.headers.internalerrormessage
           : new Error(error).message;
-          this.process.showError(message, 'error');
-          this.process.processDTO.loading = false;
-          this.expressFormData = null;
         });
   };
 
+  @action
+  saveProgramData = (programRequestDTO) => {
 
+    this.programsService.saveProgram(programRequestDTO)
+        .then(response => {
+          runInAction(() => {
+            const { data } = response;
+          });
+        })
+        .catch(error => {
+          const message = error.response ? error.response.headers.internalerrormessage
+          : new Error(error).message;
+        });
+  };
 
   @action
   resetForm = () => {

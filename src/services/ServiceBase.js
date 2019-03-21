@@ -10,8 +10,14 @@ class ServiceBase {
 
     setHeaders = () => {
         this.headers = {
-            "gsec-user-token" : localStorage.getItem("gco_auth_token")
-        };
+            'Accept': '*/*',
+            'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
+            'Content-Type':  'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': 'accept, content-type',
+            'Access-Control-Max-Age': '1728000'
+          };
     };
 
     replacePathParams = (url, pathParams) => {

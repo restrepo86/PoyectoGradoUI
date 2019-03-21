@@ -10,6 +10,7 @@ import GridCard from '../../components/GridCard';
 import ListComponent from '../../components/ListComponent';
 import GridGutter from '../../components/GridGutter';
 import CardMatter from '../../components/CardMatter';
+import RegisterProgramModal from '../../components/RegisterProgram';
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -116,6 +117,7 @@ class LayoutComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.props = this.props;
 
     this.state = {
       collapsed: false,
@@ -206,13 +208,16 @@ class LayoutComponent extends React.Component {
 
               <Switch>
                   <Route exact path="/main/programs" render={(routeProps) => (
-                    <ListComponent />
+                    <ListComponent {...routeProps} {...this.props} />
                   )}/>
                   <Route path="/main/programs/engineer/system/study/plan" render={(routeProps) => (
                     <GridGutter />
                   )} />
                   <Route path="/main/programs/engineer/systems" render={(routeProps) => (                    
                     <Table dataSource={dataSource} columns={columns} />
+                  )} />
+                  <Route path="/main/programs/save/program" render={(routeProps) => (
+                    <RegisterProgramModal {...routeProps} {...this.props} />
                   )} />
               </Switch>
 
