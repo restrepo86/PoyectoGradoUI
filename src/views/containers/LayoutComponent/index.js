@@ -8,7 +8,6 @@ import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
 import GridCard from '../../components/GridCard';
 import ListComponent from '../../components/ListComponent';
-import GridGutter from '../../components/GridGutter';
 import CardMatter from '../../components/CardMatter';
 import RegisterProgramModal from '../../components/RegisterProgram';
 const {
@@ -45,17 +44,6 @@ const semestres = [
         keyIndex: 'semestre1'
     },
     {
-      nombreAsignatura: "MATEMÁTICAS",
-      codigoAsignatura: "ISM0111",
-      formacionComplementaria: "CB",
-      creditos: 4,
-      horasTeoricas: "4",
-      horasLaboratorio: "0",
-      semestre: "1",
-      keyIndex: 'semestre1'
-  }]
-}, {
-  asignaturas: [{
       nombreAsignatura: "LÓGICA DE PROGRAMACIÓN",
       codigoAsignatura: "ISM0111",
       formacionComplementaria: "CB",
@@ -64,6 +52,17 @@ const semestres = [
       horasLaboratorio: "0",
       semestre: "2",
       keyIndex: 'semestre2'
+  }]
+}, {
+  asignaturas: [{
+      nombreAsignatura: "MATEMÁTICAS",
+      codigoAsignatura: "ISM0111",
+      formacionComplementaria: "CB",
+      creditos: 4,
+      horasTeoricas: "4",
+      horasLaboratorio: "0",
+      semestre: "1",
+      keyIndex: 'semestre1'
   },
   {
     nombreAsignatura: "OOP",
@@ -77,15 +76,20 @@ const semestres = [
 }]
 }]; 
 
-//let dataSource = [];
+const chachacha = (asignaturaCard) => {
+  console.log(asignaturaCard)
+  const  asignatureObject = {};
+  asignaturaCard.forEach(as => {
+    const property = `semestre${as.name}`;
+    asignatureObject[property] = as[property];
+  }); 
+  return asignatureObject;
+};  
 
 const dataSource = semestres
   .map(semestre => semestre.asignaturas)
   .map(createAsignatureCardsBySemesters)
-  .reduce((asignaturas1, asignaturas2) => asignaturas1.concat(asignaturas2));
-  /*.forEach(asignaturaArray => {
-    dataSource = dataSource.concat(asignaturaArray)
-  });*/
+  .map(chachacha);
 
 console.log(dataSource);
 
@@ -210,9 +214,6 @@ class LayoutComponent extends React.Component {
                   <Route exact path="/main/programs" render={(routeProps) => (
                     <ListComponent {...routeProps} {...this.props} />
                   )}/>
-                  <Route path="/main/programs/engineer/system/study/plan" render={(routeProps) => (
-                    <GridGutter />
-                  )} />
                   <Route path="/main/programs/engineer/systems" render={(routeProps) => (                    
                     <Table dataSource={dataSource} columns={columns} />
                   )} />
