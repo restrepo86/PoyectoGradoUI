@@ -21,11 +21,10 @@ class RegisterProgram extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         const url = this.buidProgramURL(values.siniesCode);
         const programRequestDTO = new ProgramRequestDTO(url, values.programName, values.siniesCode, planesEstudio);
-        console.log('stores', this.props.stores);
         this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
+        
       }
     });
   }
