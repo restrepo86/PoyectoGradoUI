@@ -8,11 +8,13 @@ import Process from './stores/Process';
 import Filter from './stores/Filter';
 import './index.css';
 import App from './App';
+import ListComponentStore from './stores/ListComponentStore';
 
 
 const process =  new Process();
 const filter = new Filter(programsService, process);
-const stores = { filter };
+const dataListComponent = new ListComponentStore();
+const stores = { filter, dataListComponent };
 
 const routes = (
     <BrowserRouter>

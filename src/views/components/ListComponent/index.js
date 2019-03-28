@@ -2,22 +2,6 @@ import React from 'react';
 import { List, Button } from 'antd';
 import { observer } from 'mobx-react';
 
-const data = [
-
-  {
-    title: 'Ingeniería de Sistemas',
-    url: '/main/programs/engineer/systems',
-  },
-  {
-    title: 'Ingeniería Electrónica',
-    url: '/main/programs/engineer/electronic',
-  },
-  {
-    title: 'Derecho',
-    url: '/main/programs/law',
-  },
-
-];
 
 @observer
 class ListComponent extends React.Component {
@@ -26,6 +10,11 @@ class ListComponent extends React.Component {
   constructor(props) {
     super(props);
     this.filter = this.props.stores.filter;
+    this.data = this.props.stores.dataListComponent.data;
+  }
+
+  componentDidMount = () => {
+    //llamar al store de consulta de datos para llenar data.
   }
 
   state = { visible: false }
@@ -35,7 +24,7 @@ class ListComponent extends React.Component {
         <div>
           <List
             itemLayout="horizontal"
-            dataSource={data}
+            dataSource={this.data}
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta

@@ -6,24 +6,32 @@ import ProgramRequestDTO from '../../../dto/ProgramRequestDTO';
 @observer
 class RegisterProgram extends React.Component {
 
-
+  
   constructor(props) {
     super(props);
     this.filter = this.props.stores.filter;
+    this.dataListComponentStore = this.props.stores.dataListComponent;
+    
   }
 
+  
   handleSubmit = (e) => {
+    const planesEstudio = [];
     console.log(this.props.form)
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        const programRequestDTO = new ProgramRequestDTO(values.programName, values.siniesCode);
-        console.log(programRequestDTO);
-        this.filter.saveProgramData(programRequestDTO);
-        //window.location.href = "/main";
+        const url = this.buidProgramURL(values.siniesCode);
+        const programRequestDTO = new ProgramRequestDTO(url, values.programName, values.siniesCode, planesEstudio);
+        console.log('stores', this.props.stores);
+        this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
       }
     });
+  }
+
+  buidProgramURL = (siniesCode) => {
+    return (`/main/programs/${siniesCode}`);
   }
 
   render() {

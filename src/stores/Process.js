@@ -2,6 +2,7 @@ import { observable, autorun } from 'mobx';
 import { notification } from 'antd';
 import ProcessDTO from '../dto/ProcessDTO';
 export default class Process {
+  
   @observable processDTO;
 
   constructor() {

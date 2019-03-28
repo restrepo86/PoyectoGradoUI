@@ -1,11 +1,13 @@
 import { observable, runInAction, action } from 'mobx';
-import ProgramRequestDTO from '../dto/ProgramRequestDTO';
+
 export default class Filter {
 
   @observable programsService;
+  @observable process;
 
-  constructor(programsService) {
+  constructor(programsService, process) {
     this.programsService = programsService;
+    this.process = process
   }
 
   @action
@@ -23,18 +25,27 @@ export default class Filter {
   };
 
   @action
-  saveProgramData = (programRequestDTO) => {
-
+  saveProgramData = (programRequestDTO, dataListComponenStore) => {
+    
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'GUARDANDO...';
     this.programsService.saveProgram(programRequestDTO)
         .then(response => {
           runInAction(() => {
             const { data } = response;
+            const item = {'title': response.data.codigoSnies, 'url': response.data.id};
+            dataListComponenStore.data.push(item);
+            localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
+            this.process.showError('Programa Guardado Correctamente', 'success');
+            this.process.processDTO.loading = false;
           });
         })
         .catch(error => {
-          const message = error.response ? error.response.headers.internalerrormessage
-          : new Error(error).message;
+          const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+          this.process.showError(message, 'error');
+          this.process.processDTO.loading = false;
         });
+
   };
 
   @action
