@@ -32,17 +32,19 @@ export default class Filter {
     this.programsService.saveProgram(programRequestDTO)
       .then(response => {
         runInAction(() => {
+          
           const { data } = response;
           const item = { 'title': response.data.nombre, 'url': response.data.id };
           dataListComponenStore.data.push(item);
           localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
-          this.process.showError('Programa Guardado Correctamente', 'success');
+          this.process.showMessage('Programa Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
+          
         });
       })
       .catch(error => {
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
-        this.process.showError(message, 'error');
+        this.process.showMessage(message, 'error');
         this.process.processDTO.loading = false;
       });
 

@@ -17,7 +17,7 @@ const dataListComponent = new ListComponentStore();
 const stores = { filter, dataListComponent };
 
 const routes = (
-    <BrowserRouter>
+    <BrowserRouter>      
         <LocaleProvider locale={es_ES}>
           <App stores={stores} />
         </LocaleProvider>

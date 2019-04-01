@@ -2,28 +2,27 @@ import React from 'react';
 import LoginForm from './components/LoginForm';
 import LayoutComponent from './containers/LayoutComponent';
 import RegistrationForm from './components/RegistrationForm';
-import { Route } from 'react-router';
-import { Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
 const Main = (props) => (
    
    <main>
 
-            <Switch>
-               <Route exact path="/" render={(routeProps) => (
-                  <LoginForm />
-               )} />
-               <Route path="/main" render={(routeProps) => (
-                  <LayoutComponent {...routeProps} {...props}/>
-               )} />
-            </Switch>
-            <Switch>
-               <Route exact path="/login/register" render={(routeProps) => (
-                  <RegistrationForm />
-               )} />
-            </Switch>
-   
+            <Router>
+               <Switch>
+                  <Route exact path="/" component={(routeProps) => (
+                     <LoginForm />
+                  )} />
+                  <Route path="/main" component={(routeProps) => (
+                     <LayoutComponent {...routeProps} {...props}/>
+                  )} />
+                  <Route exact path="/login/register" component={(routeProps) => (
+                     <RegistrationForm />
+                  )} />
+               </Switch>
+            </Router>
+               
    </main>
 
 );

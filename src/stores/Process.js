@@ -9,7 +9,7 @@ export default class Process {
     this.processDTO = new ProcessDTO();
   }
 
-  showError = (message, type) => {
+  showMessage = (message, type) => {
     this.processDTO.responseMessage = message;
     this.processDTO.showMessage = true;
     this.processDTO.requestState = type;                    

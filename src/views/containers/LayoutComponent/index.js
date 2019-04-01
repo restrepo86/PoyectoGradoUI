@@ -2,14 +2,15 @@ import React from 'react';
 import {
   Layout, Menu, Icon, Table
 } from 'antd';
-import { Route } from 'react-router';
-import { Switch } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
-import GridCard from '../../components/GridCard';
 import ListComponent from '../../components/ListComponent';
 import CardMatter from '../../components/CardMatter';
-import RegisterProgramModal from '../../components/RegisterProgram';
+import RegisterProgram from '../../components/RegisterProgram';
+import Progress from '../../components/Progress';
+
 const {
   Header, Content, Footer, Sider,
 } = Layout;
@@ -76,7 +77,7 @@ const semestres = [
 }]
 }]; 
 
-const chachacha = (asignaturaCard) => {
+const filterBySemestre = (asignaturaCard) => {
   console.log(asignaturaCard)
   const  asignatureObject = {};
   asignaturaCard.forEach(as => {
@@ -89,7 +90,7 @@ const chachacha = (asignaturaCard) => {
 const dataSource = semestres
   .map(semestre => semestre.asignaturas)
   .map(createAsignatureCardsBySemesters)
-  .map(chachacha);
+  .map(filterBySemestre);
 
 console.log(dataSource);
 
@@ -114,9 +115,29 @@ const columns = [{
   dataIndex: 'semestre5',
   title: 'Semestre 5',
   key: "5",
+}, {
+  dataIndex: 'semestre6',
+  title: 'Semestre 6',
+  key: "6",
+}, {
+  dataIndex: 'semestre7',
+  title: 'Semestre 7',
+  key: "8",
+}, {
+  dataIndex: 'semestre8',
+  title: 'Semestre 8',
+  key: "8",
+}, {
+  dataIndex: 'semestre9',
+  title: 'Semestre 9',
+  key: "9",
+}, {
+  dataIndex: 'semestre10',
+  title: 'Semestre 10',
+  key: "10",
 }];
 
-
+@observer
 class LayoutComponent extends React.Component {
 
   constructor(props) {
@@ -142,8 +163,8 @@ class LayoutComponent extends React.Component {
       ['2', '/div2'],
       ['programs', '/main/programs']
     ]);
-
-    window.location.href = routes.get(key);
+  
+    window.location = routes.get(key);
   }
 
   updateSelectedItem() {
@@ -158,7 +179,9 @@ class LayoutComponent extends React.Component {
   render() {
     console.log(this.state);
     return (
+    
       <Layout style={{ minHeight: '100vh' }}>
+        <Progress  { ...this.props.stores.filter.process.getData() } />
         <Sider
           collapsible
           collapsed={this.state.collapsed}
@@ -168,9 +191,9 @@ class LayoutComponent extends React.Component {
           <img src={LogoUco} className="LogoUco" alt="LogoUco" />
           <Menu style={style.parentMenu} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
             
-            <Menu.Item key="programs" onClick={() => this.onSelectMenuItem('programs')}>
+            <Menu.Item key="programs">
               <Icon type="desktop" />
-              <span>Programas</span>
+              <span><Link to="/main/programs">Programas</Link></span>
             </Menu.Item>
             <SubMenu
               key="programsTitle"
@@ -207,28 +230,29 @@ class LayoutComponent extends React.Component {
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} />
-          <Content style={{ margin: '16px 16px' }}>
-            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+       
+            <Content style={{ margin: '16px 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
 
-              <Switch>
-                  <Route exact path="/main/programs" render={(routeProps) => (
-                    <ListComponent {...routeProps} {...this.props} />
-                  )}/>
-                  <Route path="/main/programs/engineer/systems" render={(routeProps) => (                    
-                    <Table dataSource={dataSource} columns={columns} />
-                  )} />
-                  <Route path="/main/programs/save/program" render={(routeProps) => (
-                    <RegisterProgramModal {...routeProps} {...this.props} />
-                  )} />
-              </Switch>
+                    <Route exact path="/main/programs" component={(routeProps) => (
+                      <ListComponent {...routeProps} {...this.props} />
+                    )}/>
+                    <Route path="/main/programs/engineer/systems" component={(routeProps) => (                    
+                      <Table dataSource={dataSource} columns={columns} />
+                    )} />
+                    <Route path="/main/programs/save/program" component={(routeProps) => (
+                      <RegisterProgram {...routeProps} {...this.props} />
+                    )} />
 
-            </div>
-          </Content>
+              </div>
+            </Content>
+         
           <Footer style={{ textAlign: 'center' }}>
             Ant Design ©2018 Created by Ant UED
           </Footer>
         </Layout>
       </Layout>
+
     );
   }
 }
