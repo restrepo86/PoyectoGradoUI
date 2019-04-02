@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import ProgramRequestDTO from '../../../dto/ProgramRequestDTO';
 
 @observer
@@ -16,11 +17,13 @@ class RegisterProgram extends React.Component {
 
   
   handleSubmit = (e) => {
+
     const planesEstudio = [];
-    console.log(this.props.form)
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      
       if (!err) {
+
         const url = this.buidProgramURL(values.siniesCode);
         const programRequestDTO = new ProgramRequestDTO(url, values.programName, values.siniesCode, planesEstudio);
         this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
@@ -49,9 +52,9 @@ class RegisterProgram extends React.Component {
 
           <Form.Item>
             {getFieldDecorator('siniesCode', {
-              rules: [{ required: true, message: 'Por favor ingrese el codigo SINIES!' }],
+              rules: [{ required: true, message: 'Por favor ingrese el codigo SNIES!' }],
             })(
-              <Input placeholder="Código Sinies" />
+              <Input placeholder="Código Snies" />
             )}
           </Form.Item>
 

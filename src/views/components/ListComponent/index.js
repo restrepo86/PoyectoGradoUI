@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Button } from 'antd';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 
 @observer
@@ -14,34 +15,68 @@ class ListComponent extends React.Component {
   }
 
   componentDidMount = () => {
-    //llamar al store de consulta de datos para llenar data.
+    
+    if (this.data.length == 0) {
+      this.filter.getProgramsData();
+    }
+    
+  }
+
+  getProgramsDataList = () => {
+
+    if (this.filter.programsData) {
+
+      this.filter.programsData.forEach(program => {
+
+        const item = { 'title': program.nombre, 'url': '/main/programs/inps' };
+        this.data.push(item);
+        
+      });
+      sessionStorage.setItem('data', JSON.stringify(this.data));
+    
+    }
+    
   }
 
   state = { visible: false }
 
   render() {
+    console.log('programsData', this.filter.programsData, this.data)
+
+    
+    this.getProgramsDataList();
+    
       return(
         <div>
           <List
             itemLayout="horizontal"
-            dataSource={this.data}
+            dataSource={ this.data }
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta
-                  title={<a href={item.url}><center>{item.title}</center></a>}
+                  title={<Link to={item.url}><center>{item.title}</center></Link>}
                 />
               </List.Item>
             )}
           />
           <br/>
           <center>
+
             <Button 
               type="primary"
               style={{ backgroundColor: '#026F35', color: '#fff' }}
-              onClick={() => window.location.href = '/main/programs/save/program'}
+              
             >
-              Agregar Programa
+              <Link to = '/main/programs/save/program'>Agregar Programa</Link>
             </Button>
+            <Button 
+              type="primary"
+              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              
+            >
+              <Link to = '/main/programs/save/program'>Borrar Programa</Link>
+            </Button>
+
           </center>
         </div>
         

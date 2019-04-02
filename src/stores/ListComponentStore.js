@@ -2,25 +2,8 @@ import { observable } from "mobx";
 
 class ListComponentStore {
 
-    @observable data = localStorage.getItem('data') ? JSON.parse( localStorage.getItem('data')) : 
-    
-      [
+    @observable data = sessionStorage.getItem('data') ? JSON.parse( sessionStorage.getItem('data')) : [];
 
-        {
-          title: 'Ingeniería de Sistemas',
-          url: '/main/programs/engineer/systems',
-        },
-        {
-          title: 'Ingeniería Electrónica',
-          url: '/main/programs/engineer/electronic',
-        },
-        {
-          title: 'Derecho',
-          url: '/main/programs/law',
-        },
-        
-      
-      ];
 
 }
 

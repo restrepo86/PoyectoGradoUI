@@ -4,6 +4,7 @@ export default class Filter {
 
   @observable programsService;
   @observable process;
+  @observable programsData;
 
   constructor(programsService, process) {
     this.programsService = programsService;
@@ -16,6 +17,7 @@ export default class Filter {
       .then(response => {
         runInAction(() => {
           const { data } = response;
+          this.programsData = data;
         });
       })
       .catch(error => {
@@ -36,7 +38,7 @@ export default class Filter {
           const { data } = response;
           const item = { 'title': response.data.nombre, 'url': response.data.id };
           dataListComponenStore.data.push(item);
-          localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
+          sessionStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
           this.process.showMessage('Programa Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
           
