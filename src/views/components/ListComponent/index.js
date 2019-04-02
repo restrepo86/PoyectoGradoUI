@@ -16,7 +16,7 @@ class ListComponent extends React.Component {
 
   componentDidMount = () => {
     
-    if (this.data.length == 0) {
+    if (this.data.length === 0) {
       this.filter.getProgramsData();
     }
     
@@ -24,8 +24,8 @@ class ListComponent extends React.Component {
 
   getProgramsDataList = () => {
 
-    if (this.filter.programsData) {
-
+    if (this.filter.programsData && this.data.length === 0) {
+      
       this.filter.programsData.forEach(program => {
 
         const item = { 'title': program.nombre, 'url': '/main/programs/inps' };
@@ -34,16 +34,12 @@ class ListComponent extends React.Component {
       });
       sessionStorage.setItem('data', JSON.stringify(this.data));
     
-    }
-    
+    }    
   }
 
   state = { visible: false }
 
   render() {
-    console.log('programsData', this.filter.programsData, this.data)
-
-    
     this.getProgramsDataList();
     
       return(
