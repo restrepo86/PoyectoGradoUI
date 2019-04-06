@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ProgramRequestDTO from '../../../dto/ProgramRequestDTO';
 
 @observer
@@ -12,32 +12,34 @@ class RegisterProgram extends React.Component {
     super(props);
     this.filter = this.props.stores.filter;
     this.dataListComponentStore = this.props.stores.dataListComponent;
-    
   }
 
   
+  
   handleSubmit = (e) => {
 
-    const planesEstudio = [];
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       
       if (!err) {
-
         const url = this.buidProgramURL(values.siniesCode);
-        const programRequestDTO = new ProgramRequestDTO(url, values.programName, values.siniesCode, planesEstudio);
+        const programRequestDTO = new ProgramRequestDTO(values.siniesCode, values.programName, values.siniesCode);
         this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
-        
       }
     });
   }
 
   buidProgramURL = (siniesCode) => {
     return (`/main/programs/${siniesCode}`);
+
+
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    if (this.filter.saveSuccess) {
+      return <Redirect to='/main/programs' />
+    }
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className="login-form">

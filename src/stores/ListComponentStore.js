@@ -2,7 +2,7 @@ import { observable } from "mobx";
 
 class ListComponentStore {
 
-    @observable data = sessionStorage.getItem('data') ? JSON.parse( sessionStorage.getItem('data')) : [];
+    @observable data = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : [];
 
 
 }

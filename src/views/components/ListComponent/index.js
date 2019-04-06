@@ -16,6 +16,7 @@ class ListComponent extends React.Component {
 
   componentDidMount = () => {
     
+    this.filter.setSaveSuccess(false);
     if (this.data.length === 0) {
       this.filter.getProgramsData();
     }
@@ -23,23 +24,19 @@ class ListComponent extends React.Component {
   }
 
   getProgramsDataList = () => {
-
-    if (this.filter.programsData && this.data.length === 0) {
-      
-      this.filter.programsData.forEach(program => {
-
-        const item = { 'title': program.nombre, 'url': '/main/programs/inps' };
-        this.data.push(item);
-        
-      });
-      sessionStorage.setItem('data', JSON.stringify(this.data));
     
+    if (this.filter.programsData && this.data.length === 0) {   
+      
+      const programs = this.filter.programsData.map(program => ({ 'title': program.nombre, 'url': '/main/programs/inps' }));
+      this.data = this.data.concat(programs);
+      localStorage.setItem('data', JSON.stringify(this.data)); 
     }    
   }
 
   state = { visible: false }
 
   render() {
+
     this.getProgramsDataList();
     
       return(

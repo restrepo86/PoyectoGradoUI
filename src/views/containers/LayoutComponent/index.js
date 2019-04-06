@@ -3,13 +3,14 @@ import {
   Layout, Menu, Icon, Table
 } from 'antd';
 import { observer } from 'mobx-react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
 import ListComponent from '../../components/ListComponent';
 import CardMatter from '../../components/CardMatter';
 import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';
+import InpsComponent from '../../components/InpsComponent';
 
 const {
   Header, Content, Footer, Sider,
@@ -78,7 +79,7 @@ const semestres = [
 }]; 
 
 const filterBySemestre = (asignaturaCard) => {
-  console.log(asignaturaCard)
+
   const  asignatureObject = {};
   asignaturaCard.forEach(as => {
     const property = `semestre${as.name}`;
@@ -92,7 +93,7 @@ const dataSource = semestres
   .map(createAsignatureCardsBySemesters)
   .map(filterBySemestre);
 
-console.log(dataSource);
+
 
 
 const columns = [{
@@ -177,7 +178,7 @@ class LayoutComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+
     return (
     
       <Layout style={{ minHeight: '100vh' }}>
@@ -242,6 +243,9 @@ class LayoutComponent extends React.Component {
                     )} />
                     <Route path="/main/programs/save/program" component={(routeProps) => (
                       <RegisterProgram {...routeProps} {...this.props} />
+                    )} />
+                    <Route path="/main/programs/inps" component={(routeProps) => (
+                      <InpsComponent {...routeProps} {...this.props} />
                     )} />
 
               </div>

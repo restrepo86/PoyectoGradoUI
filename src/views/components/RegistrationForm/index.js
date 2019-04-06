@@ -6,8 +6,6 @@ import {
     Icon, 
     Cascader, 
     Select, 
-    Row, 
-    Col, 
     Checkbox, 
     Button, 
     AutoComplete,
@@ -17,27 +15,6 @@ import {
   const { Option } = Select;
   const AutoCompleteOption = AutoComplete.Option;
   
-  const residences = [{
-    value: 'Colombia',
-    label: 'Colombia',
-    children: [{
-      value: 'Antioquia',
-      label: 'Antioquia',
-      children: [{
-        value: 'Medellin',
-        label: 'Medellin',
-      }, {
-        value: 'Rionegro',
-        label: 'Rionegro',
-      }, {
-        value: 'La Ceja',
-        label: 'La Ceja',
-      }, {
-        value: 'El Carmen',
-        label: 'El Carmen',
-      }],
-    }],
-  }];
   
   class RegistrationForm extends React.Component {
     state = {
@@ -256,13 +233,12 @@ import {
 
           <Form.Item
             {...formItemLayout}
-            label="Lugar de Residencia"
+            label="Direccion"
           >
-            {getFieldDecorator('residence', {
-              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-              rules: [{ type: 'array', required: true, message: 'Por favor ingrese su lugar de residencia!' }],
+            {getFieldDecorator('address', {
+              rules: [{ required: true, message: 'Por favor ingrese su dirección!' }],
             })(
-              <Cascader options={residences} />
+              <Input />
             )}
           </Form.Item>
 

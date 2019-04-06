@@ -5,6 +5,7 @@ export default class Filter {
   @observable programsService;
   @observable process;
   @observable programsData;
+  @observable saveSuccess =  false;
 
   constructor(programsService, process) {
     this.programsService = programsService;
@@ -36,11 +37,12 @@ export default class Filter {
         runInAction(() => {
           
           const { data } = response;
-          const item = { 'title': response.data.nombre, 'url': response.data.id };
+          const item = { 'title': response.data.nombre, 'url': '/main/programs/inps' };
           dataListComponenStore.data.push(item);
-          sessionStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
+          localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
           this.process.showMessage('Programa Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
+          this.saveSuccess = true;
           
         });
       })
@@ -59,5 +61,9 @@ export default class Filter {
   }
 
   getData = () => this.filterDataDTO.getData();
+
+  setSaveSuccess = (saveSucess) => {
+    this.saveSuccess = saveSucess;
+  }
 
 }
