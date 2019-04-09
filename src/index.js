@@ -5,16 +5,16 @@ import { LocaleProvider } from 'antd';
 import es_ES from 'antd/lib/locale-provider/es_ES';
 import { programsService } from './services/Services';
 import Process from './stores/Process';
-import Filter from './stores/Filter';
 import './index.css';
 import App from './App';
 import ListComponentStore from './stores/ListComponentStore';
+import Programs from './stores/Programs';
 
 
 const process =  new Process();
-const filter = new Filter(programsService, process);
+const programs = new Programs(programsService, process);
 const dataListComponent = new ListComponentStore();
-const stores = { filter, dataListComponent };
+const stores = { programs, dataListComponent };
 
 const routes = (
     <BrowserRouter>      

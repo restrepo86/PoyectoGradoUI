@@ -10,7 +10,7 @@ class ListComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.filter = this.props.stores.filter;
+    this.filter = this.props.stores.programs;
     this.data = this.props.stores.dataListComponent.data;
   }
 

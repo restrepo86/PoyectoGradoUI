@@ -1,6 +1,6 @@
 import { observable, runInAction, action } from 'mobx';
 
-export default class Filter {
+export default class Programs {
 
   @observable programsService;
   @observable process;

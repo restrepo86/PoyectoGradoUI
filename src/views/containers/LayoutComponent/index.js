@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Layout, Menu, Icon, Table
+  Layout, Menu, Icon
 } from 'antd';
 import { observer } from 'mobx-react';
 import { Route, Link } from 'react-router-dom';
@@ -69,7 +69,7 @@ class LayoutComponent extends React.Component {
     return (
     
       <Layout style={{ minHeight: '100vh' }}>
-        <Progress  { ...this.props.stores.filter.process.getData() } />
+        <Progress  { ...this.props.stores.programs.process.getData() } />
         <Sider
           collapsible
           collapsed={this.state.collapsed}

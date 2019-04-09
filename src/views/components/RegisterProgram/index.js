@@ -10,7 +10,7 @@ class RegisterProgram extends React.Component {
   
   constructor(props) {
     super(props);
-    this.filter = this.props.stores.filter;
+    this.filter = this.props.stores.programs;
     this.dataListComponentStore = this.props.stores.dataListComponent;
   }
 
@@ -22,17 +22,10 @@ class RegisterProgram extends React.Component {
     this.props.form.validateFields((err, values) => {
       
       if (!err) {
-        const url = this.buidProgramURL(values.siniesCode);
         const programRequestDTO = new ProgramRequestDTO(values.siniesCode, values.programName, values.siniesCode);
         this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
       }
     });
-  }
-
-  buidProgramURL = (siniesCode) => {
-    return (`/main/programs/${siniesCode}`);
-
-
   }
 
   render() {
