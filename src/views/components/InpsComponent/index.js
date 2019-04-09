@@ -1,26 +1,28 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./index.css";
 import { List, Card, Button } from "antd";
 
 const data = [
   {
-    title: "Title 1"
+    title: "INP 1"
   },
   {
-    title: "Title 2"
+    title: "INP 2"
   },
   {
-    title: "Title 3"
+    title: "INP 3"
   },
   {
-    title: "Title 4"
+    title: "INP 4"
   }
 ];
 
 class InpsComponent extends React.Component {
 
-    render = () => {
 
+    render = () => {
+        
         return(
 
             <List
@@ -36,7 +38,9 @@ class InpsComponent extends React.Component {
                         height: 'auto'    
                     }}
                 >
-                  <Card title={item.title}>Card content</Card>
+                  <Link to="/main/programs/inps/studyplan">
+                    <Card title={item.title}>Card content</Card>
+                  </Link>
                 </Button>
               </List.Item>
             )}

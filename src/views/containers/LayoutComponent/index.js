@@ -11,6 +11,7 @@ import CardMatter from '../../components/CardMatter';
 import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';
 import InpsComponent from '../../components/InpsComponent';
+import DetailStudyPlan from '../../components/DetailStuyPlan';
 
 const {
   Header, Content, Footer, Sider,
@@ -23,120 +24,6 @@ const style = {
     color: 'white'
   }
 }
-
-const createAsignatureCardsBySemesters = (asignaturas) => {
-  return asignaturas
-  .map((asignatura, index) => {
-    const cardAsignatura = { key: index, name: asignatura.semestre };
-    cardAsignatura[asignatura.keyIndex] = <CardMatter { ...asignatura } />;
-    return cardAsignatura;
-});
-};
-
-const semestres = [
-  {
-    asignaturas: [{
-        nombreAsignatura: "ÁLGEBRA",
-        codigoAsignatura: "ISM0111",
-        formacionComplementaria: "CB",
-        creditos: 4,
-        horasTeoricas: "4",
-        horasLaboratorio: "0",
-        semestre: "1",
-        keyIndex: 'semestre1'
-    },
-    {
-      nombreAsignatura: "LÓGICA DE PROGRAMACIÓN",
-      codigoAsignatura: "ISM0111",
-      formacionComplementaria: "CB",
-      creditos: 4,
-      horasTeoricas: "4",
-      horasLaboratorio: "0",
-      semestre: "2",
-      keyIndex: 'semestre2'
-  }]
-}, {
-  asignaturas: [{
-      nombreAsignatura: "MATEMÁTICAS",
-      codigoAsignatura: "ISM0111",
-      formacionComplementaria: "CB",
-      creditos: 4,
-      horasTeoricas: "4",
-      horasLaboratorio: "0",
-      semestre: "1",
-      keyIndex: 'semestre1'
-  },
-  {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "2",
-    keyIndex: 'semestre2'
-}]
-}]; 
-
-const filterBySemestre = (asignaturaCard) => {
-
-  const  asignatureObject = {};
-  asignaturaCard.forEach(as => {
-    const property = `semestre${as.name}`;
-    asignatureObject[property] = as[property];
-  }); 
-  return asignatureObject;
-};  
-
-const dataSource = semestres
-  .map(semestre => semestre.asignaturas)
-  .map(createAsignatureCardsBySemesters)
-  .map(filterBySemestre);
-
-
-
-
-const columns = [{
-  dataIndex: 'semestre1',
-  title: 'Semestre 1',
-  key: "1",
-}, {
-  dataIndex: 'semestre2',
-  title: 'Semestre 2',
-  key: "2",
-},{
-  dataIndex: 'semestre3',
-  title: 'Semestre 3',
-  key: "3",
-}, {
-  dataIndex: 'semestre4',
-  title: 'Semestre 4',
-  key: "4",
-}, {
-  dataIndex: 'semestre5',
-  title: 'Semestre 5',
-  key: "5",
-}, {
-  dataIndex: 'semestre6',
-  title: 'Semestre 6',
-  key: "6",
-}, {
-  dataIndex: 'semestre7',
-  title: 'Semestre 7',
-  key: "8",
-}, {
-  dataIndex: 'semestre8',
-  title: 'Semestre 8',
-  key: "8",
-}, {
-  dataIndex: 'semestre9',
-  title: 'Semestre 9',
-  key: "9",
-}, {
-  dataIndex: 'semestre10',
-  title: 'Semestre 10',
-  key: "10",
-}];
 
 @observer
 class LayoutComponent extends React.Component {
@@ -238,14 +125,14 @@ class LayoutComponent extends React.Component {
                     <Route exact path="/main/programs" component={(routeProps) => (
                       <ListComponent {...routeProps} {...this.props} />
                     )}/>
-                    <Route path="/main/programs/engineer/systems" component={(routeProps) => (                    
-                      <Table dataSource={dataSource} columns={columns} />
-                    )} />
-                    <Route path="/main/programs/save/program" component={(routeProps) => (
+                    <Route exact path="/main/programs/save/program" component={(routeProps) => (
                       <RegisterProgram {...routeProps} {...this.props} />
                     )} />
-                    <Route path="/main/programs/inps" component={(routeProps) => (
+                    <Route exact path="/main/programs/inps" component={(routeProps) => (
                       <InpsComponent {...routeProps} {...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/inps/studyplan" component={(routeProps) => (
+                      <DetailStudyPlan {...routeProps} {...this.props} />
                     )} />
 
               </div>

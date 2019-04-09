@@ -1,4 +1,16 @@
+td, th {
+    display: table-cell;
+    vertical-align: top;
+}
+
+
+.ant-table-tbody > tr > td  {
+    width: 100px;
+}
+
 .ant-card-actions {
+    /*inline style en el componente para parametrizar el color
+    */
     background: #faad14de;
     border-top: 1px solid rgba(0, 0, 0, 0.96);
     zoom: 0.8;
@@ -21,7 +33,7 @@
 .ant-card-bordered {
     width: 90px; 
     border: 1px solid black; 
-    margin: auto;
+    float: left;
 }
 
 .ant-card-wider-padding .ant-card-body {
