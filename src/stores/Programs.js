@@ -37,7 +37,6 @@ export default class Programs {
         runInAction(() => {
           
           const { data } = response;
-          console.log('data', data)
           const item = { 'title': data.nombre, 'programData': data };
           dataListComponenStore.data.push(item);
           localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));

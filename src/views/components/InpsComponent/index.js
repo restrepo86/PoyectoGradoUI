@@ -23,10 +23,14 @@ class InpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.dataListComponent = this.props.stores.dataListComponent;
+    this.studyPlan = this.props.stores.studyPlan;
   }
 
   componentDidMount = () => {
     this.dataListComponent.setProgramClickSuccess(false);
+    const sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
+    this.studyPlan.getStudyPlanData(sniesCode);
+    console.log('studyPlans', this.studyPlan.studyPlanData)
   }
 
 
