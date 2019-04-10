@@ -20,9 +20,18 @@ const data = [
 
 class InpsComponent extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.dataListComponent = this.props.stores.dataListComponent;
+  }
+
+  componentDidMount = () => {
+    this.dataListComponent.setProgramClickSuccess(false);
+  }
+
 
     render = () => {
-        
+      console.log('program ', this.dataListComponent.programClickData)
         return(
 
             <List
@@ -31,7 +40,6 @@ class InpsComponent extends React.Component {
             renderItem={item => (
               <List.Item>
                 <Button 
-                    class="button-card"
                     style={{ 
                         backgroundColor: '#026F35', 
                         color: '#fff',

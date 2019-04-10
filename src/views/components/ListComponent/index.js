@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Button } from 'antd';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 
 @observer
@@ -12,7 +12,10 @@ class ListComponent extends React.Component {
     super(props);
     this.filter = this.props.stores.programs;
     this.data = this.props.stores.dataListComponent.data;
+    this.dataListComponent = this.props.stores.dataListComponent;
   }
+
+  
 
   componentDidMount = () => {
     
@@ -33,11 +36,21 @@ class ListComponent extends React.Component {
     }    
   }
 
+  clickProgramAction = (item) => {
+
+    this.dataListComponent.setProgramClickData(item);
+    this.dataListComponent.setProgramClickSuccess(true);
+    
+  }
+
   state = { visible: false }
 
   render() {
 
     this.getProgramsDataList();
+    if (this.dataListComponent.programClickSuccess) {
+      return <Redirect to='/main/programs/inps' />
+    }
     
       return(
         <div>
@@ -47,7 +60,15 @@ class ListComponent extends React.Component {
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta
-                  title={<Link to={item.url}><center>{item.title}</center></Link>}
+                  title={
+                    <center>
+                      <Button
+                        onClick={() => this.clickProgramAction(item)}
+                      >
+                        {item.title}
+                      </Button>
+                    </center>
+                  }
                 />
               </List.Item>
             )}
@@ -60,7 +81,7 @@ class ListComponent extends React.Component {
               style={{ backgroundColor: '#026F35', color: '#fff' }}
               
             >
-              <Link to = '/main/programs/save/program'>Agregar Programa</Link>
+              <Link to='/main/programs/save/program'>Agregar Programa</Link>
             </Button>
             <Button 
               type="primary"

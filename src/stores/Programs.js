@@ -37,7 +37,8 @@ export default class Programs {
         runInAction(() => {
           
           const { data } = response;
-          const item = { 'title': response.data.nombre, 'url': '/main/programs/inps' };
+          console.log('data', data)
+          const item = { 'title': data.nombre, 'url': '/main/programs/inps' };
           dataListComponenStore.data.push(item);
           localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
           this.process.showMessage('Programa Guardado Correctamente', 'success');
