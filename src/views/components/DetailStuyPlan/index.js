@@ -125,6 +125,7 @@ class DetailStudyPlan extends React.Component {
           <Table 
               columns={columnsNames} 
               dataSource={mattersBySemester} 
+              scroll={{ x: 1300}}
               size="small"
               pagination={pagination}
           /> 
