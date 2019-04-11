@@ -17,7 +17,6 @@ class ListComponent extends React.Component {
 
   componentDidMount = () => {
     
-    //sessionStorage.removeItem('studyPlanData');
     this.filter.setSaveSuccess(false);
     if (this.data.length === 0) {
       this.filter.getProgramsData();

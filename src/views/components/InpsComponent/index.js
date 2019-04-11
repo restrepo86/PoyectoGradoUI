@@ -42,7 +42,7 @@ class InpsComponent extends React.Component {
       console.log('this.studyPlanData', this.studyPlanData);
         return(
             <List
-            grid={{ gutter: 10, column: 4 }}
+            grid={{ gutter: 10, column: 3 }}
             dataSource={this.studyPlanData}
             renderItem={item => (
               <List.Item>
@@ -54,7 +54,11 @@ class InpsComponent extends React.Component {
                     }}
                 >
                   <Link to="/main/programs/inps/studyplan">
-                    <Card title={item.inp}>Card content</Card>
+                    <Card title={item.inp}>
+                      {`Creditos: ${item.creditos}`}<br />
+                      {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
+                      {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
+                    </Card>
                   </Link>
                 </Button>
               </List.Item>

@@ -1,3 +1,7 @@
 .ant-card-head-wrapper {
     display: -webkit-inline-box;
 }
+
+.ant-card-bordered {
+    width: 220px
+}
