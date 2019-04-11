@@ -15,10 +15,9 @@ class ListComponent extends React.Component {
     this.dataListComponent = this.props.stores.dataListComponent;
   }
 
-  
-
   componentDidMount = () => {
     
+    sessionStorage.removeItem('studyPlanData');
     this.filter.setSaveSuccess(false);
     if (this.data.length === 0) {
       this.filter.getProgramsData();

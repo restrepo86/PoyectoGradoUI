@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import "./index.css";
+import { observer } from 'mobx-react';
 import { List, Card, Button } from "antd";
+import "./index.css";
 
 const data = [
   {
@@ -18,6 +19,7 @@ const data = [
   }
 ];
 
+@observer
 class InpsComponent extends React.Component {
 
   constructor(props) {
@@ -30,17 +32,18 @@ class InpsComponent extends React.Component {
     this.dataListComponent.setProgramClickSuccess(false);
     const sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
     this.studyPlan.getStudyPlanData(sniesCode);
-    console.log('studyPlans', this.studyPlan.studyPlanData)
   }
 
 
     render = () => {
       console.log('program ', this.dataListComponent.programClickData)
+      
+      this.studyPlanData = sessionStorage.getItem('studyPlanData') ? JSON.parse(sessionStorage.getItem('studyPlanData')) : [];
+      console.log('this.studyPlanData', this.studyPlanData);
         return(
-
             <List
             grid={{ gutter: 10, column: 4 }}
-            dataSource={data}
+            dataSource={this.studyPlanData}
             renderItem={item => (
               <List.Item>
                 <Button 
@@ -51,7 +54,7 @@ class InpsComponent extends React.Component {
                     }}
                 >
                   <Link to="/main/programs/inps/studyplan">
-                    <Card title={item.title}>Card content</Card>
+                    <Card title={item.inp}>Card content</Card>
                   </Link>
                 </Button>
               </List.Item>

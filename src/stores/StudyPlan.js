@@ -18,6 +18,7 @@ export default class StudyPlan {
         runInAction(() => {
           const { data } = response;
           this.studyPlanData = data;
+          sessionStorage.setItem('studyPlanData', JSON.stringify(data));
         });
       })
       .catch(error => {
