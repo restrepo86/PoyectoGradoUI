@@ -29,7 +29,7 @@ const columnsNames = [{
 }, {
   dataIndex: 'semestre7',
   title: 'Semestre 7',
-  key: "8",
+  key: "7",
 }, {
   dataIndex: 'semestre8',
   title: 'Semestre 8',

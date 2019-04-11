@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { List, Card, Button } from "antd";
 import "./index.css";
@@ -28,18 +28,32 @@ class InpsComponent extends React.Component {
     this.studyPlan = this.props.stores.studyPlan;
   }
 
+  state = {
+    redirect: false
+  }
+
   componentDidMount = () => {
     this.dataListComponent.setProgramClickSuccess(false);
     const sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
     this.studyPlan.getStudyPlanData(sniesCode);
   }
 
+  onClickInpButton = (item) => {
 
-    render = () => {
-      console.log('program ', this.dataListComponent.programClickData)
-      
+    sessionStorage.setItem('inpData', JSON.stringify(item))
+    this.setState({ redirect: true }); 
+    
+  }
+
+  render = () => {
+      console.log('studyPlan', this.studyPlan);
+      const { redirect } = this.state;
+      if (redirect) {
+        return <Redirect to='/main/programs/inps/studyplan' />
+      }
+
       this.studyPlanData = sessionStorage.getItem('studyPlanData') ? JSON.parse(sessionStorage.getItem('studyPlanData')) : [];
-      console.log('this.studyPlanData', this.studyPlanData);
+      
         return(
             <List
             grid={{ gutter: 10, column: 3 }}
@@ -52,14 +66,13 @@ class InpsComponent extends React.Component {
                         color: '#fff',
                         height: 'auto'    
                     }}
+                    onClick={() => this.onClickInpButton(item)}
                 >
-                  <Link to="/main/programs/inps/studyplan">
                     <Card title={item.inp}>
                       {`Creditos: ${item.creditos}`}<br />
                       {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
                       {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
                     </Card>
-                  </Link>
                 </Button>
               </List.Item>
             )}
