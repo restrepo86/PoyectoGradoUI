@@ -7,19 +7,30 @@ const { Meta } = Card;
 
 class CardMatter extends Component {
 
+    getStyle = (tipoFormacion) => {
+      return new Map([
+        ['CBI', '#78909c'],
+        ['FC', '#026F35'],
+        ['IA', '#2196f3'],
+        ['CB', '#f9a825'], 
+        ['O', '#b71c1c']
+      ]).get(tipoFormacion);
+    }
+    
     render = () => {
         return(
             <Card
+                bodyStyle={{ background: this.getStyle('CBI') }}
                 actions={[
-                    <h4>{this.props.formacionComplementaria}</h4>,
-                    <h4>{this.props.creditos}</h4>,
-                    <h4>{this.props.horasTeoricas}</h4>,
-                    <h4>{this.props.horasLaboratorio}</h4>
+                    <li>{this.props.formacionComplementaria}</li>,
+                    <li>{this.props.creditos}</li>,
+                    <li>{this.props.horasTeoricas}</li>,
+                    <li>{this.props.horasLaboratorio}</li>
                 ]}
             >
                 <Meta 
                     title={this.props.nombre} 
-                    description={this.props.codigo} 
+                    description={this.props.codigo}       
                 />
             </Card>
         );

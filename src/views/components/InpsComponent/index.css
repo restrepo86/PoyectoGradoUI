@@ -3,5 +3,6 @@
 }
 
 .ant-card-bordered {
-    width: 220px
+    min-width: 220px;
+    max-width: 300px;
 }
