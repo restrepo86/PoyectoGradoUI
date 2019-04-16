@@ -18,8 +18,8 @@ class CardMatter extends Component {
                 ]}
             >
                 <Meta 
-                    title={this.props.nombreAsignatura} 
-                    description={this.props.codigoAsignatura} 
+                    title={this.props.nombre} 
+                    description={this.props.codigo} 
                 />
             </Card>
         );

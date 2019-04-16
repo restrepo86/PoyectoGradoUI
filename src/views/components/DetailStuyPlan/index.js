@@ -48,8 +48,8 @@ const columnsNames = [{
 const datosAsignaturas = [
 
   {
-    nombreAsignatura: "ÁLGEBRA",
-    codigoAsignatura: "ISM0111",
+    nombre: "ÁLGEBRA",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -57,8 +57,8 @@ const datosAsignaturas = [
     semestre: "1",
     keyIndex: 'semestre1'
   }, {
-    nombreAsignatura: "LÓGICA DE PROGRAMACIÓN",
-    codigoAsignatura: "ISM0111",
+    nombre: "LÓGICA DE PROGRAMACIÓN",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -66,8 +66,8 @@ const datosAsignaturas = [
     semestre: "2",
     keyIndex: 'semestre2'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -75,8 +75,8 @@ const datosAsignaturas = [
     semestre: "3",
     keyIndex: 'semestre3'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -84,8 +84,8 @@ const datosAsignaturas = [
     semestre: "1",
     keyIndex: 'semestre1'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -93,8 +93,8 @@ const datosAsignaturas = [
     semestre: "1",
     keyIndex: 'semestre1'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -102,8 +102,8 @@ const datosAsignaturas = [
     semestre: "6",
     keyIndex: 'semestre6'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -111,8 +111,8 @@ const datosAsignaturas = [
     semestre: "7",
     keyIndex: 'semestre7'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -120,8 +120,8 @@ const datosAsignaturas = [
     semestre: "8",
     keyIndex: 'semestre8'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -129,8 +129,8 @@ const datosAsignaturas = [
     semestre: "9",
     keyIndex: 'semestre9'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -138,8 +138,8 @@ const datosAsignaturas = [
     semestre: "10",
     keyIndex: 'semestre10'
   }, {
-    nombreAsignatura: "MATEMÁTICAS",
-    codigoAsignatura: "ISM0111",
+    nombre: "MATEMÁTICAS",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -148,8 +148,8 @@ const datosAsignaturas = [
     keyIndex: 'semestre1'
   },
   {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -157,8 +157,8 @@ const datosAsignaturas = [
     semestre: "2",
     keyIndex: 'semestre2'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -166,8 +166,8 @@ const datosAsignaturas = [
     semestre: "3",
     keyIndex: 'semestre3'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -175,8 +175,8 @@ const datosAsignaturas = [
     semestre: "4",
     keyIndex: 'semestre4'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -184,8 +184,8 @@ const datosAsignaturas = [
     semestre: "5",
     keyIndex: 'semestre5'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -193,8 +193,8 @@ const datosAsignaturas = [
     semestre: "6",
     keyIndex: 'semestre6'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -202,8 +202,8 @@ const datosAsignaturas = [
     semestre: "7",
     keyIndex: 'semestre7'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -211,8 +211,8 @@ const datosAsignaturas = [
     semestre: "8",
     keyIndex: 'semestre8'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -220,8 +220,8 @@ const datosAsignaturas = [
     semestre: "9",
     keyIndex: 'semestre9'
   }, {
-    nombreAsignatura: "OOP",
-    codigoAsignatura: "ISM0111",
+    nombre: "OOP",
+    codigo: "ISM0111",
     formacionComplementaria: "CB",
     creditos: 4,
     horasTeoricas: "4",
@@ -242,10 +242,13 @@ class DetailStudyPlan extends React.Component {
   componentDidMount = () => {
     this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
     this.matters.getMattersData(this.inpData.programid, this.inpData.inp);
+    
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
+
     return asignatura
+      .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.semestre}` }))
       .map((asignatura, index) => {
         const cardAsignatura = { key: index, name: asignatura.semestre };
         cardAsignatura[asignatura.keyIndex] = <CardMatter {...asignatura} />;
@@ -262,11 +265,18 @@ class DetailStudyPlan extends React.Component {
     return asignatureObject;
   };
 
-  mattersBySemester = (datosAsignaturas) => {
-    const matersCard = this.createAsignatureCardsBySemesters(datosAsignaturas)
-    const asigantureObject = matersCard.map(asignatureCard => this.filterBySemestre(asignatureCard));
-    return this.orderBySemester(asigantureObject);
-  }
+  groupBySemester = (datosAsignaturas, semesterNumber) => {
+    return datosAsignaturas.filter(asignatura => asignatura[`semestre${semesterNumber}`]);
+  };
+
+  buildSemesters = (semesterNumber, semester, semesterOrdered, totalSemester) => {
+    for (let idx = 0; idx < totalSemester; idx++) {
+      if (semester[idx] && semesterOrdered[idx]) {
+        semesterOrdered[idx][`semestre${semesterNumber}`] = semester[idx][`semestre${semesterNumber}`];
+      }
+    }
+    return semesterOrdered;
+  };
 
   orderBySemester = (datosAsignaturas) => {
     const totalSemester = 10;
@@ -282,28 +292,23 @@ class DetailStudyPlan extends React.Component {
     
   };
 
-  groupBySemester = (datosAsignaturas, semesterNumber) => {
-    return datosAsignaturas.filter(asignatura => asignatura[`semestre${semesterNumber}`]);
-  };
+  mattersBySemester = (datosAsignaturas) => {
 
-  buildSemesters = (semesterNumber, semester, semesterOrdered, totalSemester) => {
-    for (let idx = 0; idx < totalSemester; idx++) {
-      if (semester[idx] && semesterOrdered[idx]) {
-        semesterOrdered[idx][`semestre${semesterNumber}`] = semester[idx][`semestre${semesterNumber}`];
-      }
-    }
-    return semesterOrdered;
+    const matersCard = this.createAsignatureCardsBySemesters(datosAsignaturas)
+    const asigantureObject = matersCard.map(asignatureCard => this.filterBySemestre(asignatureCard));
+    return this.orderBySemester(asigantureObject);
   };
 
   render = () => {
-    this.mattersData = sessionStorage.getItem('mattersData') ? JSON.parse(sessionStorage.getItem('mattersData')) : [];
-    console.log(this.mattersData);
+    
+    const datasource = sessionStorage.getItem('mattersData') ? JSON.parse(sessionStorage.getItem('mattersData')) : [];
+    
     return (
       <div>
 
         <Table
           columns={columnsNames}
-          dataSource={this.mattersBySemester(datosAsignaturas)}
+          dataSource={this.mattersBySemester(datasource)}
           scroll={{ x: 1300 }}
           size="small"
           pagination={pagination}
