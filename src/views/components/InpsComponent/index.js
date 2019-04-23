@@ -32,14 +32,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Codigo Snies del Programa">
-              {getFieldDecorator('programId', {
-                rules: [{ required: true, message: 'por favor ingrese el codigo Snies del programa al que pertenece el plan de estudio!' }],
-              })(
-                <Input />
-              )}
-            </Form.Item>
-
             <Form.Item label="Créditos">
               {getFieldDecorator('creditos')(<Input type="textarea" />)}
             </Form.Item>
@@ -58,6 +50,7 @@ class InpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.dataListComponent = this.props.stores.dataListComponent;
+    this.sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
     this.studyPlan = this.props.stores.studyPlan;
   }
 
@@ -79,15 +72,12 @@ class InpsComponent extends React.Component {
   handleCreate = () => {
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
+      
       if (err) {
         return;
       }
-
-      console.log('Received values of form: ', values);
       const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp, values.creditos);
-      console.log('studyPlanRequestDTO', studyPlanRequestDTO)
-      console.log('this.studyPlan', this.studyPlan)
-      this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, values.programId);
+      this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.sniesCode);
 
       form.resetFields();
       this.setState({ visible: false });
@@ -101,8 +91,7 @@ class InpsComponent extends React.Component {
 
   componentDidMount = () => {
     this.dataListComponent.setProgramClickSuccess(false);
-    const sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
-    this.studyPlan.getStudyPlanData(sniesCode);
+    this.studyPlan.getStudyPlanData(this.sniesCode);
   }
 
   onClickInpButton = (item) => {
@@ -113,12 +102,12 @@ class InpsComponent extends React.Component {
   }
 
   render = () => {
-      console.log('studyPlan', this.studyPlan);
+      console.log('studyPlan', this.studyPlan.studyPlanData);
       const { redirect } = this.state;
       if (redirect) {
         return <Redirect to='/main/programs/inps/studyplan' />
       }
-
+    
       this.studyPlanData = sessionStorage.getItem('studyPlanData') ? JSON.parse(sessionStorage.getItem('studyPlanData')) : [];
       
         return(
