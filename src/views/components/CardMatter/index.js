@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Card } from "antd";
+import { Card, Popover } from "antd";
 import './style.css';
 
 const { Meta } = Card;
+
+const content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
 
 class CardMatter extends Component {
 
@@ -19,12 +26,16 @@ class CardMatter extends Component {
 
     
     render = () => {
-        const additionalInformation = this.getAdditionalInformation(this.props.id);
+        const additionalInformation = this.getAdditionalInformation(this.props.componenteDeFormacion.nombre);
         return(
             <Card
                 bodyStyle={{ background: additionalInformation.color }}
                 actions={[
-                    <li>{additionalInformation.nomenclatura}</li>,
+                    <li>
+                    <Popover placement="leftBottom" content={content} title="Title">
+                        {this.props.componenteDeFormacion.codigo},
+                    </Popover>
+                    </li>,
                     <li>{this.props.creditos}</li>,
                     <li>{this.props.horasTeoricas}</li>,
                     <li>{this.props.horasLaboratorio}</li>

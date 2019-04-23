@@ -20,7 +20,7 @@ const programs = new Programs(programsService, process);
 const studyPlan = new StudyPlan(studyPlanService, process);
 const matters = new Matters(mattersService, process);
 const dataListComponent = new ListComponentStore();
-const stores = { programs, dataListComponent, studyPlan, matters };
+const stores = { programs, dataListComponent, studyPlan, matters, process };
 
 const routes = (
     <BrowserRouter>      

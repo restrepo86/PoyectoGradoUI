@@ -45,208 +45,24 @@ const columnsNames = [{
 }];
 
 
-const datosAsignaturas = [
-
-  {
-    nombre: "ÁLGEBRA",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "1",
-    keyIndex: 'semestre1'
-  }, {
-    nombre: "LÓGICA DE PROGRAMACIÓN",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "2",
-    keyIndex: 'semestre2'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "3",
-    keyIndex: 'semestre3'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "1",
-    keyIndex: 'semestre1'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "1",
-    keyIndex: 'semestre1'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "6",
-    keyIndex: 'semestre6'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "7",
-    keyIndex: 'semestre7'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "8",
-    keyIndex: 'semestre8'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "9",
-    keyIndex: 'semestre9'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "10",
-    keyIndex: 'semestre10'
-  }, {
-    nombre: "MATEMÁTICAS",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "1",
-    keyIndex: 'semestre1'
-  },
-  {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "2",
-    keyIndex: 'semestre2'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "3",
-    keyIndex: 'semestre3'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "4",
-    keyIndex: 'semestre4'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "5",
-    keyIndex: 'semestre5'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "6",
-    keyIndex: 'semestre6'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "7",
-    keyIndex: 'semestre7'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "8",
-    keyIndex: 'semestre8'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "9",
-    keyIndex: 'semestre9'
-  }, {
-    nombre: "OOP",
-    codigo: "ISM0111",
-    formacionComplementaria: "CB",
-    creditos: 4,
-    horasTeoricas: "4",
-    horasLaboratorio: "0",
-    semestre: "10",
-    keyIndex: 'semestre10'
-  }
-]
-
-
 class DetailStudyPlan extends React.Component {
 
   constructor(props) {
     super(props);
     this.matters = this.props.stores.matters;
+    this.process = this.props.stores.process;
   }
 
   componentDidMount = () => {
+
     this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
     this.matters.getMattersData(this.inpData.programid, this.inpData.inp);
+    
     
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
-
+    
     return asignatura
       .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.semestre}` }))
       .map((asignatura, index) => {
@@ -302,7 +118,7 @@ class DetailStudyPlan extends React.Component {
   render = () => {
     
     const datasource = sessionStorage.getItem('mattersData') ? JSON.parse(sessionStorage.getItem('mattersData')) : [];
-    
+  
     return (
       <div>
 

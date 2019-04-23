@@ -1,23 +1,56 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button } from "antd";
+import { List, Card, Button, Modal, Form, Input, Radio } from "antd";
+import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 
-const data = [
-  {
-    title: "INP 1"
-  },
-  {
-    title: "INP 2"
-  },
-  {
-    title: "INP 3"
-  },
-  {
-    title: "INP 4"
+
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+    render() {
+      const {
+        visible, onCancel, onCreate, form,
+      } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Agregue un nuevo Plan de Estudio"
+          okText="Agregar"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+
+            <Form.Item label="Ingrese el INP">
+              {getFieldDecorator('inp', {
+                rules: [{ required: true, message: 'por favor ingrese un INP para el plan de estudio!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Codigo Snies del Programa">
+              {getFieldDecorator('programId', {
+                rules: [{ required: true, message: 'por favor ingrese el codigo Snies del programa al que pertenece el plan de estudio!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Créditos">
+              {getFieldDecorator('creditos')(<Input type="textarea" />)}
+            </Form.Item>
+            
+          </Form>
+        </Modal>
+      );
+    }
   }
-];
+);
+
 
 @observer
 class InpsComponent extends React.Component {
@@ -29,8 +62,42 @@ class InpsComponent extends React.Component {
   }
 
   state = {
-    redirect: false
+
+    redirect: false,
+    visible: false,
+
   }
+
+  showModal = () => {
+    this.setState({ visible: true });
+  }
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  handleCreate = () => {
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      console.log('Received values of form: ', values);
+      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp, values.creditos);
+      console.log('studyPlanRequestDTO', studyPlanRequestDTO)
+      console.log('this.studyPlan', this.studyPlan)
+      this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, values.programId);
+
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  }
+
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
+
 
   componentDidMount = () => {
     this.dataListComponent.setProgramClickSuccess(false);
@@ -55,28 +122,49 @@ class InpsComponent extends React.Component {
       this.studyPlanData = sessionStorage.getItem('studyPlanData') ? JSON.parse(sessionStorage.getItem('studyPlanData')) : [];
       
         return(
+
+          <div>
+
             <List
-            grid={{ gutter: 10, column: 3 }}
-            dataSource={this.studyPlanData}
-            renderItem={item => (
-              <List.Item>
+              grid={{ gutter: 10, column: 3 }}
+              dataSource={this.studyPlanData}
+                renderItem={item => (
+                  <List.Item>
+                    <Button 
+                        style={{ 
+                            backgroundColor: '#026F35', 
+                            color: '#fff',
+                            height: 'auto'    
+                        }}
+                        onClick={() => this.onClickInpButton(item)}
+                    >
+                        <Card title={item.inp}>
+                          {`Creditos: ${item.creditos}`}<br />
+                          {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
+                          {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
+                        </Card>
+                    </Button>
+                  </List.Item>
+                )}
+            />
+            <br />
+              <center>
                 <Button 
-                    style={{ 
-                        backgroundColor: '#026F35', 
-                        color: '#fff',
-                        height: 'auto'    
-                    }}
-                    onClick={() => this.onClickInpButton(item)}
+                  type="primary" 
+                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  onClick={this.showModal}
                 >
-                    <Card title={item.inp}>
-                      {`Creditos: ${item.creditos}`}<br />
-                      {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
-                      {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
-                    </Card>
+                  Agregar Plan de Estudio
                 </Button>
-              </List.Item>
-            )}
-          />
+                <CollectionCreateForm
+                  wrappedComponentRef={this.saveFormRef}
+                  visible={this.state.visible}
+                  onCancel={this.handleCancel}
+                  onCreate={this.handleCreate}
+                />
+              </center>
+            
+          </div>
 
         );
     }
