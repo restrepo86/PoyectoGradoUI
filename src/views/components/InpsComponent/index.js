@@ -89,9 +89,12 @@ class InpsComponent extends React.Component {
   }
 
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.dataListComponent.setProgramClickSuccess(false);
+
     this.studyPlan.getStudyPlanData(this.sniesCode);
+    console.log('studyPlanStore', this.studyPlan)
+    console.log('studyPlanData', this.studyPlan.studyPlanData);
   }
 
   onClickInpButton = (item) => {
@@ -101,8 +104,8 @@ class InpsComponent extends React.Component {
     
   }
 
-  render = () => {
-      console.log('studyPlan', this.studyPlan.studyPlanData);
+  render() {
+      
       const { redirect } = this.state;
       if (redirect) {
         return <Redirect to='/main/programs/inps/studyplan' />
@@ -116,7 +119,7 @@ class InpsComponent extends React.Component {
 
             <List
               grid={{ gutter: 10, column: 3 }}
-              dataSource={this.studyPlanData}
+              dataSource={this.studyPlan.studyPlanData}
                 renderItem={item => (
                   <List.Item>
                     <Button 

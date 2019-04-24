@@ -28,7 +28,7 @@ class ListComponent extends React.Component {
     
     if (this.filter.programsData && this.data.length === 0) {   
       
-      const programs = this.filter.programsData.map(program => ({ 'title': program.nombre, 'url': '/main/programs/inps' }));
+      const programs = this.filter.programsData.map(program => ({ 'title': program.nombre, 'programData': program }));
       this.data = this.data.concat(programs);
       localStorage.setItem('data', JSON.stringify(this.data)); 
     }    

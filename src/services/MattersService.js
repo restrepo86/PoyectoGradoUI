@@ -22,9 +22,15 @@ class MattersService extends ServiceBase {
     };
 
     getMatters = async (programId, inp) => {
-       this.setHeaders();
-       const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}`;
-       return await this.getRequest({}, responseUrl);
+      this.setHeaders();
+      const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}`;
+      return await this.getRequest({}, responseUrl);
+    };
+
+    saveMatter = async (programId, inp, asignaturaRequest) => {
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}`;
+      return await this.postRequest(requestUrl, asignaturaRequest);
     };
 
 }

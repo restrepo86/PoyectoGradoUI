@@ -31,7 +31,7 @@ export default class Programs {
   saveProgramData = (programRequestDTO, dataListComponenStore) => {
 
     this.process.processDTO.loading = true;
-    this.process.processDTO.loadingMessage = 'GUARDANDO...';
+    this.process.processDTO.loadingMessage = 'GUARDANDO ...';
     this.programsService.saveProgram(programRequestDTO)
       .then(response => {
         runInAction(() => {

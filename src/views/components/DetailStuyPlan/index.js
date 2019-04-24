@@ -1,6 +1,89 @@
 import React from 'react';
-import { Table, pagination } from 'antd';
+import { Table, pagination, Form, Input, Modal, Button } from 'antd';
 import CardMatter from '../CardMatter';
+import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
+
+
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+    render() {
+      const {
+        visible, onCancel, onCreate, form,
+      } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Agregue una nueva asignatura"
+          okText="Agregar"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+
+            <Form.Item label="Código">
+              {getFieldDecorator('codigo', {
+                rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteFormacion', {
+                rules: [{ required: true, message: 'Por favor ingrese el componente de formación!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nombre">
+              {getFieldDecorator('nombre', {
+                rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Teóricas">
+              {getFieldDecorator('horasTeoricas', {
+                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Laboratorio">
+              {getFieldDecorator('horasLaboratorio', {
+                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Semestre">
+              {getFieldDecorator('semestre', {
+                rules: [{ required: true, message: 'Por favor ingrese el semestre al que pertenece la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Créditos">
+              {getFieldDecorator('creditos', {
+                rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+            
+          </Form>
+        </Modal>
+      );
+    }
+  }
+);
 
 const columnsNames = [{
   dataIndex: 'semestre1',
@@ -53,11 +136,43 @@ class DetailStudyPlan extends React.Component {
     this.process = this.props.stores.process;
   }
 
+  state = {
+    visible: false,
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
+  }
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  handleCreate = () => {
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      
+      if (err) {
+        return;
+      }
+      this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
+      const asignaturaRequestDTO = 
+        new AsignaturaRequestDTO(values.codigo, values.componenteFormacion, values.nombre, values.creditos, values.horasTeoricas, values.horasLaboratorio, values.semestre);
+      this.matters.saveMatterData(this.inpData.programid, this.inpData.inp, asignaturaRequestDTO);
+
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  }
+
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
+
   componentDidMount = () => {
 
     this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
     this.matters.getMattersData(this.inpData.programid, this.inpData.inp);
-    
     
   }
 
@@ -104,7 +219,8 @@ class DetailStudyPlan extends React.Component {
         this.buildSemesters(idx, semester, semesterOrdered, totalSemester);
       }
     }
-    return semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
+    const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
+    return semesters.concat(semesters).concat(semesters);
     
   };
 
@@ -129,6 +245,22 @@ class DetailStudyPlan extends React.Component {
           size="small"
           pagination={pagination}
         />
+        <br/>
+        <center>
+          <Button 
+            type="primary" 
+            style={{ backgroundColor: '#026F35', color: '#fff' }}
+            onClick={this.showModal}
+          >
+            Agregar Asignatura
+          </Button>
+          <CollectionCreateForm
+            wrappedComponentRef={this.saveFormRef}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+          />
+        </center>
 
       </div>
     );
