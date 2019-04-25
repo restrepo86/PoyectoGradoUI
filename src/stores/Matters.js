@@ -4,7 +4,7 @@ export default class Matters {
 
   @observable mattersService;
   @observable process;
-  @observable mattersData;
+  @observable mattersData = [];
 
   constructor(mattersService, process) {
     this.mattersService = mattersService;
@@ -18,7 +18,6 @@ export default class Matters {
         runInAction(() => {
           const { data } = response;
           this.mattersData = data;
-          sessionStorage.setItem('mattersData', JSON.stringify(data));
         });
       })
       .catch(error => {

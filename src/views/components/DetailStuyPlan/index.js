@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Table, pagination, Form, Input, Modal, Button } from 'antd';
+import { Table, pagination, Form, Input, Modal, Button, Select } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 
@@ -8,11 +8,16 @@ import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
     render() {
       const {
         visible, onCancel, onCreate, form,
       } = this.props;
       const { getFieldDecorator } = form;
+
+      const InputGroup = Input.Group;
+      const Option = Select.Option;
+
       return (
         <Modal
           visible={visible}
@@ -32,10 +37,16 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion', {
-                rules: [{ required: true, message: 'Por favor ingrese el componente de formación!' }],
-              })(
-                <Input />
+              {getFieldDecorator('componenteFormacion') (
+               
+                  <Select>
+                    <Option value="cienciaBasicaIngenieria">Ciencia basica de Ingenieria</Option>
+                    <Option value="formacionComplementaria">Formacion complementaria</Option>
+                    <Option value="ingenieriaAplicada">Ingenieria aplicada</Option>
+                    <Option value="CienciaBasica">Ciencia basica</Option>
+                    <Option value="optativaInterdiciplinaria">Optativa interdisciplinaria</Option>
+                  </Select>
+              
               )}
             </Form.Item>
 
@@ -154,7 +165,7 @@ class DetailStudyPlan extends React.Component {
     
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
-      
+      console.log('values', values)
       if (err) {
         return;
       }
@@ -233,16 +244,13 @@ class DetailStudyPlan extends React.Component {
   };
 
   render() {
-    
-    const datasource = sessionStorage.getItem('mattersData') ? JSON.parse(sessionStorage.getItem('mattersData')) : [];
 
-    console.log('mattersData', this.matters.mattersData)
     return (
       <div>
 
         <Table
           columns={columnsNames}
-          dataSource={this.mattersBySemester(datasource)}
+          dataSource={this.mattersBySemester(this.matters.mattersData)}
           scroll={{ x: 1300 }}
           size="small"
           pagination={pagination}
