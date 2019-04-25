@@ -52,6 +52,7 @@ class InpsComponent extends React.Component {
     this.dataListComponent = this.props.stores.dataListComponent;
     this.sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
     this.studyPlan = this.props.stores.studyPlan;
+    this.inpComponentStore = this.props.stores.inpComponentStore
   }
 
   state = {
@@ -91,15 +92,12 @@ class InpsComponent extends React.Component {
 
   componentDidMount() {
     this.dataListComponent.setProgramClickSuccess(false);
-
     this.studyPlan.getStudyPlanData(this.sniesCode);
-    console.log('studyPlanStore', this.studyPlan)
-    console.log('studyPlanData', this.studyPlan.studyPlanData);
   }
 
   onClickInpButton = (item) => {
 
-    sessionStorage.setItem('inpData', JSON.stringify(item))
+    this.inpComponentStore.setInpData(item);
     this.setState({ redirect: true }); 
     
   }
@@ -110,8 +108,6 @@ class InpsComponent extends React.Component {
       if (redirect) {
         return <Redirect to='/main/programs/inps/studyplan' />
       }
-    
-      this.studyPlanData = sessionStorage.getItem('studyPlanData') ? JSON.parse(sessionStorage.getItem('studyPlanData')) : [];
       
         return(
 

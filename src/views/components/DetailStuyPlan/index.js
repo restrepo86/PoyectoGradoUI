@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import { Table, pagination, Form, Input, Modal, Button } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
@@ -127,13 +128,14 @@ const columnsNames = [{
   key: "10",
 }];
 
-
+@observer
 class DetailStudyPlan extends React.Component {
 
   constructor(props) {
     super(props);
     this.matters = this.props.stores.matters;
     this.process = this.props.stores.process;
+    this.inpComponentStore = this.props.stores.inpComponentStore;
   }
 
   state = {
@@ -149,19 +151,21 @@ class DetailStudyPlan extends React.Component {
   }
 
   handleCreate = () => {
+    
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
       
       if (err) {
         return;
       }
-      this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
+
       const asignaturaRequestDTO = 
         new AsignaturaRequestDTO(values.codigo, values.componenteFormacion, values.nombre, values.creditos, values.horasTeoricas, values.horasLaboratorio, values.semestre);
-      this.matters.saveMatterData(this.inpData.programid, this.inpData.inp, asignaturaRequestDTO);
+      this.matters.saveMatterData(this.inpComponentStore.inpData.programid, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
 
       form.resetFields();
       this.setState({ visible: false });
+
     });
   }
 
@@ -170,10 +174,7 @@ class DetailStudyPlan extends React.Component {
   }
 
   componentDidMount = () => {
-
-    this.inpData = sessionStorage.getItem('inpData') ? JSON.parse(sessionStorage.getItem('inpData')) : [];
-    this.matters.getMattersData(this.inpData.programid, this.inpData.inp);
-    
+    this.matters.getMattersData(this.inpComponentStore.inpData.programid, this.inpComponentStore.inpData.inp);
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
@@ -231,10 +232,11 @@ class DetailStudyPlan extends React.Component {
     return this.orderBySemester(asigantureObject);
   };
 
-  render = () => {
+  render() {
     
     const datasource = sessionStorage.getItem('mattersData') ? JSON.parse(sessionStorage.getItem('mattersData')) : [];
-  
+
+    console.log('mattersData', this.matters.mattersData)
     return (
       <div>
 

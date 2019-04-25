@@ -13,6 +13,7 @@ import ListComponentStore from './stores/ListComponentStore';
 import Programs from './stores/Programs';
 import StudyPlan from './stores/StudyPlan';
 import Matters from './stores/Matters';
+import InpComponentStore from './stores/InpComponentStore';
 
 
 const process =  new Process();
@@ -20,7 +21,8 @@ const programs = new Programs(programsService, process);
 const studyPlan = new StudyPlan(studyPlanService, process);
 const matters = new Matters(mattersService, process);
 const dataListComponent = new ListComponentStore();
-const stores = { programs, dataListComponent, studyPlan, matters, process };
+const inpComponentStore = new InpComponentStore();
+const stores = { programs, dataListComponent, studyPlan, matters, process, inpComponentStore };
 
 const routes = (
     <BrowserRouter>      
