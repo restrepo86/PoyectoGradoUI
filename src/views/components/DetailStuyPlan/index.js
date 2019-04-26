@@ -38,11 +38,11 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('componenteFormacion') (
                
                   <Select>
-                    <Option value="cienciaBasicaIngenieria">Ciencia basica de Ingenieria</Option>
-                    <Option value="formacionComplementaria">Formacion complementaria</Option>
-                    <Option value="ingenieriaAplicada">Ingenieria aplicada</Option>
-                    <Option value="CienciaBasica">Ciencia basica</Option>
-                    <Option value="optativaInterdiciplinaria">Optativa interdisciplinaria</Option>
+                    <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
+                    <Option value="formacioncomplementaria">Formacion complementaria</Option>
+                    <Option value="ingenieriaaplicada">Ingeniería aplicada</Option>
+                    <Option value="cienciabasica">Ciencia básica</Option>
+                    <Option value="optativainterdisciplinaria">Optativa interdisciplinaria</Option>
                   </Select>
               
               )}
@@ -182,7 +182,7 @@ class DetailStudyPlan extends React.Component {
   }
 
   componentDidMount = () => {
-    this.matters.getMattersData(this.inpComponentStore.inpData.programid, this.inpComponentStore.inpData.inp);
+    this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
