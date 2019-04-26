@@ -21,8 +21,8 @@ export default class Matters {
         });
       })
       .catch(error => {
-        const message = error.response ? error.response.headers.internalerrormessage
-          : new Error(error).message;
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
       });
   };
 

@@ -14,8 +14,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
         visible, onCancel, onCreate, form,
       } = this.props;
       const { getFieldDecorator } = form;
-
-      const InputGroup = Input.Group;
       const Option = Select.Option;
 
       return (
@@ -169,10 +167,9 @@ class DetailStudyPlan extends React.Component {
       if (err) {
         return;
       }
-
       const asignaturaRequestDTO = 
         new AsignaturaRequestDTO(values.codigo, values.componenteFormacion, values.nombre, values.creditos, values.horasTeoricas, values.horasLaboratorio, values.semestre);
-      this.matters.saveMatterData(this.inpComponentStore.inpData.programid, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
+      this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
 
       form.resetFields();
       this.setState({ visible: false });
@@ -232,7 +229,7 @@ class DetailStudyPlan extends React.Component {
       }
     }
     const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
-    return semesters.concat(semesters).concat(semesters);
+    return semesters;
     
   };
 
@@ -244,10 +241,10 @@ class DetailStudyPlan extends React.Component {
   };
 
   render() {
-
+    console.log('mattersData', this.matters.mattersData);
     return (
       <div>
-
+        
         <Table
           columns={columnsNames}
           dataSource={this.mattersBySemester(this.matters.mattersData)}

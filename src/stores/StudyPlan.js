@@ -23,6 +23,7 @@ export default class StudyPlan {
       })
       .catch(error => {
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
       });
   };
 
