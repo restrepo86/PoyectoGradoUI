@@ -28,7 +28,7 @@ export default class Programs {
   };
 
   @action
-  saveProgramData = (programRequestDTO, dataListComponenStore) => {
+  saveProgramData = (programRequestDTO, programsComponentStore) => {
 
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'GUARDANDO ...';
@@ -38,8 +38,8 @@ export default class Programs {
           
           const { data } = response;
           const item = { 'title': data.nombre, 'programData': data };
-          dataListComponenStore.data.push(item);
-          localStorage.setItem('data', JSON.stringify(dataListComponenStore.data));
+          programsComponentStore.data.push(item);
+          localStorage.setItem('data', JSON.stringify(programsComponentStore.data));
           this.process.showMessage('Programa Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
           this.saveSuccess = true;
