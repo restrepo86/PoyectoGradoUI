@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 
 @observer
-class ListComponent extends React.Component {
+class ProgramsComponent extends React.Component {
 
 
   constructor(props) {
@@ -99,5 +99,5 @@ class ListComponent extends React.Component {
 
 }
 
-export default ListComponent;
+export default ProgramsComponent;
 

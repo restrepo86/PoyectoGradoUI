@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import { Route, Link } from 'react-router-dom';
 import LogoUco from '../../../image/logo-uco.png';
 import './style.css';
-import ListComponent from '../../components/ListComponent';
+import ProgramsComponent from '../../components/ProgramsComponent';
 import CardMatter from '../../components/CardMatter';
 import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';
@@ -123,7 +123,7 @@ class LayoutComponent extends React.Component {
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
 
                     <Route exact path="/main/programs" component={(routeProps) => (
-                      <ListComponent {...routeProps} {...this.props} />
+                      <ProgramsComponent {...routeProps} {...this.props} />
                     )}/>
                     <Route exact path="/main/programs/save/program" component={(routeProps) => (
                       <RegisterProgram {...routeProps} {...this.props} />
