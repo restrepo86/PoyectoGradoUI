@@ -11,7 +11,7 @@ class RegisterProgram extends React.Component {
   constructor(props) {
     super(props);
     this.filter = this.props.stores.programs;
-    this.dataListComponentStore = this.props.stores.dataListComponent;
+    this.programsComponentStore = this.props.stores.programsComponentStore;
   }
 
   
@@ -23,7 +23,7 @@ class RegisterProgram extends React.Component {
       
       if (!err) {
         const programRequestDTO = new ProgramRequestDTO(values.siniesCode, values.programName, values.siniesCode);
-        this.filter.saveProgramData(programRequestDTO, this.dataListComponentStore);
+        this.filter.saveProgramData(programRequestDTO, this.programsComponentStore);
       }
     });
   }

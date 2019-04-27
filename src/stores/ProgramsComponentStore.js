@@ -1,6 +1,6 @@
 import { observable } from "mobx";
 
-class ListComponentStore {
+class ProgramsComponentStore {
 
     @observable data = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : [];
     @observable programClickData;
@@ -16,4 +16,4 @@ class ListComponentStore {
 
 }
 
-export default ListComponentStore;
+export default ProgramsComponentStore;

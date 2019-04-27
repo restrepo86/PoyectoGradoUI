@@ -11,8 +11,8 @@ class ListComponent extends React.Component {
   constructor(props) {
     super(props);
     this.filter = this.props.stores.programs;
-    this.data = this.props.stores.dataListComponent.data;
-    this.dataListComponent = this.props.stores.dataListComponent;
+    this.data = this.props.stores.programsComponentStore.data;
+    this.programsComponentStore = this.props.stores.programsComponentStore;
   }
 
   componentDidMount = () => {
@@ -36,8 +36,8 @@ class ListComponent extends React.Component {
 
   clickProgramAction = (item) => {
 
-    this.dataListComponent.setProgramClickData(item);
-    this.dataListComponent.setProgramClickSuccess(true);
+    this.programsComponentStore.setProgramClickData(item);
+    this.programsComponentStore.setProgramClickSuccess(true);
     
   }
 
@@ -46,7 +46,7 @@ class ListComponent extends React.Component {
   render() {
 
     this.getProgramsDataList();
-    if (this.dataListComponent.programClickSuccess) {
+    if (this.programsComponentStore.programClickSuccess) {
       return <Redirect to='/main/programs/inps' />
     }
     

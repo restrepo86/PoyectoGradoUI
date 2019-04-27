@@ -49,8 +49,8 @@ class InpsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.dataListComponent = this.props.stores.dataListComponent;
-    this.sniesCode = this.dataListComponent.programClickData.programData.codigoSnies;
+    this.programsComponentStore = this.props.stores.programsComponentStore;
+    this.sniesCode = this.programsComponentStore.programClickData.programData.codigoSnies;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
   }
@@ -91,7 +91,7 @@ class InpsComponent extends React.Component {
 
 
   componentDidMount() {
-    this.dataListComponent.setProgramClickSuccess(false);
+    this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.sniesCode);
   }
 

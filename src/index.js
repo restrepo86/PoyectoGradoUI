@@ -9,7 +9,7 @@ import { mattersService } from './services/Services';
 import Process from './stores/Process';
 import './index.css';
 import App from './App';
-import ListComponentStore from './stores/ListComponentStore';
+import ProgramsComponentStore from './stores/ProgramsComponentStore';
 import Programs from './stores/Programs';
 import StudyPlan from './stores/StudyPlan';
 import Matters from './stores/Matters';
@@ -20,9 +20,9 @@ const process =  new Process();
 const programs = new Programs(programsService, process);
 const studyPlan = new StudyPlan(studyPlanService, process);
 const matters = new Matters(mattersService, process);
-const dataListComponent = new ListComponentStore();
+const programsComponentStore = new ProgramsComponentStore();
 const inpComponentStore = new InpComponentStore();
-const stores = { programs, dataListComponent, studyPlan, matters, process, inpComponentStore };
+const stores = { programs, programsComponentStore, studyPlan, matters, process, inpComponentStore };
 
 const routes = (
     <BrowserRouter>      
