@@ -10,8 +10,7 @@ class RegisterProgram extends React.Component {
   
   constructor(props) {
     super(props);
-    this.filter = this.props.stores.programs;
-    this.programsComponentStore = this.props.stores.programsComponentStore;
+    this.registerProgramStore = this.props.stores.programs;
   }
 
   
@@ -23,14 +22,14 @@ class RegisterProgram extends React.Component {
       
       if (!err) {
         const programRequestDTO = new ProgramRequestDTO(values.siniesCode, values.programName, values.siniesCode);
-        this.filter.saveProgramData(programRequestDTO, this.programsComponentStore);
+        this.registerProgramStore.saveProgramData(programRequestDTO);
       }
     });
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    if (this.filter.saveSuccess) {
+    if (this.registerProgramStore.saveSuccess) {
       return <Redirect to='/main/programs' />
     }
     return (

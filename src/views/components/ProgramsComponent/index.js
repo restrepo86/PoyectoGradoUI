@@ -10,28 +10,17 @@ class ProgramsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.filter = this.props.stores.programs;
-    this.data = this.props.stores.programsComponentStore.data;
+    this.registerProgramStore = this.props.stores.programs;
     this.programsComponentStore = this.props.stores.programsComponentStore;
   }
 
   componentDidMount = () => {
     
-    this.filter.setSaveSuccess(false);
-    if (this.data.length === 0) {
-      this.filter.getProgramsData();
+    this.registerProgramStore.setSaveSuccess(false);
+    if (!this.registerProgramStore.programsData) {
+      this.registerProgramStore.getProgramsData();
     }
     
-  }
-
-  getProgramsDataList = () => {
-    
-    if (this.filter.programsData && this.data.length === 0) {   
-      
-      const programs = this.filter.programsData.map(program => ({ 'title': program.nombre, 'programData': program }));
-      this.data = this.data.concat(programs);
-      localStorage.setItem('data', JSON.stringify(this.data)); 
-    }    
   }
 
   clickProgramAction = (item) => {
@@ -45,7 +34,6 @@ class ProgramsComponent extends React.Component {
 
   render() {
 
-    this.getProgramsDataList();
     if (this.programsComponentStore.programClickSuccess) {
       return <Redirect to='/main/programs/inps' />
     }
@@ -54,7 +42,7 @@ class ProgramsComponent extends React.Component {
         <div>
           <List
             itemLayout="horizontal"
-            dataSource={ this.data }
+            dataSource={ this.registerProgramStore.programsData }
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta

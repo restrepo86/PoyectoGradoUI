@@ -18,7 +18,8 @@ export default class Programs {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          this.programsData = data;
+          const programs = data.map(program => { return { 'title': program.nombre, 'programData': program }})
+          this.programsData = programs;
         });
       })
       .catch(error => {
@@ -28,7 +29,7 @@ export default class Programs {
   };
 
   @action
-  saveProgramData = (programRequestDTO, programsComponentStore) => {
+  saveProgramData = (programRequestDTO) => {
 
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'GUARDANDO ...';
@@ -38,8 +39,7 @@ export default class Programs {
           
           const { data } = response;
           const item = { 'title': data.nombre, 'programData': data };
-          programsComponentStore.data.push(item);
-          localStorage.setItem('data', JSON.stringify(programsComponentStore.data));
+          this.programsData.push(item);
           this.process.showMessage('Programa Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
           this.saveSuccess = true;
