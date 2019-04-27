@@ -2,7 +2,6 @@ import { observable } from "mobx";
 
 class ProgramsComponentStore {
 
-    @observable data = [];
     @observable programClickData;
     @observable programClickSuccess = false;
 
