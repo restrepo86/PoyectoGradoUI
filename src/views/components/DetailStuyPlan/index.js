@@ -72,9 +72,25 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Semestre">
-              {getFieldDecorator('semestre', {
-                rules: [{ required: true, message: 'Por favor ingrese el semestre al que pertenece la asignatura!' }],
+            <Form.Item label="Horas Prácticas">
+              {getFieldDecorator('horasPracticas', {
+                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Trabajo Independiente del Estudiante">
+              {getFieldDecorator('trabajoIndependienteEstudiante', {
+                rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nivel">
+              {getFieldDecorator('nivel', {
+                rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
                 <Input />
               )}
@@ -97,43 +113,43 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
 const columnsNames = [{
   dataIndex: 'semestre1',
-  title: 'Semestre 1',
+  title: 'Nivel 1',
   key: "1",
 }, {
   dataIndex: 'semestre2',
-  title: 'Semestre 2',
+  title: 'Nivel 2',
   key: "2",
 }, {
   dataIndex: 'semestre3',
-  title: 'Semestre 3',
+  title: 'Nivel 3',
   key: "3",
 }, {
   dataIndex: 'semestre4',
-  title: 'Semestre 4',
+  title: 'Nivel 4',
   key: "4",
 }, {
   dataIndex: 'semestre5',
-  title: 'Semestre 5',
+  title: 'Nivel 5',
   key: "5",
 }, {
   dataIndex: 'semestre6',
-  title: 'Semestre 6',
+  title: 'Nivel 6',
   key: "6",
 }, {
   dataIndex: 'semestre7',
-  title: 'Semestre 7',
+  title: 'Nivel 7',
   key: "7",
 }, {
   dataIndex: 'semestre8',
-  title: 'Semestre 8',
+  title: 'Nivel 8',
   key: "8",
 }, {
   dataIndex: 'semestre9',
-  title: 'Semestre 9',
+  title: 'Nivel 9',
   key: "9",
 }, {
   dataIndex: 'semestre10',
-  title: 'Semestre 10',
+  title: 'Nivel 10',
   key: "10",
 }];
 
@@ -168,7 +184,16 @@ class DetailStudyPlan extends React.Component {
         return;
       }
       const asignaturaRequestDTO = 
-        new AsignaturaRequestDTO(values.codigo, values.componenteFormacion, values.nombre, values.creditos, values.horasTeoricas, values.horasLaboratorio, values.semestre);
+        new AsignaturaRequestDTO(
+          values.codigo, 
+          values.componenteFormacion, 
+          values.nombre, values.creditos, 
+          values.horasTeoricas, 
+          values.horasLaboratorio, 
+          values.nivel,
+          values.horasPracticas,
+          values.trabajoIndependienteEstudiante);
+
       this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
 
       form.resetFields();
