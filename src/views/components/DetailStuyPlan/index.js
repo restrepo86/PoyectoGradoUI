@@ -271,9 +271,10 @@ class DetailStudyPlan extends React.Component {
       <div>
         
         <Table
+          rowKey={record => record.uid}
           columns={columnsNames}
           dataSource={this.mattersBySemester(this.matters.mattersData)}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 2300 }}
           size="small"
           pagination={pagination}
         />
