@@ -12,6 +12,7 @@ import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';
 import InpsComponent from '../../components/InpsComponent';
 import DetailStudyPlan from '../../components/DetailStuyPlan';
+import UpdateProgramComponent from '../../components/UpdateProgramComponent';
 
 const {
   Header, Content, Footer, Sider,
@@ -31,6 +32,7 @@ class LayoutComponent extends React.Component {
   constructor(props) {
     super(props);
     this.props = this.props;
+    this.loginStore = this.props.stores.loginStore;
 
     this.state = {
       collapsed: false,
@@ -40,7 +42,11 @@ class LayoutComponent extends React.Component {
 
   componentWillMount(){
     this.updateSelectedItem();
-  }
+  };
+
+  componentDidMount() {
+    this.loginStore.setValidateUserSuccess(false);
+  };
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
@@ -133,6 +139,9 @@ class LayoutComponent extends React.Component {
                     )} />
                     <Route exact path="/main/programs/inps/studyplan" component={(routeProps) => (
                       <DetailStudyPlan {...routeProps} {...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/update/program" component={(routeProps) => (
+                      <UpdateProgramComponent {...routeProps}{...this.props}/>
                     )} />
 
               </div>

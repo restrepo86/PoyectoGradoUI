@@ -1,25 +1,44 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { observer } from 'mobx-react';
 import {
     Form, Icon, Input, Button,
   } from 'antd';
-  
+import LoginUserDTO from '../../../dto/LoginUserDTO';
+
+
+  @observer
   class LoginForm extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.loginStore = this.props.stores.loginStore;
+    };
+    
     handleSubmit = (e) => {
-      console.log(this.props.form)
+
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
-          window.location.href = "/main";
+          const loginUserDTO = new LoginUserDTO(values.userName,values.password); 
+          this.loginStore.validateLoginUser(loginUserDTO);
         }
       });
+
     }
   
     render() {
+
       const { getFieldDecorator } = this.props.form;
+ 
+      if (this.loginStore.validateUserSuccess) {
+        return <Redirect to = '/main' />
+      }
+      
       return (
 
         <Form onSubmit={this.handleSubmit} className="login-form">
+          
           <Form.Item>
             {getFieldDecorator('userName', {
               rules: [{ required: true, message: 'Por favor ingrese un nombre de usuario!' }],
@@ -37,13 +56,24 @@ import {
           </Form.Item>
 
           <Form.Item>
-            <Button style={{ backgroundColor: '#026F35', color: '#fff' }}  
-            htmlType="submit" 
-            className="login-form-button">
-              Ingresar
+            <Button 
+              style={{ backgroundColor: '#026F35', color: '#fff' }}  
+              htmlType="submit" 
+              className="login-form-button">
+
+                Ingresar
+
             </Button>
             <br/>
-            <a href="/login/register" style={{ color: '#026F35' }}> Registrar nuevo usuario!</a>
+            <a > 
+            <Link 
+              to = "/login/register"
+              style={{ color: '#026F35' }}>
+
+                Registrar nuevo usuario!
+
+            </Link>
+            </a>
           </Form.Item>
 
         </Form>

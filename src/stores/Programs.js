@@ -5,7 +5,9 @@ export default class Programs {
   @observable programsService;
   @observable process;
   @observable programsData;
+  @observable programUpdateDataRequest;
   @observable saveSuccess =  false;
+  @observable updateSuccess = false;
 
   constructor(programsService, process) {
     this.programsService = programsService;
@@ -55,15 +57,39 @@ export default class Programs {
   };
 
   @action
+  updateProgramsData = (programId, programUpdateRequestDTO) => {
+    this.programsService.updateProgramsData(programId, programUpdateRequestDTO)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          const programs = data.map(program => { return { 'title': program.nombre, 'programData': program }})
+          this.updateSuccess = true;
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+      });
+  };
+
+  @action
   resetForm = () => {
     this.filterDataDTO.initialize();
     this.expressFormData = null;
-  }
+  };
 
   getData = () => this.filterDataDTO.getData();
 
   setSaveSuccess = (saveSucess) => {
     this.saveSuccess = saveSucess;
-  }
+  };
+
+  setUpdateSuccess = (updateSuccess) => {
+    this.updateSuccess = updateSuccess;
+  };
+
+  setProgramUpdateDataRequest = (programUpdateDataRequest) => {
+    this.programUpdateDataRequest = programUpdateDataRequest;
+  };
 
 }
