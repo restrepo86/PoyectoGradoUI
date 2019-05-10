@@ -102,6 +102,14 @@ class InpsComponent extends React.Component {
     
   }
 
+  updateStudyPlan = () => {
+
+  };
+
+  deleteStudyPlan = () => {
+
+  };
+
   render() {
       
       const { redirect } = this.state;
@@ -143,6 +151,20 @@ class InpsComponent extends React.Component {
                   onClick={this.showModal}
                 >
                   Agregar Plan de Estudio
+                </Button>
+                <Button 
+                  type="primary" 
+                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  onClick={this.deleteStudyPlan}
+                >
+                  Borrar Plan de Estudio
+                </Button>
+                <Button 
+                  type="primary" 
+                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  onClick={this.updateStudyPlan}
+                >
+                  Actualizar Plan de Estudio
                 </Button>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
