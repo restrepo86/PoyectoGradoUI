@@ -18,7 +18,7 @@ const Main = (props) => (
                      <LayoutComponent {...routeProps} {...props}/>
                   )} />
                   <Route exact path="/login/register" component={(routeProps) => (
-                     <RegistrationForm />
+                     <RegistrationForm {...routeProps} {...props} />
                   )} />
                </Switch>
             </Router>

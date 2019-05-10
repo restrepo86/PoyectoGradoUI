@@ -7,15 +7,20 @@ import {
     Select, 
     Checkbox, 
     Button, 
-    AutoComplete,
     DatePicker
   } from 'antd';
+  import AddUserRequestDTO from '../../../dto/AddUserRequestDTO';
   
   const { Option } = Select;
-  const AutoCompleteOption = AutoComplete.Option;
   
   
   class RegistrationForm extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.loginStore = this.props.stores.loginStore;
+    }
+
     state = {
       confirmDirty: false,
       autoCompleteResult: [],
@@ -26,6 +31,18 @@ import {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          const addUserRequestDTO = new AddUserRequestDTO(
+            values.nombre,
+            values.apellidoUno,
+            values.apellidoDos,
+            values.fechaNacimiento,
+            values.email,
+            values.password,
+            values.usuario,
+            values.address, 
+            values.celular
+          );
+          this.loginStore.addNewUser(addUserRequestDTO);
         }
       });
     }
@@ -38,7 +55,7 @@ import {
     compareToFirstPassword = (rule, value, callback) => {
       const form = this.props.form;
       if (value && value !== form.getFieldValue('password')) {
-        callback('Two passwords that you enter is inconsistent!');
+        callback('Las contraseñas están diferentes, por favor verifique e intente nuevamente!');
       } else {
         callback();
       }
@@ -96,10 +113,6 @@ import {
         </Select>
       );
   
-      const websiteOptions = autoCompleteResult.map(website => (
-        <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-      ));
-  
       return (
 
         <Form onSubmit={this.handleSubmit}>
@@ -114,13 +127,7 @@ import {
             {getFieldDecorator('nombre', {
               rules: [{ required: true, message: 'Por favor ingrese su nombre!' }],
             })(
-              <AutoComplete
-                dataSource={websiteOptions}
-                onChange={this.handleWebsiteChange}
-                placeholder="Ingrese su nombre"
-              >
-                <Input />
-              </AutoComplete>
+                <Input placeholder="Ingrese su nombre"/>
             )}
           </Form.Item>
           
@@ -131,13 +138,7 @@ import {
             {getFieldDecorator('apellidoUno', {
               rules: [{ required: true, message: 'Por favor ingrese su primer apellido!' }],
             })(
-              <AutoComplete
-                dataSource={websiteOptions}
-                onChange={this.handleWebsiteChange}
-                placeholder="Ingrese su primer apellido"
-              >
-                <Input />
-              </AutoComplete>
+                <Input placeholder="Ingrese su primer apellido"/>
             )}
           </Form.Item>
 
@@ -148,13 +149,7 @@ import {
             {getFieldDecorator('apellidoDos', {
               rules: [{ required: false }],
             })(
-              <AutoComplete
-                dataSource={websiteOptions}
-                onChange={this.handleWebsiteChange}
-                placeholder="Ingrese su segundo apellido"
-              >
-                <Input />
-              </AutoComplete>
+                <Input placeholder="Ingrese su segundo apellido"/>
             )}
           </Form.Item>
 
@@ -164,7 +159,11 @@ import {
             hasFeedback
             validateStatus="success"
           >
-            <DatePicker style={{ width: '100%' }} />
+            {getFieldDecorator('fechaNacimiento', {
+              rules: [{ required: false }],
+            })(
+              <DatePicker style={{ width: '100%' }} />
+            )}
           </Form.Item>
 
           <Form.Item
@@ -208,7 +207,7 @@ import {
                 validator: this.compareToFirstPassword,
               }],
             })(
-              <Input type="contraseña" onBlur={this.handleConfirmBlur} />
+              <Input type="password" onBlur={this.handleConfirmBlur} />
             )}
           </Form.Item>
 
@@ -255,6 +254,7 @@ import {
           <Form.Item {...tailFormItemLayout}>
             {getFieldDecorator('acepto', {
               valuePropName: 'checked',
+              rules: [{ required: true, message: 'Debe leer y aceptar términos y condiciones!' }],
             })(
               <Checkbox>He leído y acepto términos y <a href="" style={{ color: '#026F35' }}>condiciones</a></Checkbox>
             )}

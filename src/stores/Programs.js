@@ -58,7 +58,7 @@ export default class Programs {
 
   @action
   updateProgramsData = (programId, programUpdateRequestDTO) => {
-    this.programsService.updateProgramsData(programId, programUpdateRequestDTO)
+    this.programsService.updateProgram(programId, programUpdateRequestDTO)
       .then(response => {
         runInAction(() => {
           const { data } = response;
