@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Table, pagination, Form, Input, Modal, Button, Select } from 'antd';
+import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 
@@ -287,6 +288,21 @@ class DetailStudyPlan extends React.Component {
           >
             Agregar Asignatura
           </Button>
+          <Button 
+            type="primary" 
+            style={{ backgroundColor: '#026F35', color: '#fff' }}
+            onClick={this.showModal}
+          >
+            Actualizar Asignatura
+          </Button>
+          <Link to='/main/programs/inps/studyplan/subject/delete'>
+            <Button 
+              type="primary" 
+              style={{ backgroundColor: '#026F35', color: '#fff' }}
+            >
+              Borrar Asignatura
+            </Button>
+          </Link>
           <CollectionCreateForm
             wrappedComponentRef={this.saveFormRef}
             visible={this.state.visible}

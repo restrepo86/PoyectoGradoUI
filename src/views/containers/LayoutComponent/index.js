@@ -13,6 +13,7 @@ import Progress from '../../components/Progress';
 import InpsComponent from '../../components/InpsComponent';
 import DetailStudyPlan from '../../components/DetailStuyPlan';
 import UpdateProgramComponent from '../../components/UpdateProgramComponent';
+import DeleteMatterComponent from '../../components/DeleteMatterComponent';
 
 const {
   Header, Content, Footer, Sider,
@@ -141,7 +142,10 @@ class LayoutComponent extends React.Component {
                       <DetailStudyPlan {...routeProps} {...this.props} />
                     )} />
                     <Route exact path="/main/programs/update/program" component={(routeProps) => (
-                      <UpdateProgramComponent {...routeProps}{...this.props}/>
+                      <UpdateProgramComponent {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/inps/studyplan/subject/delete" component={(routeProps) => (
+                      <DeleteMatterComponent {...routeProps}{...this.props} />
                     )} />
 
               </div>

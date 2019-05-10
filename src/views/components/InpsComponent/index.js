@@ -155,16 +155,16 @@ class InpsComponent extends React.Component {
                 <Button 
                   type="primary" 
                   style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.deleteStudyPlan}
+                  onClick={this.updateStudyPlan}
                 >
-                  Borrar Plan de Estudio
+                  Actualizar Plan de Estudio
                 </Button>
                 <Button 
                   type="primary" 
                   style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.updateStudyPlan}
+                  onClick={this.deleteStudyPlan}
                 >
-                  Actualizar Plan de Estudio
+                  Borrar Plan de Estudio
                 </Button>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}

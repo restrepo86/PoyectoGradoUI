@@ -33,6 +33,19 @@ class MattersService extends ServiceBase {
       return await this.postRequest(requestUrl, asignaturaRequest);
     };
 
+    updateMatter = async (programId, inp, updateMatterRequestDTO) => {
+      this.headers();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.CODIGO}/${inp}/${this.urls.MATTER}`;
+      return await this.putRequest(requestUrl, updateMatterRequestDTO);
+    };
+
+    deleteMatter = async (programId, inp, matterId) => {
+      this.headers();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}/${matterId}`;
+      return await this.deleteRequest(requestUrl);
+    };
+  
+
 }
 
 export default MattersService;
