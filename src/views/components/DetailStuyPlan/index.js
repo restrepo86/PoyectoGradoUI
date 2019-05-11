@@ -288,13 +288,15 @@ class DetailStudyPlan extends React.Component {
           >
             Agregar Asignatura
           </Button>
-          <Button 
-            type="primary" 
-            style={{ backgroundColor: '#026F35', color: '#fff' }}
-            onClick={this.showModal}
-          >
-            Actualizar Asignatura
-          </Button>
+          <Link to='/main/programs/inps/studyplan/subject/update'>
+            <Button 
+              type="primary" 
+              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              onClick={this.showModal}
+            >
+              Actualizar Asignatura
+            </Button>
+          </Link>
           <Link to='/main/programs/inps/studyplan/subject/delete'>
             <Button 
               type="primary" 

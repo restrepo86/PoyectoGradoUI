@@ -5,6 +5,8 @@ export default class Matters {
   @observable mattersService;
   @observable process;
   @observable mattersData = [];
+  @observable matterUpdateSelected;
+  @observable matterUpdateIsSelected = false;
 
   constructor(mattersService, process) {
     this.mattersService = mattersService;
@@ -49,20 +51,18 @@ export default class Matters {
   @action
   updateMatterData = (programId, inp, updateMatterRequestDTO) => {
 
-    this.process.processDTO.loading = true;
-    this.process.processDTO.loadingMessage = 'ACTUALIZANDO ...';
+  
     this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO)
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          this.process.showMessage('Asignatura Actualizada Correctamente', 'success');
-          this.process.processDTO.loading = false;
+
         });
       })
       .catch(error => {
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
-        this.process.showMessage(message, 'error');
-        this.process.processDTO.loading = false;
+        //this.process.showMessage(message, 'error');
+        //this.process.processDTO.loading = false;
       });
   };
 
@@ -82,6 +82,14 @@ export default class Matters {
         this.process.processDTO.loading = false;
          */
       });
+  };
+
+  setMatterUpdateSelected = (matterUpdateSelected) => {
+    this.matterUpdateSelected = matterUpdateSelected;
+  };
+
+  setMatterUpdateIsSelected = (matterUpdateIsSelected) => {
+    this.matterUpdateIsSelected = matterUpdateIsSelected;
   };
 
 }

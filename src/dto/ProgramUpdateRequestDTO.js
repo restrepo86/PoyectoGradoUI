@@ -1,11 +1,11 @@
 class ProgramUpdateRequestDTO {
 
     codigoSnies;
-    programName;
+    nombre;
 
     constructor(codigoSnies, programName) {
         this.codigoSnies = codigoSnies;
-        this.programName = programName;
+        this.nombre = programName;
     }
 }
 
