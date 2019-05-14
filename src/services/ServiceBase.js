@@ -93,7 +93,6 @@ class ServiceBase {
             url,
             headers,
         };
-        console.log('Delete Program')
         const response = this.myInvoke(serviceData);
         return this.resolvePromise(response);
     };

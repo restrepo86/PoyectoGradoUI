@@ -209,6 +209,8 @@ class DetailStudyPlan extends React.Component {
 
   componentDidMount = () => {
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
+    this.matters.setDeleteSuccess(false);
+    this.matters.setUpdateSuccess(false);
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {

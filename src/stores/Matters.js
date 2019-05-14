@@ -2,11 +2,12 @@ import { observable, runInAction, action } from 'mobx';
 
 export default class Matters {
 
-  @observable mattersService;
   @observable process;
   @observable mattersData = [];
   @observable matterUpdateSelected;
   @observable matterUpdateIsSelected = false;
+  @observable deleteSuccess = false;
+  @observable updateSuccess = false;
 
   constructor(mattersService, process) {
     this.mattersService = mattersService;
@@ -50,19 +51,20 @@ export default class Matters {
 
   @action
   updateMatterData = (programId, inp, updateMatterRequestDTO) => {
-
-  
     this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO)
       .then(response => {
         runInAction(() => {
           const { data } = response;
+          this.updateSuccess = true;
 
         });
       })
       .catch(error => {
+        
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
-        //this.process.showMessage(message, 'error');
-        //this.process.processDTO.loading = false;
+        this.process.showMessage(message, 'error');
+        this.process.processDTO.loading = false;
+
       });
   };
 
@@ -73,14 +75,15 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
+          this.deleteSuccess = true;
         });
       })
       .catch(error => {
-        /**
+        
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
         this.process.showMessage(message, 'error');
         this.process.processDTO.loading = false;
-         */
+        
       });
   };
 
@@ -90,6 +93,14 @@ export default class Matters {
 
   setMatterUpdateIsSelected = (matterUpdateIsSelected) => {
     this.matterUpdateIsSelected = matterUpdateIsSelected;
+  };
+
+  setDeleteSuccess = (deleteSuccess) => {
+    this.deleteSuccess = deleteSuccess;
+  };
+
+  setUpdateSuccess = (updateSuccess) => {
+    this.updateSuccess = updateSuccess;
   };
 
 }

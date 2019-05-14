@@ -20,24 +20,22 @@ class UpdateMatterForm extends React.Component {
 
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-    console.log('values update program', values);
+    console.log('values update subject', values);
         
       if (!err) {
-
-        console.log(this.matterUpdateSelected)
         
         const updateMatterRequestDTO = new UpdateMatterRequestDTO(
-            values.componenteDeFormacion,
+            this.matterUpdateSelected.componenteDeFormacion.nombre, //values.componenteDeFormacion, se debe consultar los componentes de formacion para actualizar en el plan de estudio segun el elegido a actualizar en el formulario
             values.nombre,
             values.creditos,
             values.horasTeoricas,
             values.horasLaboratorio,
-            '',//horas practicas
-            '',// trabajo independiente del estudiante
-            values.semestre
+            values.horasPracticas,
+            values.trabajoIndependienteEstudiante,
+            values.nivel
         );
         
-        this.matters.updateMatterData('353454', this.matterUpdateSelected.inp, updateMatterRequestDTO);
+        this.matters.updateMatterData('353454'/**ProgramId */, this.matterUpdateSelected.inp, updateMatterRequestDTO);
 
       }
     });
@@ -47,10 +45,11 @@ class UpdateMatterForm extends React.Component {
 
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
-    if (this.matters.deleteSuccess) {
+    if (this.matters.updateSuccess) {
       return <Redirect to='/main/programs/inps/studyplan' />
     }
-    console.log('mattersCodigo', this.matterUpdateSelected);
+
+    console.log('matterUpdateSelected', this.matterUpdateSelected);
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className="login-form">
@@ -64,7 +63,7 @@ class UpdateMatterForm extends React.Component {
               )}
             </Form.Item>
 
-            <Form.Item label="Componente de Formación" defaultValue='hola'>
+            <Form.Item label="Componente de Formación">
               {getFieldDecorator('componenteFormacion', {
                   initialValue: this.matterUpdateSelected.componenteDeFormacion.nombre
               })(

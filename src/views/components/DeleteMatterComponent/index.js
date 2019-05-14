@@ -24,7 +24,8 @@ class DeleteMatterComponent extends React.Component {
 
         
       if (!err) {
-        const selectedMatter = this.matters.mattersData.filter(matter => matter.codigo === values.deleteMatterId);
+        const selectedMatter = this.matters.mattersData.filter(matter => matter.codigo === values.deleteMatterId)[0];
+        console.log('selectedMatter', selectedMatter)
         this.matters.deleteMatterData('353454', selectedMatter.inp, selectedMatter.codigo);
       }
     });
