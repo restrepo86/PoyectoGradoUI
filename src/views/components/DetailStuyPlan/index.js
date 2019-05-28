@@ -4,6 +4,7 @@ import { Table, pagination, Form, Input, Modal, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
+import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -112,6 +113,134 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   }
 );
 
+
+const SubjectDetail = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+
+    render() {
+      const {
+        visibleSubject, onCancel, onCreateSubjectUpdate, form, nameSubject, subjectData
+      } = this.props;
+      const { getFieldDecorator } = form;
+      const Option = Select.Option;
+
+      return (
+        <Modal
+          
+          style={{ backgroundColor: '#026F35', color: '#fff' }}
+          visible={visibleSubject}
+          title={nameSubject}
+          okText="Actualizar"
+          onCancel={onCancel}
+          onOk={onCreateSubjectUpdate}
+          
+        >
+          <Form layout="vertical">
+
+            <Form.Item label="Código">
+              {getFieldDecorator('codigo', {
+                initialValue: subjectData.codigo,
+                rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteFormacion', {
+                  initialValue: 'subjectData.componenteDeFormacion.nombre',
+              })(
+               
+                  <Select>
+                    <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
+                    <Option value="formacioncomplementaria">Formacion complementaria</Option>
+                    <Option value="Ingenieria aplicada">Ingeniería aplicada</Option>
+                    <Option value="cienciabasica">Ciencia básica</Option>
+                    <Option value="optativainterdisciplinaria">Optativa interdisciplinaria</Option>
+                  </Select>
+              
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nombre">
+              {getFieldDecorator('nombre', {
+                initialValue: subjectData.nombre,
+                rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Teóricas">
+              {getFieldDecorator('horasTeoricas', {
+                initialValue: subjectData.horasTeoricas,
+                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Laboratorio">
+              {getFieldDecorator('horasLaboratorio', {
+                initialValue: subjectData.horasLaboratorio,
+                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Prácticas">
+              {getFieldDecorator('horasPracticas', {
+                initialValue: 'FALTAN',
+                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Trabajo Independiente del Estudiante">
+              {getFieldDecorator('trabajoIndependienteEstudiante', {
+                initialValue: 'FALTAN',
+                rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nivel">
+              {getFieldDecorator('nivel', {
+                initialValue: subjectData.semestre,
+                rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Créditos">
+              {getFieldDecorator('creditos', {
+                initialValue: subjectData.creditos,
+                rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <center>
+              <Button
+              >
+                Eliminar
+              </Button>
+            </center>
+
+          </Form>
+        </Modal>
+      );
+    }
+  }
+);
+
+
 const columnsNames = [{
   dataIndex: 'semestre1',
   title: 'Nivel 1',
@@ -163,9 +292,13 @@ class DetailStudyPlan extends React.Component {
     this.process = this.props.stores.process;
     this.inpComponentStore = this.props.stores.inpComponentStore;
   }
+  
 
   state = {
     visible: false,
+    visibleSubject: false,
+    nameSubject: '', 
+    subjectData: {}
   }
 
   showModal = () => {
@@ -203,6 +336,48 @@ class DetailStudyPlan extends React.Component {
     });
   }
 
+  showModalSubject = () => {
+    this.setState({ visibleSubject: true });
+  };
+
+  handleCancelSubject = () => {
+    this.setState({ visibleSubject: false });
+  };
+
+  handleUpdate = () => {
+
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      console.log('valuesUpdate', values)
+      if (err) {
+        return;
+      }
+      const updateMatterRequestDTO = new UpdateMatterRequestDTO(
+        '', //values.componenteDeFormacion, se debe consultar los componentes de formacion para actualizar en el plan de estudio segun el elegido a actualizar en el formulario
+        values.nombre,
+        values.creditos,
+        values.horasTeoricas,
+        values.horasLaboratorio,
+        values.horasPracticas,
+        values.trabajoIndependienteEstudiante,
+        values.nivel
+      );
+      
+      this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO);
+
+      form.resetFields();
+      this.setState({ visible: false });
+
+    });
+
+  };
+
+  openModal = (propiedadesAsignatura) => {
+    console.log('propiedadesAsignatura', propiedadesAsignatura);
+    this.showModalSubject();
+    this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura });
+  };
+
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
@@ -219,7 +394,15 @@ class DetailStudyPlan extends React.Component {
       .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.semestre}` }))
       .map((asignatura, index) => {
         const cardAsignatura = { key: index, name: asignatura.semestre };
-        cardAsignatura[asignatura.keyIndex] = <CardMatter {...asignatura} />;
+        cardAsignatura[asignatura.keyIndex] = 
+          <Button
+            style={{ 
+              height: 'auto'    
+            }}
+            onClick = {() => this.openModal({...asignatura})}
+          >
+            <CardMatter {...asignatura} />
+          </Button>;
         return cardAsignatura;
       });
   };
@@ -312,6 +495,14 @@ class DetailStudyPlan extends React.Component {
             visible={this.state.visible}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
+          />
+          <SubjectDetail 
+            wrappedComponentRef={this.saveFormRef}
+            visibleSubject={this.state.visibleSubject}
+            nameSubject={this.state.nameSubject}
+            subjectData={this.state.subjectData}
+            onCancel={this.handleCancelSubject}
+            onCreateSubjectUpdate={this.handleUpdate}
           />
         </center>
 
