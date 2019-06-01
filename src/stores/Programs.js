@@ -62,8 +62,9 @@ export default class Programs {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          const programs = data.map(program => { return { 'title': program.nombre, 'programData': program }})
+          //const programs = data.map(program => { return { 'title': program.nombre, 'programData': program }})
           this.updateSuccess = true;
+          console.log('updateSucess')
         });
       })
       .catch(error => {

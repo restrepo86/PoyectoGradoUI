@@ -17,8 +17,10 @@ class ProgramsComponent extends React.Component {
   componentDidMount = () => {
     
     this.registerProgramStore.setSaveSuccess(false);
-    if (!this.registerProgramStore.programsData) {
+    if (!this.registerProgramStore.programsData || this.registerProgramStore.updateSuccess) {
       this.registerProgramStore.getProgramsData();
+      console.log('entro')
+      this.registerProgramStore.setUpdateSuccess(false);
     }
     
   }
