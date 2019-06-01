@@ -32,10 +32,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Créditos">
-              {getFieldDecorator('creditos')(<Input type="textarea" />)}
-            </Form.Item>
-            
           </Form>
         </Modal>
       );
@@ -77,7 +73,7 @@ class InpsComponent extends React.Component {
       if (err) {
         return;
       }
-      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp, values.creditos);
+      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp);
       this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.sniesCode);
 
       form.resetFields();

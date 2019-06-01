@@ -29,7 +29,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           <Form layout="vertical">
 
             <Form.Item label="Código">
-              {getFieldDecorator('codigo', {
+              {getFieldDecorator('codigoAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
               })(
                 <Input />
@@ -37,7 +37,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion') (
+              {getFieldDecorator('componenteDeFormacionNombreAgregar') (
                
                   <Select>
                     <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
@@ -51,7 +51,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Nombre">
-              {getFieldDecorator('nombre', {
+              {getFieldDecorator('nombreAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
               })(
                 <Input />
@@ -59,7 +59,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Teóricas">
-              {getFieldDecorator('horasTeoricas', {
+              {getFieldDecorator('horasTeoricasAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
                 <Input />
@@ -67,7 +67,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Laboratorio">
-              {getFieldDecorator('horasLaboratorio', {
+              {getFieldDecorator('horasLaboratorioAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
                 <Input />
@@ -75,7 +75,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Prácticas">
-              {getFieldDecorator('horasPracticas', {
+              {getFieldDecorator('horasPracticasAgregar', {
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
                 <Input />
@@ -83,7 +83,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Trabajo Independiente del Estudiante">
-              {getFieldDecorator('trabajoIndependienteEstudiante', {
+              {getFieldDecorator('trabajoIndependienteEstudianteAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
                 <Input />
@@ -91,7 +91,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Nivel">
-              {getFieldDecorator('nivel', {
+              {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
                 <Input />
@@ -99,7 +99,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Créditos">
-              {getFieldDecorator('creditos', {
+              {getFieldDecorator('creditosAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
                 <Input />
@@ -311,7 +311,7 @@ class DetailStudyPlan extends React.Component {
 
   handleCreate = () => {
     
-    const form = this.formRef.props.form;
+    const form = this.formRefAddSubject.props.form;
     form.validateFields((err, values) => {
       console.log('values', values)
       if (err) {
@@ -319,14 +319,15 @@ class DetailStudyPlan extends React.Component {
       }
       const asignaturaRequestDTO = 
         new AsignaturaRequestDTO(
-          values.codigo, 
-          values.componenteFormacion, 
-          values.nombre, values.creditos, 
-          values.horasTeoricas, 
-          values.horasLaboratorio, 
-          values.nivel,
-          values.horasPracticas,
-          values.trabajoIndependienteEstudiante);
+          values.codigoAgregar, 
+          values.componenteDeFormacionNombreAgregar, 
+          values.nombreAgregar, 
+          values.creditosAgregar, 
+          values.horasTeoricasAgregar, 
+          values.horasLaboratorioAgregar, 
+          values.nivelAgregar,
+          values.horasPracticasAgregar,
+          values.trabajoIndependienteEstudianteAgregar);
 
       this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
 
@@ -381,6 +382,11 @@ class DetailStudyPlan extends React.Component {
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
+
+  saveFormRefAddSubject = (formRefAddSubject) => {
+    this.formRefAddSubject = formRefAddSubject;
+  }
+
 
   componentDidMount = () => {
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
@@ -491,7 +497,7 @@ class DetailStudyPlan extends React.Component {
             </Button>
           </Link>
           <CollectionCreateForm
-            wrappedComponentRef={this.saveFormRef}
+            wrappedComponentRef={this.saveFormRefAddSubject}
             visible={this.state.visible}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}

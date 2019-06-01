@@ -1,12 +1,10 @@
 class StudyPlanRequestDTO {
 
     inp;
-    creditos;
 
-    constructor(inp, creditos){
+    constructor(inp){
 
         this.inp = inp;
-        this.creditos = creditos;
 
     }
 
