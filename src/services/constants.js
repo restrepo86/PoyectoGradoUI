@@ -6,3 +6,4 @@ export const MATTER = 'asignatura';
 export const USER = 'usuario';
 export const LOGIN = 'login';
 export const CODIGO = 'codigo';
+export const COMPONENT = 'componente';

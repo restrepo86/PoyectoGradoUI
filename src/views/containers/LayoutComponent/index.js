@@ -92,25 +92,12 @@ class LayoutComponent extends React.Component {
               <Icon type="desktop" />
               <span><Link to="/main/programs">Programas</Link></span>
             </Menu.Item>
-            <SubMenu
-              key="programsTitle"
-              title={<span><Icon type="shop" /><span>Programas</span></span>}
-            >
-              <SubMenu
-                key="systemsEngineer" title={<span>Ingeniería de Sistemas</span>}
-               >
-                  <SubMenu
-                    key="inps" title={<span>INP's</span>} 
-                  >
-                    <Menu.Item key="3">Tom</Menu.Item>
-                    <Menu.Item key="4">Bill</Menu.Item>
-                    <Menu.Item key="5">Alex</Menu.Item>
-            
 
-                  </SubMenu>
+            <Menu.Item key="trainingComponents">
+              <Icon type="desktop" />
+              <span><Link to="/main/programs">Componentes de Formación</Link></span>
+            </Menu.Item>
 
-               </SubMenu>
-             </SubMenu>
             <SubMenu
               key="sub2"
               title={<span><Icon type="team" /><span>Team</span></span>}

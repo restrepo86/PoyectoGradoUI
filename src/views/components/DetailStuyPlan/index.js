@@ -291,6 +291,8 @@ class DetailStudyPlan extends React.Component {
     this.matters = this.props.stores.matters;
     this.process = this.props.stores.process;
     this.inpComponentStore = this.props.stores.inpComponentStore;
+    this.trainingComponentStore = this.props.stores.trainingComponentStore;
+    console.log('stores', this.props.stores);
   }
   
 
@@ -392,6 +394,8 @@ class DetailStudyPlan extends React.Component {
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
     this.matters.setDeleteSuccess(false);
     this.matters.setUpdateSuccess(false);
+    
+    this.trainingComponentStore.getTrainingComponents();
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {

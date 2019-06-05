@@ -34,7 +34,7 @@ class ProgramsService extends ServiceBase {
 
     updateProgram = async (programId, programUpdateRequestDTO) => {
       this.setHeaders();
-      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${programId}`
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${programId}`;
       return await this.putRequest(requestUrl, programUpdateRequestDTO);
     };
 
