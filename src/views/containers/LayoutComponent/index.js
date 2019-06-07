@@ -16,6 +16,7 @@ import UpdateProgramComponent from '../../components/UpdateProgramComponent';
 import DeleteMatterComponent from '../../components/DeleteMatterComponent';
 import UpdateMatterComponent from '../../components/UpdateMatterComponent';
 import UpdateMatterForm from '../../components/UpdateMatterForm';
+import TrainingComponents from '../../components/TrainingComponents';
 
 const {
   Header, Content, Footer, Sider,
@@ -95,7 +96,7 @@ class LayoutComponent extends React.Component {
 
             <Menu.Item key="trainingComponents">
               <Icon type="desktop" />
-              <span><Link to="/main/programs">Componentes de Formación</Link></span>
+              <span><Link to="/main/training/components">Componentes de Formación</Link></span>
             </Menu.Item>
 
             <SubMenu
@@ -141,6 +142,9 @@ class LayoutComponent extends React.Component {
                     )} />
                     <Route exact path="/main/programs/inps/studyplan/subject/select/update" component={(routeProps) => (
                       <UpdateMatterForm {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/training/components" component={(routeProps) => (
+                      <TrainingComponents {...routeProps}{...this.props}/>
                     )} />
 
               </div>

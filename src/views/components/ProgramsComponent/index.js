@@ -19,7 +19,6 @@ class ProgramsComponent extends React.Component {
     this.registerProgramStore.setSaveSuccess(false);
     if (!this.registerProgramStore.programsData || this.registerProgramStore.updateSuccess) {
       this.registerProgramStore.getProgramsData();
-      console.log('entro')
       this.registerProgramStore.setUpdateSuccess(false);
     }
     
@@ -77,13 +76,6 @@ class ProgramsComponent extends React.Component {
               
             >
               <Link to = '/main/programs/update/program'>Actualizar Programa</Link>
-            </Button>
-            <Button 
-              type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-              
-            >
-              <Link to = '/main/programs/save/program'>Borrar Programa</Link>
             </Button>
 
           </center>
