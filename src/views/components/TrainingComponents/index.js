@@ -109,20 +109,12 @@ class TrainingComponents extends React.Component {
     
   }
 
-  onClickTrainingComponentButton = (item) => {
+  onClickTrainingComponentButton = (trainingComponent) => {
 
-    this.inpComponentStore.setInpData(item);
-    this.setState({ redirect: true }); 
+    console.log('componente de Formacion', trainingComponent)
+    //this.setState({ redirect: true }); 
     
   }
-
-  updateStudyPlan = () => {
-
-  };
-
-  deleteStudyPlan = () => {
-
-  };
 
   render() {
       
@@ -138,7 +130,7 @@ class TrainingComponents extends React.Component {
             <List
               grid={{ gutter: 10, column: 3 }}
               dataSource={this.trainingComponentStore.trainingComponentsData}
-                renderItem={item => (
+                renderItem={trainingComponent => (
                   <List.Item>
                     <Button 
                         style={{ 
@@ -146,11 +138,13 @@ class TrainingComponents extends React.Component {
                             color: '#fff',
                             height: 'auto',  
                         }}
-                        onClick={() => this.onClickTrainingComponentButton(item)}
+                        onClick={() => this.onClickTrainingComponentButton(trainingComponent)}
                     >
-                        <Card title={item.nombre}>
-                          {`Abreviatura: ${item.abreviatura}`}<br />
-                          {`Color en hexadecimal: ${(item.color)}`}<br />
+                        <Card 
+                          title={trainingComponent.nombre}
+                          bodyStyle={{ background: trainingComponent.color }}>
+                            {`Abreviatura: ${trainingComponent.abreviatura}`}<br />
+                            {`Color en hexadecimal: ${(trainingComponent.color)}`}<br />
                         </Card>
                     </Button>
                   </List.Item>
