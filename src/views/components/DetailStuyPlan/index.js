@@ -12,9 +12,11 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   class extends React.Component {
 
     render() {
+
       const {
-        visible, onCancel, onCreate, form,
+        visible, onCancel, onCreate, form, trainingComponentsData
       } = this.props;
+
       const { getFieldDecorator } = form;
       const Option = Select.Option;
 
@@ -36,25 +38,23 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteDeFormacionNombreAgregar') (
-               
-                  <Select>
-                    <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
-                    <Option value="formacioncomplementaria">Formacion complementaria</Option>
-                    <Option value="ingenieriaaplicada">Ingeniería aplicada</Option>
-                    <Option value="cienciabasica">Ciencia básica</Option>
-                    <Option value="optativainterdisciplinaria">Optativa interdisciplinaria</Option>
-                  </Select>
-              
-              )}
-            </Form.Item>
-
             <Form.Item label="Nombre">
               {getFieldDecorator('nombreAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
               })(
                 <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteDeFormacionNombreAgregar')(
+               
+                <Select>
+                  {trainingComponentsData.map(trainingComponent =>
+                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
+                  )}
+              </Select>
+              
               )}
             </Form.Item>
 
@@ -120,10 +120,11 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
     render() {
       const {
-        visibleSubject, onCancel, onCreateSubjectUpdate, form, nameSubject, subjectData
+        visibleSubject, onCancel, onCreateSubjectUpdate, form, nameSubject, subjectData, trainingComponentsData
       } = this.props;
       const { getFieldDecorator } = form;
       const Option = Select.Option;
+      const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
 
       return (
         <Modal
@@ -147,28 +148,26 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion', {
-                  initialValue: 'subjectData.componenteDeFormacion.nombre',
-              })(
-               
-                  <Select>
-                    <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
-                    <Option value="formacioncomplementaria">Formacion complementaria</Option>
-                    <Option value="Ingenieria aplicada">Ingeniería aplicada</Option>
-                    <Option value="cienciabasica">Ciencia básica</Option>
-                    <Option value="optativainterdisciplinaria">Optativa interdisciplinaria</Option>
-                  </Select>
-              
-              )}
-            </Form.Item>
-
             <Form.Item label="Nombre">
               {getFieldDecorator('nombre', {
                 initialValue: subjectData.nombre,
                 rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
               })(
                 <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteFormacion', {
+                  initialValue: trainingComponentSubject.nombre,
+              })(
+               
+                <Select>
+                  {trainingComponentsData.map(trainingComponent =>
+                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
+                  )}
+                </Select>
+              
               )}
             </Form.Item>
 
@@ -210,7 +209,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Nivel">
               {getFieldDecorator('nivel', {
-                initialValue: subjectData.semestre,
+                initialValue: subjectData.nivel,
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
                 <Input />
@@ -240,7 +239,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   }
 );
 
-
+  
 const columnsNames = [{
   dataIndex: 'semestre1',
   title: 'Nivel 1',
@@ -292,7 +291,7 @@ class DetailStudyPlan extends React.Component {
     this.process = this.props.stores.process;
     this.inpComponentStore = this.props.stores.inpComponentStore;
     this.trainingComponentStore = this.props.stores.trainingComponentStore;
-    console.log('stores', this.props.stores);
+
   }
   
 
@@ -300,11 +299,12 @@ class DetailStudyPlan extends React.Component {
     visible: false,
     visibleSubject: false,
     nameSubject: '', 
-    subjectData: {}
+    subjectData: {},
+    trainingComponentsData: []
   }
 
   showModal = () => {
-    this.setState({ visible: true });
+    this.setState({ visible: true, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
   }
 
   handleCancel = () => {
@@ -356,7 +356,7 @@ class DetailStudyPlan extends React.Component {
         return;
       }
       const updateMatterRequestDTO = new UpdateMatterRequestDTO(
-        '', //values.componenteDeFormacion, se debe consultar los componentes de formacion para actualizar en el plan de estudio segun el elegido a actualizar en el formulario
+        values.componenteFormacion, 
         values.nombre,
         values.creditos,
         values.horasTeoricas,
@@ -369,7 +369,7 @@ class DetailStudyPlan extends React.Component {
       this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO);
 
       form.resetFields();
-      this.setState({ visible: false });
+      this.setState({ visibleSubject: false });
 
     });
 
@@ -378,7 +378,7 @@ class DetailStudyPlan extends React.Component {
   openModal = (propiedadesAsignatura) => {
     console.log('propiedadesAsignatura', propiedadesAsignatura);
     this.showModalSubject();
-    this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura });
+    this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
   };
 
   saveFormRef = (formRef) => {
@@ -391,19 +391,23 @@ class DetailStudyPlan extends React.Component {
 
 
   componentDidMount = () => {
+
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
     this.matters.setDeleteSuccess(false);
     this.matters.setUpdateSuccess(false);
     
-    this.trainingComponentStore.getTrainingComponents();
+    if (!this.trainingComponentStore.trainingComponentsData) {
+      this.trainingComponentStore.getTrainingComponents();
+    }
+   
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
     
     return asignatura
-      .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.semestre}` }))
+      .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.nivel}` }))
       .map((asignatura, index) => {
-        const cardAsignatura = { key: index, name: asignatura.semestre };
+        const cardAsignatura = { key: index, name: asignatura.nivel };
         cardAsignatura[asignatura.keyIndex] = 
           <Button
             style={{ 
@@ -483,28 +487,12 @@ class DetailStudyPlan extends React.Component {
           >
             Agregar Asignatura
           </Button>
-          <Link to='/main/programs/inps/studyplan/subject/update'>
-            <Button 
-              type="primary" 
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-              onClick={this.showModal}
-            >
-              Actualizar Asignatura
-            </Button>
-          </Link>
-          <Link to='/main/programs/inps/studyplan/subject/delete'>
-            <Button 
-              type="primary" 
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-            >
-              Borrar Asignatura
-            </Button>
-          </Link>
           <CollectionCreateForm
             wrappedComponentRef={this.saveFormRefAddSubject}
             visible={this.state.visible}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
+            trainingComponentsData={this.state.trainingComponentsData}
           />
           <SubjectDetail 
             wrappedComponentRef={this.saveFormRef}
@@ -513,6 +501,7 @@ class DetailStudyPlan extends React.Component {
             subjectData={this.state.subjectData}
             onCancel={this.handleCancelSubject}
             onCreateSubjectUpdate={this.handleUpdate}
+            trainingComponentsData={this.state.trainingComponentsData}
           />
         </center>
 

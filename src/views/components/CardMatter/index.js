@@ -13,23 +13,12 @@ const content = (
   );
 
 class CardMatter extends Component {
-
-    getAdditionalInformation = (tipoFormacion) => {
-      return new Map([
-        ['Ciencia basica de Ingenieria', { color: '#78909c', nomenclatura: 'CBI' }],
-        ['Formacion complementaria', { color: '#026F35', nomenclatura: 'FC' }],
-        ['Ingenieria aplicada', { color: '#2196f3', nomenclatura: 'IA' }],
-        ['Ciencia basica', { color: '#f9a825', nomenclatura: 'CB' }], 
-        ['Optativa interdisciplinaria', { color: '#b71c1c', nomenclatura: 'O' }]
-      ]).get(tipoFormacion);
-    }
-
     
     render = () => {
-        const additionalInformation = this.getAdditionalInformation(this.props.componenteDeFormacion.nombre);
+        
         return(
             <Card
-                bodyStyle={{ background: additionalInformation.color }}
+                bodyStyle={{ background: this.props.componenteDeFormacion.color }}
                 actions={[
                     <li>
                     <Popover placement="leftBottom" content={content} title="Title">

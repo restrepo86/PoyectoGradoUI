@@ -38,7 +38,7 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          this.process.showMessage('Programa Guardado Correctamente', 'success');
+          this.process.showMessage('Asignatura Guardada Correctamente', 'success');
           this.process.processDTO.loading = false;
         });
       })
@@ -51,12 +51,15 @@ export default class Matters {
 
   @action
   updateMatterData = (programId, inp, updateMatterRequestDTO) => {
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ACTUALIZANDO ...';
     this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO)
       .then(response => {
         runInAction(() => {
           const { data } = response;
           this.updateSuccess = true;
-
+          this.process.showMessage('Asignatura Actualizada Correctamente', 'success');
+          this.process.processDTO.loading = false;
         });
       })
       .catch(error => {

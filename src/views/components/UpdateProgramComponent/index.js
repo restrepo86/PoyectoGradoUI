@@ -11,6 +11,7 @@ class UpdateProgramComponent extends React.Component {
   constructor(props) {
     super(props);
     this.programStore = this.props.stores.programs;
+    console.log('programsData', this.programStore.programsData)
   };
 
   

@@ -7,9 +7,9 @@ class UpdateMatterRequestDTO {
     horasLaboratorio; 
     horasPracticas; 
     trabajoIndependienteEstudiante; 
-    semestre;
+    nivel;
 
-    constructor(componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, horasPracticas, trabajoIndependienteEstudiante, semestre) {
+    constructor(componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, horasPracticas, trabajoIndependienteEstudiante, nivel) {
 
         this.componenteDeFormacion = componenteDeFormacion;
         this.nombre = nombre;
@@ -18,7 +18,7 @@ class UpdateMatterRequestDTO {
         this.horasLaboratorio = horasLaboratorio;
         this.horasPracticas = horasPracticas;
         this.trabajoIndependienteEstudiante = trabajoIndependienteEstudiante;
-        this.semestre = semestre;
+        this.nivel = nivel;
 
     };
 

@@ -38,7 +38,6 @@ export default class TrainingComponentStore {
           runInAction(() => {
             
             const { data } = response;
-            //const item = { 'title': data.nombre, 'programData': data };
             this.trainingComponentsData.push(data);
             this.process.showMessage('Commponente de Formación Guardado Correctamente', 'success');
             this.process.processDTO.loading = false;
