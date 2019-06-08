@@ -73,12 +73,15 @@ export default class Matters {
 
   @action
   deleteMatterData = (programId, inp, matterId) => {
-    
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ELIMINANDO ...';
     this.mattersService.deleteMatter(programId, inp, matterId)
       .then(response => {
         runInAction(() => {
           const { data } = response;
           this.deleteSuccess = true;
+          this.process.showMessage('Asignatura Eliminada Correctamente', 'success');
+          this.process.processDTO.loading = false;
         });
       })
       .catch(error => {

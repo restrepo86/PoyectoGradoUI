@@ -118,10 +118,25 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
 
+    deleteSubject = (subjectId, mattersStore, programId, inp) => {
+      mattersStore.deleteMatterData(programId, inp, subjectId);
+    };
+
     render() {
+
       const {
-        visibleSubject, onCancel, onCreateSubjectUpdate, form, nameSubject, subjectData, trainingComponentsData
+        visibleSubject, 
+        onCancel, 
+        onCreateSubjectUpdate, 
+        form, 
+        nameSubject, 
+        subjectData, 
+        trainingComponentsData,
+        mattersStore,
+        programId, 
+        inp
       } = this.props;
+
       const { getFieldDecorator } = form;
       const Option = Select.Option;
       const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
@@ -227,6 +242,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
             <center>
               <Button
+                onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
               >
                 Eliminar
               </Button>
@@ -305,11 +321,11 @@ class DetailStudyPlan extends React.Component {
 
   showModal = () => {
     this.setState({ visible: true, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
-  }
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     
@@ -337,7 +353,7 @@ class DetailStudyPlan extends React.Component {
       this.setState({ visible: false });
 
     });
-  }
+  };
 
   showModalSubject = () => {
     this.setState({ visibleSubject: true });
@@ -393,6 +409,13 @@ class DetailStudyPlan extends React.Component {
   componentDidMount = () => {
 
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
+    /**
+    this.setState({ 
+      mattersStore: this.matters, 
+      programId: this.inpComponentStore.inpData.programId,
+      inp: this.inpComponentStore.inpData.inp
+    });
+*/
     this.matters.setDeleteSuccess(false);
     this.matters.setUpdateSuccess(false);
     
@@ -502,6 +525,9 @@ class DetailStudyPlan extends React.Component {
             onCancel={this.handleCancelSubject}
             onCreateSubjectUpdate={this.handleUpdate}
             trainingComponentsData={this.state.trainingComponentsData}
+            mattersStore={this.matters}
+            programId={this.inpComponentStore.inpData.programId}
+            inp={this.inpComponentStore.inpData.inp}
           />
         </center>
 
