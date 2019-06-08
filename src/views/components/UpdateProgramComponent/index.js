@@ -11,7 +11,6 @@ class UpdateProgramComponent extends React.Component {
   constructor(props) {
     super(props);
     this.programStore = this.props.stores.programs;
-    console.log('programsData', this.programStore.programsData)
   };
 
   
@@ -20,8 +19,6 @@ class UpdateProgramComponent extends React.Component {
 
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-    console.log('values update program', values);
-    console.log(this.programStore.programsData.filter(program => program.programData.codigoSnies === values.updateProgramCodeSnies))
       if (!err) {
         const programUpdateRequestDTO = new ProgramUpdateRequestDTO(values.updateProgramCodeSnies, values.newProgramName);
         this.programStore.updateProgramsData(values.updateProgramCodeSnies, programUpdateRequestDTO);

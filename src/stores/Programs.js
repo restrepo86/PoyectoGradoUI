@@ -58,13 +58,15 @@ export default class Programs {
 
   @action
   updateProgramsData = (programId, programUpdateRequestDTO) => {
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ACTUALIZANDO ...';
     this.programsService.updateProgram(programId, programUpdateRequestDTO)
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          //const programs = data.map(program => { return { 'title': program.nombre, 'programData': program }})
+          this.process.showMessage('Programa Actualizado Correctamente', 'success');
+          this.process.processDTO.loading = false;
           this.updateSuccess = true;
-          console.log('updateSucess')
         });
       })
       .catch(error => {
