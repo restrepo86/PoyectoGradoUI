@@ -28,11 +28,16 @@ class StudyPlanService extends ServiceBase {
     };
 
     saveStudyPlan = async (studyPlanRequestDTO, programId) => {  
-      console.log('saveStudyPlan', studyPlanRequestDTO)
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}`;
       return await this.postRequest(requestUrl, studyPlanRequestDTO)
     }
+
+    deleteStudyPlan = async (programId, inp) => {
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}`;
+      return await this.deleteRequest(requestUrl);
+    };
 
 }
 

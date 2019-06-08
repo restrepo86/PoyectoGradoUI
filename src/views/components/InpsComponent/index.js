@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { List, Card, Button, Modal, Form, Input } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
@@ -89,6 +89,7 @@ class InpsComponent extends React.Component {
   componentDidMount() {
     this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.sniesCode);
+    this.studyPlan.setStudyPlanDeleted(false);
   }
 
   onClickInpButton = (item) => {
@@ -97,14 +98,6 @@ class InpsComponent extends React.Component {
     this.setState({ redirect: true }); 
     
   }
-
-  updateStudyPlan = () => {
-
-  };
-
-  deleteStudyPlan = () => {
-
-  };
 
   render() {
       
@@ -148,20 +141,15 @@ class InpsComponent extends React.Component {
                 >
                   Agregar Plan de Estudio
                 </Button>
-                <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.updateStudyPlan}
-                >
-                  Actualizar Plan de Estudio
-                </Button>
-                <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.deleteStudyPlan}
-                >
-                  Borrar Plan de Estudio
-                </Button>
+              
+                <Link to = '/main/programs/inps/delete'>
+                  <Button 
+                    type="primary" 
+                    style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  >
+                    Borrar Plan de Estudio
+                  </Button>
+                </Link>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
                   visible={this.state.visible}

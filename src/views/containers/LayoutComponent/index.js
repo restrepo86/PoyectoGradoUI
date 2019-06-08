@@ -14,9 +14,9 @@ import InpsComponent from '../../components/InpsComponent';
 import DetailStudyPlan from '../../components/DetailStuyPlan';
 import UpdateProgramComponent from '../../components/UpdateProgramComponent';
 import DeleteMatterComponent from '../../components/DeleteMatterComponent';
-import UpdateMatterComponent from '../../components/UpdateMatterComponent';
 import UpdateMatterForm from '../../components/UpdateMatterForm';
 import TrainingComponents from '../../components/TrainingComponents';
+import DeleteStudyPlanComponent from '../../components/DeleteStudyPlanComponent';
 
 const {
   Header, Content, Footer, Sider,
@@ -137,8 +137,8 @@ class LayoutComponent extends React.Component {
                     <Route exact path="/main/programs/inps/studyplan/subject/delete" component={(routeProps) => (
                       <DeleteMatterComponent {...routeProps}{...this.props} />
                     )} />
-                    <Route exact path="/main/programs/inps/studyplan/subject/update" component={(routeProps) => (
-                      <UpdateMatterComponent {...routeProps}{...this.props} />
+                    <Route exact path="/main/programs/inps/delete" component={(routeProps) => (
+                      <DeleteStudyPlanComponent {...routeProps}{...this.props} />
                     )} />
                     <Route exact path="/main/programs/inps/studyplan/subject/select/update" component={(routeProps) => (
                       <UpdateMatterForm {...routeProps}{...this.props} />

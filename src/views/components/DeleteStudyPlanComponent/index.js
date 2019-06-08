@@ -5,11 +5,11 @@ import { observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
 @observer
-class UpdateMatterComponent extends React.Component {
+class DeleteStudyPlanComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.matters = this.props.stores.matters;
+        this.studyPlan = this.props.stores.studyPlan;
     };
     
     handleSubmit = (e) => {
@@ -18,14 +18,12 @@ class UpdateMatterComponent extends React.Component {
         this.props.form.validateFields((err, values) => {
         
             if (!err) {
-                
-                const selectedMatter = this.matters.mattersData.filter(matter => matter.codigo === values.updateMatterId);
-                selectedMatter.map(matter => {
-                    this.matters.setMatterUpdateSelected(matter);
-                });
-                
-                this.matters.setMatterUpdateIsSelected(true);
+                console.log('values', values)
             
+                const selectedMatter = this.studyPlan.studyPlanData.filter(studyPlan => studyPlan.inp === values.deleteInp)[0];
+                console.log('selectedMatter', selectedMatter)
+                this.studyPlan.deleteStudyPlanData(selectedMatter.programId, selectedMatter.inp);
+ 
             }
         });
     };
@@ -35,20 +33,20 @@ class UpdateMatterComponent extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const Option = Select.Option;
         
-        if (this.matters.matterUpdateIsSelected) {
-            return <Redirect to='/main/programs/inps/studyplan/subject/select/update' />
+        if (this.studyPlan.studyPlanDeleted) {
+            return <Redirect to='/main/programs/inps' />
         }
         return (
         <div>
             <Form onSubmit={this.handleSubmit} className="login-form">
 
-                <Form.Item label="Seleccione la asignatura que desea actualizar">
-                    {getFieldDecorator('updateMatterId', {
-                        rules: [{ required: true, message: 'Por favor seleccione una asignatura!' }],
+                <Form.Item label="Seleccione el plan de estudio que desea eliminar">
+                    {getFieldDecorator('deleteInp', {
+                        rules: [{ required: true, message: 'Por favor seleccione una plan de estudio!' }],
                     })(
                         <Select>
-                            {this.matters.mattersData.map(matter => 
-                                <Option value={matter.codigo}>{matter.nombre}</Option>
+                            {this.studyPlan.studyPlanData.map(studyPlan => 
+                                <Option value={studyPlan.inp}>{studyPlan.inp}</Option>
                             )}
                         </Select>
                     )}
@@ -59,9 +57,8 @@ class UpdateMatterComponent extends React.Component {
                     htmlType="submit" 
                     className="login-form-button"
                     style={{ backgroundColor: '#026F35', color: '#fff' }}
-                    onClick={() => this.showModal}
                 >
-                    Actualizar
+                    Eliminar
                 </Button>
 
             </Form>
@@ -71,6 +68,6 @@ class UpdateMatterComponent extends React.Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(UpdateMatterComponent);
+const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(DeleteStudyPlanComponent);
 
 export default WrappedNormalLoginForm;
