@@ -21,7 +21,6 @@ import DeleteStudyPlanComponent from '../../components/DeleteStudyPlanComponent'
 const {
   Header, Content, Footer, Sider,
 } = Layout;
-const SubMenu = Menu.SubMenu;
 
 const style = {
   parentMenu : {
@@ -44,34 +43,12 @@ class LayoutComponent extends React.Component {
     };
   }
 
-  componentWillMount(){
-    this.updateSelectedItem();
-  };
-
   componentDidMount() {
     this.loginStore.setValidateUserSuccess(false);
   };
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
-  }
-
-  onSelectMenuItem(key) {
-    const routes = new Map([
-      ['2', '/div2'],
-      ['programs', '/main/programs']
-    ]);
-  
-    window.location = routes.get(key);
-  }
-
-  updateSelectedItem() {
-    const { pathname } = window.location;
-    const items = new Map([
-      ['/div2', '2'],
-    ]);
-
-    this.setState({ selectedMenuItem: items.get(pathname) });
   }
 
   render() {
@@ -99,17 +76,6 @@ class LayoutComponent extends React.Component {
               <span><Link to="/main/training/components">Componentes de Formación</Link></span>
             </Menu.Item>
 
-            <SubMenu
-              key="sub2"
-              title={<span><Icon type="team" /><span>Team</span></span>}
-            >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9">
-              <Icon type="file" />
-              <span>File</span>
-            </Menu.Item>
           </Menu>
 
         </Sider>
@@ -151,7 +117,7 @@ class LayoutComponent extends React.Component {
             </Content>
          
           <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            Universidad Católica de Oriente
           </Footer>
         </Layout>
       </Layout>
