@@ -1,8 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Table, pagination, Form, Input, Modal, Button, Select } from 'antd';
+import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
+import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -10,9 +12,11 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   class extends React.Component {
 
     render() {
+
       const {
-        visible, onCancel, onCreate, form,
+        visible, onCancel, onCreate, form, trainingComponentsData
       } = this.props;
+
       const { getFieldDecorator } = form;
       const Option = Select.Option;
 
@@ -27,37 +31,35 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           <Form layout="vertical">
 
             <Form.Item label="Código">
-              {getFieldDecorator('codigo', {
+              {getFieldDecorator('codigoAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
               })(
                 <Input />
               )}
             </Form.Item>
 
-            <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion') (
-               
-                  <Select>
-                    <Option value="cienciabasicadeingenieria">Ciencia básica de Ingenieria</Option>
-                    <Option value="formacioncomplementaria">Formacion complementaria</Option>
-                    <Option value="ingenieriaaplicada">Ingeniería aplicada</Option>
-                    <Option value="cienciabasica">Ciencia básica</Option>
-                    <Option value="optativainterdisciplinaria">Optativa interdisciplinaria</Option>
-                  </Select>
-              
-              )}
-            </Form.Item>
-
             <Form.Item label="Nombre">
-              {getFieldDecorator('nombre', {
+              {getFieldDecorator('nombreAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
               })(
                 <Input />
               )}
             </Form.Item>
 
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteDeFormacionNombreAgregar')(
+               
+                <Select>
+                  {trainingComponentsData.map(trainingComponent =>
+                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
+                  )}
+              </Select>
+              
+              )}
+            </Form.Item>
+
             <Form.Item label="Horas Teóricas">
-              {getFieldDecorator('horasTeoricas', {
+              {getFieldDecorator('horasTeoricasAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
                 <Input />
@@ -65,7 +67,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Laboratorio">
-              {getFieldDecorator('horasLaboratorio', {
+              {getFieldDecorator('horasLaboratorioAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
                 <Input />
@@ -73,7 +75,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Prácticas">
-              {getFieldDecorator('horasPracticas', {
+              {getFieldDecorator('horasPracticasAgregar', {
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
                 <Input />
@@ -81,7 +83,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Horas Trabajo Independiente del Estudiante">
-              {getFieldDecorator('trabajoIndependienteEstudiante', {
+              {getFieldDecorator('trabajoIndependienteEstudianteAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
                 <Input />
@@ -89,7 +91,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Nivel">
-              {getFieldDecorator('nivel', {
+              {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
                 <Input />
@@ -97,7 +99,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Créditos">
-              {getFieldDecorator('creditos', {
+              {getFieldDecorator('creditosAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
                 <Input />
@@ -111,6 +113,149 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   }
 );
 
+
+const SubjectDetail = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+
+    deleteSubject = (subjectId, mattersStore, programId, inp) => {
+      mattersStore.deleteMatterData(programId, inp, subjectId);
+    };
+
+    render() {
+
+      const {
+        visibleSubject, 
+        onCancel, 
+        onCreateSubjectUpdate, 
+        form, 
+        nameSubject, 
+        subjectData, 
+        trainingComponentsData,
+        mattersStore,
+        programId, 
+        inp
+      } = this.props;
+
+      const { getFieldDecorator } = form;
+      const Option = Select.Option;
+      const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
+
+      return (
+        <Modal
+          
+          style={{ backgroundColor: '#026F35', color: '#fff' }}
+          visible={visibleSubject}
+          title={nameSubject}
+          okText="Actualizar"
+          onCancel={onCancel}
+          onOk={onCreateSubjectUpdate}
+          
+        >
+          <Form layout="vertical">
+
+            <Form.Item label="Código">
+              {getFieldDecorator('codigo', {
+                initialValue: subjectData.codigo,
+                rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nombre">
+              {getFieldDecorator('nombre', {
+                initialValue: subjectData.nombre,
+                rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteFormacion', {
+                  initialValue: trainingComponentSubject.nombre,
+              })(
+               
+                <Select>
+                  {trainingComponentsData.map(trainingComponent =>
+                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
+                  )}
+                </Select>
+              
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Teóricas">
+              {getFieldDecorator('horasTeoricas', {
+                initialValue: subjectData.horasTeoricas,
+                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Laboratorio">
+              {getFieldDecorator('horasLaboratorio', {
+                initialValue: subjectData.horasLaboratorio,
+                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Prácticas">
+              {getFieldDecorator('horasPracticas', {
+                initialValue: 'FALTAN',
+                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Horas Trabajo Independiente del Estudiante">
+              {getFieldDecorator('trabajoIndependienteEstudiante', {
+                initialValue: 'FALTAN',
+                rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nivel">
+              {getFieldDecorator('nivel', {
+                initialValue: subjectData.nivel,
+                rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Créditos">
+              {getFieldDecorator('creditos', {
+                initialValue: subjectData.creditos,
+                rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <center>
+              <Button
+                onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
+              >
+                Eliminar
+              </Button>
+            </center>
+
+          </Form>
+        </Modal>
+      );
+    }
+  }
+);
+
+  
 const columnsNames = [{
   dataIndex: 'semestre1',
   title: 'Nivel 1',
@@ -161,23 +306,30 @@ class DetailStudyPlan extends React.Component {
     this.matters = this.props.stores.matters;
     this.process = this.props.stores.process;
     this.inpComponentStore = this.props.stores.inpComponentStore;
+    this.trainingComponentStore = this.props.stores.trainingComponentStore;
+
   }
+  
 
   state = {
     visible: false,
+    visibleSubject: false,
+    nameSubject: '', 
+    subjectData: {},
+    trainingComponentsData: []
   }
 
   showModal = () => {
-    this.setState({ visible: true });
-  }
+    this.setState({ visible: true, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     
-    const form = this.formRef.props.form;
+    const form = this.formRefAddSubject.props.form;
     form.validateFields((err, values) => {
       console.log('values', values)
       if (err) {
@@ -185,14 +337,15 @@ class DetailStudyPlan extends React.Component {
       }
       const asignaturaRequestDTO = 
         new AsignaturaRequestDTO(
-          values.codigo, 
-          values.componenteFormacion, 
-          values.nombre, values.creditos, 
-          values.horasTeoricas, 
-          values.horasLaboratorio, 
-          values.nivel,
-          values.horasPracticas,
-          values.trabajoIndependienteEstudiante);
+          values.codigoAgregar, 
+          values.componenteDeFormacionNombreAgregar, 
+          values.nombreAgregar, 
+          values.creditosAgregar, 
+          values.horasTeoricasAgregar, 
+          values.horasLaboratorioAgregar, 
+          values.nivelAgregar,
+          values.horasPracticasAgregar,
+          values.trabajoIndependienteEstudianteAgregar);
 
       this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
 
@@ -200,23 +353,93 @@ class DetailStudyPlan extends React.Component {
       this.setState({ visible: false });
 
     });
-  }
+  };
+
+  showModalSubject = () => {
+    this.setState({ visibleSubject: true });
+  };
+
+  handleCancelSubject = () => {
+    this.setState({ visibleSubject: false });
+  };
+
+  handleUpdate = () => {
+
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      console.log('valuesUpdate', values)
+      if (err) {
+        return;
+      }
+      const updateMatterRequestDTO = new UpdateMatterRequestDTO(
+        values.componenteFormacion, 
+        values.nombre,
+        values.creditos,
+        values.horasTeoricas,
+        values.horasLaboratorio,
+        values.horasPracticas,
+        values.trabajoIndependienteEstudiante,
+        values.nivel
+      );
+      
+      this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO);
+
+      form.resetFields();
+      this.setState({ visibleSubject: false });
+
+    });
+
+  };
+
+  openModal = (propiedadesAsignatura) => {
+    console.log('propiedadesAsignatura', propiedadesAsignatura);
+    this.showModalSubject();
+    this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
+  };
 
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
 
+  saveFormRefAddSubject = (formRefAddSubject) => {
+    this.formRefAddSubject = formRefAddSubject;
+  }
+
+
   componentDidMount = () => {
+
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
+    /**
+    this.setState({ 
+      mattersStore: this.matters, 
+      programId: this.inpComponentStore.inpData.programId,
+      inp: this.inpComponentStore.inpData.inp
+    });
+*/
+    this.matters.setDeleteSuccess(false);
+    this.matters.setUpdateSuccess(false);
+    
+    if (!this.trainingComponentStore.trainingComponentsData) {
+      this.trainingComponentStore.getTrainingComponents();
+    }
+   
   }
 
   createAsignatureCardsBySemesters = (asignatura) => {
     
     return asignatura
-      .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.semestre}` }))
+      .map(asignatura => ({ ...asignatura, keyIndex: `semestre${asignatura.nivel}` }))
       .map((asignatura, index) => {
-        const cardAsignatura = { key: index, name: asignatura.semestre };
-        cardAsignatura[asignatura.keyIndex] = <CardMatter {...asignatura} />;
+        const cardAsignatura = { key: index, name: asignatura.nivel };
+        cardAsignatura[asignatura.keyIndex] = 
+          <Button
+            style={{ 
+              height: 'auto'    
+            }}
+            onClick = {() => this.openModal({...asignatura})}
+          >
+            <CardMatter {...asignatura} />
+          </Button>;
         return cardAsignatura;
       });
   };
@@ -271,9 +494,10 @@ class DetailStudyPlan extends React.Component {
       <div>
         
         <Table
+          rowKey={record => record.uid}
           columns={columnsNames}
           dataSource={this.mattersBySemester(this.matters.mattersData)}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 2300 }}
           size="small"
           pagination={pagination}
         />
@@ -287,10 +511,23 @@ class DetailStudyPlan extends React.Component {
             Agregar Asignatura
           </Button>
           <CollectionCreateForm
-            wrappedComponentRef={this.saveFormRef}
+            wrappedComponentRef={this.saveFormRefAddSubject}
             visible={this.state.visible}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
+            trainingComponentsData={this.state.trainingComponentsData}
+          />
+          <SubjectDetail 
+            wrappedComponentRef={this.saveFormRef}
+            visibleSubject={this.state.visibleSubject}
+            nameSubject={this.state.nameSubject}
+            subjectData={this.state.subjectData}
+            onCancel={this.handleCancelSubject}
+            onCreateSubjectUpdate={this.handleUpdate}
+            trainingComponentsData={this.state.trainingComponentsData}
+            mattersStore={this.matters}
+            programId={this.inpComponentStore.inpData.programId}
+            inp={this.inpComponentStore.inpData.inp}
           />
         </center>
 

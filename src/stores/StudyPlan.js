@@ -5,6 +5,7 @@ export default class StudyPlan {
   @observable studyPlanService;
   @observable process;
   @observable studyPlanData = [];
+  @observable studyPlanDeleted = false;
 
   constructor(studyPlanService, process) {
     this.studyPlanService = studyPlanService;
@@ -36,7 +37,6 @@ export default class StudyPlan {
       .then(response => {
         runInAction(() => {
           const { dataSave } = response;
-          sessionStorage.setItem('studyPlanDataSave', JSON.stringify(dataSave));
           this.process.showMessage('Plan de Estudio Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
         });
@@ -49,4 +49,30 @@ export default class StudyPlan {
 
   };
 
+  @action
+  deleteStudyPlanData = (programId, inp) => {
+
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ELIMINANDO ...';
+    this.studyPlanService.deleteStudyPlan(programId, inp)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.studyPlanDeleted = true;
+          this.process.showMessage('Plan de Estudio Eliminado Correctamente', 'success');
+          this.process.processDTO.loading = false;
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+        this.process.processDTO.loading = false;
+      });
+
+  };
+
+  setStudyPlanDeleted = (studyPlanDeleted) => {
+    this.studyPlanDeleted = studyPlanDeleted;
+  };
+  
 }

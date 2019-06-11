@@ -7,6 +7,7 @@ class MattersService extends ServiceBase {
         this.url = url;
         this.headers = '';
         this.setHeaders();
+        console.log(this);
     }
 
     setHeaders = () => {
@@ -32,6 +33,21 @@ class MattersService extends ServiceBase {
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}`;
       return await this.postRequest(requestUrl, asignaturaRequest);
     };
+
+    updateMatter = async (programId, inp, updateMatterRequestDTO) => {
+      this.setHeaders();
+      const { PROGRAM_MANAGEMENT_PACK_URL, PROGRAM, CODIGO, MATTER } = this.urls;
+      const requestUrl = `${this.url}/${PROGRAM_MANAGEMENT_PACK_URL}/${PROGRAM}/${programId}/${CODIGO}/${inp}/${MATTER}`;
+      console.log(requestUrl, programId, inp, updateMatterRequestDTO)
+      return await this.putRequest(requestUrl, updateMatterRequestDTO);
+    };
+
+    deleteMatter = async (programId, inp, matterId) => {
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}/${matterId}`;
+      return await this.deleteRequest(requestUrl);
+    };
+  
 
 }
 

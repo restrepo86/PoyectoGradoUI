@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { List, Card, Button, Modal, Form, Input } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
@@ -32,10 +32,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Créditos">
-              {getFieldDecorator('creditos')(<Input type="textarea" />)}
-            </Form.Item>
-            
           </Form>
         </Modal>
       );
@@ -77,7 +73,7 @@ class InpsComponent extends React.Component {
       if (err) {
         return;
       }
-      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp, values.creditos);
+      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp);
       this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.sniesCode);
 
       form.resetFields();
@@ -93,6 +89,7 @@ class InpsComponent extends React.Component {
   componentDidMount() {
     this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.sniesCode);
+    this.studyPlan.setStudyPlanDeleted(false);
   }
 
   onClickInpButton = (item) => {
@@ -144,6 +141,15 @@ class InpsComponent extends React.Component {
                 >
                   Agregar Plan de Estudio
                 </Button>
+              
+                <Link to = '/main/programs/inps/delete'>
+                  <Button 
+                    type="primary" 
+                    style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  >
+                    Borrar Plan de Estudio
+                  </Button>
+                </Link>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
                   visible={this.state.visible}

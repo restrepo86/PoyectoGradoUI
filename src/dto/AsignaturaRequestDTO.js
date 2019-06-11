@@ -1,25 +1,25 @@
 class AsignaturaRequestDTO {
 
     codigo;
-    componenteDeFormacion;
+    componenteDeFormacionNombre;
     nombre;
     creditos;
     horasTeoricas;
     horasLaboratorio;
-    semestre;
+    nivel;
     requisitos = [];
     horasPracticas;
     trabajoIndependienteEstudiante;
 
-    constructor(codigo, componenteFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, semestre, horasPracticas, trabajoIndependienteEstudiante){
+    constructor(codigo, componenteDeFormacionNombre, nombre, creditos, horasTeoricas, horasLaboratorio, nivel, horasPracticas, trabajoIndependienteEstudiante){
 
         this.codigo = codigo;
-        this.componenteDeFormacion = componenteFormacion;
+        this.componenteDeFormacionNombre = componenteDeFormacionNombre;
         this.nombre = nombre;
         this.creditos = creditos;
         this.horasTeoricas = horasTeoricas;
         this.horasLaboratorio = horasLaboratorio;
-        this.semestre = semestre;
+        this.nivel = nivel;
         this.horasPracticas = horasPracticas;
         this.trabajoIndependienteEstudiante = trabajoIndependienteEstudiante;
     }

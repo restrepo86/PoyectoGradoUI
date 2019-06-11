@@ -12,13 +12,13 @@ const Main = (props) => (
             <Router>
                <Switch>
                   <Route exact path="/" component={(routeProps) => (
-                     <LoginForm />
+                     <LoginForm {... props} {...routeProps}/>
                   )} />
                   <Route path="/main" component={(routeProps) => (
                      <LayoutComponent {...routeProps} {...props}/>
                   )} />
                   <Route exact path="/login/register" component={(routeProps) => (
-                     <RegistrationForm />
+                     <RegistrationForm {...routeProps} {...props} />
                   )} />
                </Switch>
             </Router>

@@ -30,7 +30,13 @@ class ProgramsService extends ServiceBase {
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}`;
       return await this.postRequest(requestUrl, ProgramRequestDTO)
-    }
+    };
+
+    updateProgram = async (programId, programUpdateRequestDTO) => {
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${programId}`;
+      return await this.putRequest(requestUrl, programUpdateRequestDTO);
+    };
 
 }
 

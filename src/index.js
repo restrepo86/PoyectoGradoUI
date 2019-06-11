@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter  } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import es_ES from 'antd/lib/locale-provider/es_ES';
-import { programsService } from './services/Services';
-import { studyPlanService } from './services/Services';
-import { mattersService } from './services/Services';
+import { 
+  programsService, 
+  studyPlanService, 
+  mattersService, 
+  loginService,
+  trainingComponentService
+} from './services/Services';
 import Process from './stores/Process';
 import './index.css';
 import App from './App';
@@ -14,15 +18,29 @@ import Programs from './stores/Programs';
 import StudyPlan from './stores/StudyPlan';
 import Matters from './stores/Matters';
 import InpComponentStore from './stores/InpComponentStore';
+import LoginStore from './stores/LoginStore';
+import TrainingComponentStore from './stores/TrainingComponentStore';
 
 
 const process =  new Process();
 const programs = new Programs(programsService, process);
 const studyPlan = new StudyPlan(studyPlanService, process);
 const matters = new Matters(mattersService, process);
+const loginStore = new LoginStore(loginService, process);
+const trainingComponentStore = new TrainingComponentStore(trainingComponentService, process);
 const programsComponentStore = new ProgramsComponentStore();
 const inpComponentStore = new InpComponentStore();
-const stores = { programs, programsComponentStore, studyPlan, matters, process, inpComponentStore };
+
+const stores = { 
+  programs, 
+  programsComponentStore, 
+  studyPlan, 
+  matters, 
+  loginStore, 
+  process, 
+  inpComponentStore,
+  trainingComponentStore 
+};
 
 const routes = (
     <BrowserRouter>      

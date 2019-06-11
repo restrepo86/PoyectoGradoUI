@@ -85,6 +85,18 @@ class ServiceBase {
         return await this.myInvoke(serviceData);
     };
 
+    deleteRequest = async (url) => {
+       
+        const { headers } = this;
+        const serviceData = {
+            method: 'DELETE',
+            url,
+            headers,
+        };
+        const response = this.myInvoke(serviceData);
+        return this.resolvePromise(response);
+    };
+
     myInvoke = (serviceData) => {
         try {
            return axios(serviceData);       

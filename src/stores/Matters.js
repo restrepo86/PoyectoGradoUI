@@ -2,9 +2,12 @@ import { observable, runInAction, action } from 'mobx';
 
 export default class Matters {
 
-  @observable mattersService;
   @observable process;
   @observable mattersData = [];
+  @observable matterUpdateSelected;
+  @observable matterUpdateIsSelected = false;
+  @observable deleteSuccess = false;
+  @observable updateSuccess = false;
 
   constructor(mattersService, process) {
     this.mattersService = mattersService;
@@ -35,8 +38,7 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          sessionStorage.setItem('saveMatterResponse', JSON.stringify(data));
-          this.process.showMessage('Programa Guardado Correctamente', 'success');
+          this.process.showMessage('Asignatura Guardada Correctamente', 'success');
           this.process.processDTO.loading = false;
         });
       })
@@ -45,6 +47,66 @@ export default class Matters {
         this.process.showMessage(message, 'error');
         this.process.processDTO.loading = false;
       });
+  };
+
+  @action
+  updateMatterData = (programId, inp, updateMatterRequestDTO) => {
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ACTUALIZANDO ...';
+    this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.updateSuccess = true;
+          this.process.showMessage('Asignatura Actualizada Correctamente', 'success');
+          this.process.processDTO.loading = false;
+        });
+      })
+      .catch(error => {
+        
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+        this.process.processDTO.loading = false;
+
+      });
+  };
+
+  @action
+  deleteMatterData = (programId, inp, matterId) => {
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ELIMINANDO ...';
+    this.mattersService.deleteMatter(programId, inp, matterId)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.deleteSuccess = true;
+          this.process.showMessage('Asignatura Eliminada Correctamente', 'success');
+          this.process.processDTO.loading = false;
+        });
+      })
+      .catch(error => {
+        
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+        this.process.processDTO.loading = false;
+        
+      });
+  };
+
+  setMatterUpdateSelected = (matterUpdateSelected) => {
+    this.matterUpdateSelected = matterUpdateSelected;
+  };
+
+  setMatterUpdateIsSelected = (matterUpdateIsSelected) => {
+    this.matterUpdateIsSelected = matterUpdateIsSelected;
+  };
+
+  setDeleteSuccess = (deleteSuccess) => {
+    this.deleteSuccess = deleteSuccess;
+  };
+
+  setUpdateSuccess = (updateSuccess) => {
+    this.updateSuccess = updateSuccess;
   };
 
 }

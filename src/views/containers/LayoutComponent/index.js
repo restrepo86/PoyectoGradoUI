@@ -12,11 +12,15 @@ import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';
 import InpsComponent from '../../components/InpsComponent';
 import DetailStudyPlan from '../../components/DetailStuyPlan';
+import UpdateProgramComponent from '../../components/UpdateProgramComponent';
+import DeleteMatterComponent from '../../components/DeleteMatterComponent';
+import UpdateMatterForm from '../../components/UpdateMatterForm';
+import TrainingComponents from '../../components/TrainingComponents';
+import DeleteStudyPlanComponent from '../../components/DeleteStudyPlanComponent';
 
 const {
   Header, Content, Footer, Sider,
 } = Layout;
-const SubMenu = Menu.SubMenu;
 
 const style = {
   parentMenu : {
@@ -31,6 +35,7 @@ class LayoutComponent extends React.Component {
   constructor(props) {
     super(props);
     this.props = this.props;
+    this.loginStore = this.props.stores.loginStore;
 
     this.state = {
       collapsed: false,
@@ -38,30 +43,12 @@ class LayoutComponent extends React.Component {
     };
   }
 
-  componentWillMount(){
-    this.updateSelectedItem();
-  }
+  componentDidMount() {
+    this.loginStore.setValidateUserSuccess(false);
+  };
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
-  }
-
-  onSelectMenuItem(key) {
-    const routes = new Map([
-      ['2', '/div2'],
-      ['programs', '/main/programs']
-    ]);
-  
-    window.location = routes.get(key);
-  }
-
-  updateSelectedItem() {
-    const { pathname } = window.location;
-    const items = new Map([
-      ['/div2', '2'],
-    ]);
-
-    this.setState({ selectedMenuItem: items.get(pathname) });
   }
 
   render() {
@@ -83,36 +70,12 @@ class LayoutComponent extends React.Component {
               <Icon type="desktop" />
               <span><Link to="/main/programs">Programas</Link></span>
             </Menu.Item>
-            <SubMenu
-              key="programsTitle"
-              title={<span><Icon type="shop" /><span>Programas</span></span>}
-            >
-              <SubMenu
-                key="systemsEngineer" title={<span>Ingeniería de Sistemas</span>}
-               >
-                  <SubMenu
-                    key="inps" title={<span>INP's</span>} 
-                  >
-                    <Menu.Item key="3">Tom</Menu.Item>
-                    <Menu.Item key="4">Bill</Menu.Item>
-                    <Menu.Item key="5">Alex</Menu.Item>
-            
 
-                  </SubMenu>
-
-               </SubMenu>
-             </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={<span><Icon type="team" /><span>Team</span></span>}
-            >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9">
-              <Icon type="file" />
-              <span>File</span>
+            <Menu.Item key="trainingComponents">
+              <Icon type="desktop" />
+              <span><Link to="/main/training/components">Componentes de Formación</Link></span>
             </Menu.Item>
+
           </Menu>
 
         </Sider>
@@ -134,12 +97,27 @@ class LayoutComponent extends React.Component {
                     <Route exact path="/main/programs/inps/studyplan" component={(routeProps) => (
                       <DetailStudyPlan {...routeProps} {...this.props} />
                     )} />
+                    <Route exact path="/main/programs/update/program" component={(routeProps) => (
+                      <UpdateProgramComponent {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/inps/studyplan/subject/delete" component={(routeProps) => (
+                      <DeleteMatterComponent {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/inps/delete" component={(routeProps) => (
+                      <DeleteStudyPlanComponent {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/programs/inps/studyplan/subject/select/update" component={(routeProps) => (
+                      <UpdateMatterForm {...routeProps}{...this.props} />
+                    )} />
+                    <Route exact path="/main/training/components" component={(routeProps) => (
+                      <TrainingComponents {...routeProps}{...this.props}/>
+                    )} />
 
               </div>
             </Content>
          
           <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            Universidad Católica de Oriente
           </Footer>
         </Layout>
       </Layout>
