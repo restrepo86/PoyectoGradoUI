@@ -3,6 +3,7 @@ import LoginForm from './components/LoginForm';
 import LayoutComponent from './containers/LayoutComponent';
 import RegistrationForm from './components/RegistrationForm';
 import DriveApi from './components/driveApiComponent/DriveApi';
+import GLogin from './components/GoogleLogin/GLogin';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
@@ -23,6 +24,9 @@ const Main = (props) => (
                   )} />
                   <Route exact path="/driveAPI" component={(routeProps) => (
                      <DriveApi />
+                  )} />
+                  <Route exact path="/googleLogin" component={(routeProps) => (
+                     <GLogin />
                   )} />
                </Switch>
             </Router>
