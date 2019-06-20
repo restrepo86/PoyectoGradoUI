@@ -19,8 +19,8 @@ class Glogin extends Component {
 
     googleResponse = (response) => {
         console.log("response token: " + response.tokenId)
-        console.log("response token: " + response.accesToken)
-        const tokenBlob = new Blob([JSON.stringify({googleAccessToken: response.tokenId}, null, 2)], {type : 'application/json'});
+        console.log("response token: " + response.accessToken)
+        const tokenBlob = new Blob([JSON.stringify({gTokenId: response.tokenId, gAccessToken: response.accessToken}, null, 2)], {type : 'application/json'});
         
         const options = {
             method: 'POST',
@@ -32,6 +32,7 @@ class Glogin extends Component {
             const token = r.headers.get('Access-Token');
             r.json().then(user => {
                 if (token) {
+                    console.log("PUPE TOKEN: " + token)
                     this.setState({isAuthenticated: true, user, token})
                 }
             });
@@ -57,10 +58,10 @@ class Glogin extends Component {
                 <div>
                     <GoogleLogin
                         clientId={"522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com"}
+                        scope={"https://www.googleapis.com/auth/drive.file"}
                         buttonText="Login"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
-                        GoogleScopes={["https://www.googleapis.com/auth/drive.file"]}
                     />
                 </div>
             );
