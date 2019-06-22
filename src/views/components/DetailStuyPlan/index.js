@@ -206,7 +206,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Horas Prácticas">
               {getFieldDecorator('horasPracticas', {
-                initialValue: 'FALTAN',
+                initialValue: subjectData.horasPracticas,
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
                 <Input />
@@ -215,7 +215,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Horas Trabajo Independiente del Estudiante">
               {getFieldDecorator('trabajoIndependienteEstudiante', {
-                initialValue: 'FALTAN',
+                initialValue: subjectData.horasIndependientesDelEstudiante,
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
                 <Input />
@@ -409,13 +409,7 @@ class DetailStudyPlan extends React.Component {
   componentDidMount = () => {
 
     this.matters.getMattersData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp);
-    /**
-    this.setState({ 
-      mattersStore: this.matters, 
-      programId: this.inpComponentStore.inpData.programId,
-      inp: this.inpComponentStore.inpData.inp
-    });
-*/
+
     this.matters.setDeleteSuccess(false);
     this.matters.setUpdateSuccess(false);
     

@@ -46,7 +46,7 @@ class InpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.programsComponentStore = this.props.stores.programsComponentStore;
-    this.sniesCode = this.programsComponentStore.programClickData.programData.codigoSnies;
+    this.programId = this.programsComponentStore.programClickData.programData.id;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
   }
@@ -74,7 +74,7 @@ class InpsComponent extends React.Component {
         return;
       }
       const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp);
-      this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.sniesCode);
+      this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.programId);
 
       form.resetFields();
       this.setState({ visible: false });
@@ -88,7 +88,7 @@ class InpsComponent extends React.Component {
 
   componentDidMount() {
     this.programsComponentStore.setProgramClickSuccess(false);
-    this.studyPlan.getStudyPlanData(this.sniesCode);
+    this.studyPlan.getStudyPlanData(this.programId);
     this.studyPlan.setStudyPlanDeleted(false);
   }
 

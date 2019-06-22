@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import * as constants from './constants';
 
@@ -10,6 +11,7 @@ class ServiceBase {
 
     setHeaders = () => {
         this.headers = {
+            'Authorization' : localStorage.getItem("Authorization"),
             'Accept': '*/*',
             'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
             'Content-Type':  'application/json;charset=UTF-8',

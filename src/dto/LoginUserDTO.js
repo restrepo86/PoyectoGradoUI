@@ -1,11 +1,11 @@
 class LoginUserDTO {
 
-    usuario;
-    password;
+    gTokenId;
+    gAccessToken;
 
-    constructor(usuario, password) {
-        this.usuario = usuario;
-        this.password = password;
+    constructor(gTokenId, gAccessToken) {
+        this.gTokenId = gTokenId;
+        this.gAccessToken = gAccessToken;
     }
 
 }

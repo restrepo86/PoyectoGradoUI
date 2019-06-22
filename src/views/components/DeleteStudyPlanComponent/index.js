@@ -18,11 +18,9 @@ class DeleteStudyPlanComponent extends React.Component {
         this.props.form.validateFields((err, values) => {
         
             if (!err) {
-                console.log('values', values)
             
-                const selectedMatter = this.studyPlan.studyPlanData.filter(studyPlan => studyPlan.inp === values.deleteInp)[0];
-                console.log('selectedMatter', selectedMatter)
-                this.studyPlan.deleteStudyPlanData(selectedMatter.programId, selectedMatter.inp);
+                const selectedStudyPlan = this.studyPlan.studyPlanData.filter(studyPlan => studyPlan.id === values.deleteInp)[0];
+                this.studyPlan.deleteStudyPlanData(selectedStudyPlan.programId, selectedStudyPlan.id);
  
             }
         });
@@ -46,7 +44,7 @@ class DeleteStudyPlanComponent extends React.Component {
                     })(
                         <Select>
                             {this.studyPlan.studyPlanData.map(studyPlan => 
-                                <Option value={studyPlan.inp}>{studyPlan.inp}</Option>
+                                <Option value={studyPlan.id}>{studyPlan.inp}</Option>
                             )}
                         </Select>
                     )}

@@ -44,7 +44,7 @@ class LayoutComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.loginStore.setValidateUserSuccess(false);
+    
   };
 
   onCollapse = (collapsed) => {

@@ -4,9 +4,9 @@ export default class LoginStore {
 
         @observable loginService;
         @observable addUserResponseData;
-        @observable validateLoginUserResponse;
+        @observable validateLoginUserResponse= {};
         @observable addNewUserSuccess = false;
-        @observable validateUserSuccess = false;
+        @observable isAuthenticated = false;
 
         constructor(loginService, process) {
             this.loginService = loginService;
@@ -47,10 +47,11 @@ export default class LoginStore {
             this.loginService.loginUser(loginUserDTO)
             .then(response => {
                 runInAction(() => {
-                
+                console.log(response)
                 const { data } = response;
+                this.validateLoginUserResponse = { "data": data , "accesstoken": response.headers.accesstoken };
+
                 this.validateUserSuccess = true;
-                this.validateLoginUserResponse = data;
                 this.process.processDTO.loading = false;
                 
                 });
@@ -63,8 +64,8 @@ export default class LoginStore {
 
         };
 
-        setValidateUserSuccess = (validateUserSuccess) => {
-            this.validateUserSuccess = validateUserSuccess;
+        setIsAuthenticated = (isAuthenticated) => {
+            this.isAuthenticated = isAuthenticated;
         };
 
 }

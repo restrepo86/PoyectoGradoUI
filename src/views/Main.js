@@ -3,6 +3,7 @@ import LoginForm from './components/LoginForm';
 import LayoutComponent from './containers/LayoutComponent';
 import RegistrationForm from './components/RegistrationForm';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import LoginComponent from './components/GoogleAPIComponents/LoginComponent';
 
 
 const Main = (props) => (
@@ -12,7 +13,7 @@ const Main = (props) => (
             <Router>
                <Switch>
                   <Route exact path="/" component={(routeProps) => (
-                     <LoginForm {... props} {...routeProps}/>
+                     <LoginComponent {...routeProps} {... props} />
                   )} />
                   <Route path="/main" component={(routeProps) => (
                      <LayoutComponent {...routeProps} {...props}/>

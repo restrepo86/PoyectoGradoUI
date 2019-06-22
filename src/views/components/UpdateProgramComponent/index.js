@@ -20,8 +20,8 @@ class UpdateProgramComponent extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const programUpdateRequestDTO = new ProgramUpdateRequestDTO(values.updateProgramCodeSnies, values.newProgramName);
-        this.programStore.updateProgramsData(values.updateProgramCodeSnies, programUpdateRequestDTO);
+        const programUpdateRequestDTO = new ProgramUpdateRequestDTO(values.updateProgramId, values.newProgramName);
+        this.programStore.updateProgramsData(values.updateProgramId, programUpdateRequestDTO);
       }
     });
   };
@@ -41,12 +41,12 @@ class UpdateProgramComponent extends React.Component {
           <Form.Item
             label='Elija el programa que desea actualizar'
           >
-            {getFieldDecorator('updateProgramCodeSnies', {
+            {getFieldDecorator('updateProgramId', {
               rules: [{ required: true, message: 'Por favor elija el programa que desea actualizar!' }],
             })(
               <Select>
                 {this.programStore.programsData.map(program => 
-                  <Option value={program.programData.codigoSnies}>{program.title}</Option>
+                  <Option value={program.programData.id}>{program.title}</Option>
                 )}
               </Select>
             )}
