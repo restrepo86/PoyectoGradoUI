@@ -50,10 +50,10 @@ export default class Matters {
   };
 
   @action
-  updateMatterData = (programId, inp, updateMatterRequestDTO) => {
+  updateMatterData = (programId, inp, updateMatterRequestDTO, subjectId) => {
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'ACTUALIZANDO ...';
-    this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO)
+    this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO, subjectId)
       .then(response => {
         runInAction(() => {
           const { data } = response;

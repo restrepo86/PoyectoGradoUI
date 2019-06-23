@@ -5,5 +5,5 @@ export const STUDY_PLAN = 'planEstudio';
 export const MATTER = 'asignatura';
 export const USER = 'usuario';
 export const LOGIN = 'login2';
-export const CODIGO = 'codigo';
+export const PLAN_ESTUDIO = 'planEstudio';
 export const COMPONENT = 'componente';

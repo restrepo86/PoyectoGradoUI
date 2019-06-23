@@ -347,7 +347,7 @@ class DetailStudyPlan extends React.Component {
           values.horasPracticasAgregar,
           values.trabajoIndependienteEstudianteAgregar);
 
-      this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO);
+      this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO, this.programId);
 
       form.resetFields();
       this.setState({ visible: false });
@@ -382,7 +382,7 @@ class DetailStudyPlan extends React.Component {
         values.nivel
       );
       
-      this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO);
+      this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO, values.codigo);
 
       form.resetFields();
       this.setState({ visibleSubject: false });
