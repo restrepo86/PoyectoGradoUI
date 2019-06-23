@@ -17,9 +17,14 @@ class ProgramsComponent extends React.Component {
   componentDidMount = () => {
     
     this.registerProgramStore.setSaveSuccess(false);
-    if (!this.registerProgramStore.programsData || this.registerProgramStore.updateSuccess) {
+    if (!this.registerProgramStore.programsData 
+      || this.registerProgramStore.updateSuccess 
+      || this.registerProgramStore.deleteSuccess) {
+
       this.registerProgramStore.getProgramsData();
       this.registerProgramStore.setUpdateSuccess(false);
+      this.registerProgramStore.setDeleteProgramSuccess(false);
+
     }
     
   }
@@ -76,6 +81,13 @@ class ProgramsComponent extends React.Component {
               
             >
               <Link to = '/main/programs/update/program'>Actualizar Programa</Link>
+            </Button>
+            <Button 
+              type="primary"
+              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              
+            >
+              <Link to = '/main/programs/delete'>Borrar Programa</Link>
             </Button>
 
           </center>

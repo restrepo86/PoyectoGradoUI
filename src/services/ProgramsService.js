@@ -11,8 +11,8 @@ class ProgramsService extends ServiceBase {
 
     getPrograms = async () => {
        this.setHeaders();
-       const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}`;
-       return await this.getRequest({}, responseUrl);
+       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}`;
+       return await this.getRequest({}, requestUrl);
     };
 
     saveProgram = async (ProgramRequestDTO) => {
@@ -25,6 +25,12 @@ class ProgramsService extends ServiceBase {
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${programId}`;
       return await this.putRequest(requestUrl, programUpdateRequestDTO);
+    };
+
+    deleteProgram = async (programId) => {
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${programId}`;
+      return await this.deleteRequest(requestUrl);
     };
 
 }

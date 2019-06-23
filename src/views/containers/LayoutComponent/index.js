@@ -17,6 +17,7 @@ import DeleteMatterComponent from '../../components/DeleteMatterComponent';
 import UpdateMatterForm from '../../components/UpdateMatterForm';
 import TrainingComponents from '../../components/TrainingComponents';
 import DeleteStudyPlanComponent from '../../components/DeleteStudyPlanComponent';
+import DeleteProgramComponent from '../../components/DeleteProgramComponent';
 
 const {
   Header, Content, Footer, Sider,
@@ -111,6 +112,9 @@ class LayoutComponent extends React.Component {
                     )} />
                     <Route exact path="/main/training/components" component={(routeProps) => (
                       <TrainingComponents {...routeProps}{...this.props}/>
+                    )} />
+                     <Route exact path="/main/programs/delete" component={(routeProps) => (
+                      <DeleteProgramComponent {...routeProps}{...this.props}/>
                     )} />
 
               </div>

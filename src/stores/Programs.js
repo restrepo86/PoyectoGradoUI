@@ -8,6 +8,7 @@ export default class Programs {
   @observable programUpdateDataRequest;
   @observable saveSuccess =  false;
   @observable updateSuccess = false;
+  @observable deleteSuccess = false;
 
   constructor(programsService, process) {
     this.programsService = programsService;
@@ -76,6 +77,25 @@ export default class Programs {
   };
 
   @action
+  deleteProgram = (programId) => {
+    this.process.processDTO.loading = true;
+    this.process.processDTO.loadingMessage = 'ELIMINANDO ...';
+    this.programsService.deleteProgram(programId)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.deleteSuccess = true;
+          this.process.showMessage('Programa Eliminado Correctamente', 'success');
+          this.process.processDTO.loading = false;
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+      });
+  };
+
+  @action
   resetForm = () => {
     this.filterDataDTO.initialize();
     this.expressFormData = null;
@@ -93,6 +113,10 @@ export default class Programs {
 
   setProgramUpdateDataRequest = (programUpdateDataRequest) => {
     this.programUpdateDataRequest = programUpdateDataRequest;
+  };
+
+  setDeleteProgramSuccess = (deleteSuccess) => {
+    this.deleteSuccess = deleteSuccess;
   };
 
 }
