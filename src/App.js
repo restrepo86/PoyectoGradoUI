@@ -25,18 +25,14 @@ class App extends React.Component {
 
 
     logOut = (loginStore) => {
-        console.log("loginStore", loginStore)
         loginStore.setIsAuthenticated(false);
+        localStorage.removeItem( 'Authorization');
+        localStorage.removeItem( 'GAuthorization');
+        window.location.href='/';
     };
 
     render() {
-        console.log(this.props.stores.loginStore.isAuthenticated)
-        if (!this.props.stores.loginStore.isAuthenticated) {
-            <Redirect to = '/' />
-            console.log(this.props.stores.loginStore.isAuthenticated)
-            
-        }
-     
+       
         return(
 
             <div style={appStyle.boxContainer}>
