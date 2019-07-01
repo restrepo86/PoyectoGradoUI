@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import LoginForm from './components/LoginForm';
 import LayoutComponent from './containers/LayoutComponent';
 import RegistrationForm from './components/RegistrationForm';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

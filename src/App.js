@@ -2,7 +2,6 @@ import React from 'react';
 import Main from './views/Main';
 import { observer } from 'mobx-react';
 import { Button } from 'antd';
-import { Redirect } from 'react-router-dom';
 
 const appStyle = {
     boxContainer : {
@@ -23,9 +22,13 @@ const appStyle = {
 @observer
 class App extends React.Component {
 
+    componentDidMount() {
+        this.props.stores.loginStore.setLoginOutDisabled(true);
+    }
 
     logOut = (loginStore) => {
         loginStore.setIsAuthenticated(false);
+        loginStore.setLoginOutDisabled(true);
         sessionStorage.removeItem( 'Authorization');
         sessionStorage.removeItem( 'GAuthorization');
         window.location.href='/';
@@ -41,6 +44,7 @@ class App extends React.Component {
                     <h1 style={appStyle.windowTitle}>
                         Gestión Programas UCO                                                                                      <br/>
                         <Button
+                            disabled = { this.props.stores.loginStore.loginOutDisabled }
                             onClick = { () => this.logOut(this.props.stores.loginStore) }
                         >
                             Cerrar Sesión

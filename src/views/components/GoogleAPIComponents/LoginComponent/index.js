@@ -34,7 +34,9 @@ class LoginComponent extends React.Component {
     
             sessionStorage.setItem( 'Authorization', this.loginStore.validateLoginUserResponse.accesstoken );
             sessionStorage.setItem( 'GAuthorization', response.accessToken );
+            this.loginStore.setLoginOutDisabled(false);
             this.loginStore.setIsAuthenticated(true);
+
             
         } 
 
@@ -49,13 +51,15 @@ class LoginComponent extends React.Component {
         return (
 
             <div>
-                <GoogleLogin
-                    clientId={"522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com"}
-                    scope={"https://www.googleapis.com/auth/drive.file"}
-                    buttonText="Login"
-                    onSuccess={this.googleResponse}
-                    onFailure={this.onFailure}
-                />
+                <center>
+                    <GoogleLogin
+                        clientId={"522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com"}
+                        scope={"https://www.googleapis.com/auth/drive.file"}
+                        buttonText="Ingresar"
+                        onSuccess={this.googleResponse}
+                        onFailure={this.onFailure}
+                    />
+                </center>
             </div>
 
         );
