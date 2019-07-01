@@ -57,7 +57,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   }
 );
 
-
 @observer
 class TrainingComponents extends React.Component {
 
@@ -100,7 +99,6 @@ class TrainingComponents extends React.Component {
     this.formRef = formRef;
   }
 
-
   componentDidMount() {
 
     if (!this.trainingComponentStore.trainingComponentsData) {
@@ -112,7 +110,6 @@ class TrainingComponents extends React.Component {
   onClickTrainingComponentButton = (trainingComponent) => {
 
     console.log('componente de Formacion', trainingComponent)
-    //this.setState({ redirect: true }); 
     
   }
 
@@ -178,7 +175,6 @@ class TrainingComponents extends React.Component {
 
         );
     }
-
 
 }
 
