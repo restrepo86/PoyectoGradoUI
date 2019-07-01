@@ -108,9 +108,7 @@ class TrainingComponents extends React.Component {
   }
 
   onClickTrainingComponentButton = (trainingComponent) => {
-
     console.log('componente de Formacion', trainingComponent)
-    
   }
 
   render() {
@@ -121,7 +119,6 @@ class TrainingComponents extends React.Component {
       }
       
         return(
-
           <div>
 
             <List
