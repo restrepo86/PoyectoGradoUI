@@ -166,13 +166,6 @@ class TrainingComponents extends React.Component {
                 >
                   Actualizar Componente de Formación
                 </Button>
-                <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.deleteStudyPlan}
-                >
-                  Borrar Componente de Formación
-                </Button>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
                   visible={this.state.visible}
