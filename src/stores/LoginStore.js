@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from "mobx";
+import { observable } from "mobx";
 
 export default class LoginStore {
 
@@ -12,32 +12,6 @@ export default class LoginStore {
             this.loginService = loginService;
             this.process = process;
         }
-
-        @action
-        addNewUser = (addUserRequestDTO) => {
-
-            this.process.processDTO.loading = true;
-            this.process.processDTO.loadingMessage = 'REGISTRANDO USUARIO ...';
-            this.loginService.addNewUser(addUserRequestDTO)
-            .then(response => {
-                runInAction(() => {
-                
-                const { data } = response;
-                this.addUserResponseData = data;
-
-                this.process.showMessage('Programa Guardado Correctamente', 'success');
-                this.process.processDTO.loading = false;
-                this.addNewUserSuccess = true;
-                
-                });
-            })
-            .catch(error => {
-                const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
-                this.process.showMessage(message, 'error');
-                this.process.processDTO.loading = false;
-            });
-
-        };
 
         validateLoginUser = async (loginUserDTO) => {
           

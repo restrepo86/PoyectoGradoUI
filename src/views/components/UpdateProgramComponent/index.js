@@ -15,7 +15,6 @@ class UpdateProgramComponent extends React.Component {
   };
 
   componentDidMount() {
-    console.log('programStore', this.programStore)
     if (this.programsData == null) {
       window.location.href = "/";
     }

@@ -10,8 +10,15 @@ class DeleteProgramComponent extends React.Component {
     constructor(props) {
         super(props);
         this.programStore = this.props.stores.programs;
+        this.programsData = this.programStore.programsData;
     };
     
+    componentDidMount() {
+        if (this.programsData == null) {
+            window.location.href = "/";
+        }
+    };
+
     handleSubmit = (e) => {
 
         e.preventDefault();
@@ -45,9 +52,9 @@ class DeleteProgramComponent extends React.Component {
                         rules: [{ required: true, message: 'Por favor elija el programa que desea actualizar!' }],
                     })(
                         <Select>
-                        {this.programStore.programsData.map(program => 
-                            <Option value={program.programData.id}>{program.title}</Option>
-                        )}
+                            {this.programsData == null ? [] : this.programsData.map(program => 
+                                <Option value={program.programData.id}>{program.title}</Option>
+                            )}
                         </Select>
                     )}
                 </Form.Item>
