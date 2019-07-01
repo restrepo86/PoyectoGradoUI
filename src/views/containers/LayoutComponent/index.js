@@ -45,7 +45,9 @@ class LayoutComponent extends React.Component {
   }
 
   componentDidMount() {
-    
+    if (localStorage.getItem( 'Authorization' ) == null) {
+      window.location.href = '/';
+    }; 
   };
 
   onCollapse = (collapsed) => {
