@@ -10,10 +10,16 @@ class UpdateProgramComponent extends React.Component {
   
   constructor(props) {
     super(props);
-    this.programStore = this.props.stores.programs;
+    this.programStore = this.props.stores.programs ? this.props.stores.programs : null;
+    this.programsData = this.programStore == null ? null : this.programStore.programsData;
   };
 
-  
+  componentDidMount() {
+    console.log('programStore', this.programStore)
+    if (this.programsData == null) {
+      window.location.href = "/";
+    }
+  }; 
   
   handleSubmit = (e) => {
 
@@ -45,7 +51,8 @@ class UpdateProgramComponent extends React.Component {
               rules: [{ required: true, message: 'Por favor elija el programa que desea actualizar!' }],
             })(
               <Select>
-                {this.programStore.programsData.map(program => 
+                { 
+                  this.programsData == null ? [] : this.programsData.map(program => 
                   <Option value={program.programData.id}>{program.title}</Option>
                 )}
               </Select>

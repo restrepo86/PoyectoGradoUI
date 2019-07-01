@@ -26,8 +26,8 @@ class App extends React.Component {
 
     logOut = (loginStore) => {
         loginStore.setIsAuthenticated(false);
-        localStorage.removeItem( 'Authorization');
-        localStorage.removeItem( 'GAuthorization');
+        sessionStorage.removeItem( 'Authorization');
+        sessionStorage.removeItem( 'GAuthorization');
         window.location.href='/';
     };
 

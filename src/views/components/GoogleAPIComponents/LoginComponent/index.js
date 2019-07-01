@@ -21,21 +21,19 @@ class LoginComponent extends React.Component {
     };
 
     componentDidMount() {
-        if (this.loginStore.validateLoginUserResponse) {
-            this.loginStore.setIsAuthenticated(true);
-        }
+        sessionStorage.removeItem( 'Authorization');
+        sessionStorage.removeItem( 'GAuthorization');
     };
 
     googleResponse = async (response) => {
 
         const loginUserDTO = new LoginUserDTO(response.tokenId, response.accessToken);
         await this.loginStore.validateLoginUser(loginUserDTO);
-        console.log('this.loginStore.validateLoginUserResponse', this.loginStore.validateLoginUserResponse)
 
         if (this.loginStore.validateLoginUserResponse) {
-            console.log("PUPE TOKEN: " + this.loginStore.validateLoginUserResponse.accesstoken)
-            localStorage.setItem( 'Authorization', this.loginStore.validateLoginUserResponse.accesstoken );
-            localStorage.setItem( 'GAuthorization', response.accessToken );
+    
+            sessionStorage.setItem( 'Authorization', this.loginStore.validateLoginUserResponse.accesstoken );
+            sessionStorage.setItem( 'GAuthorization', response.accessToken );
             this.loginStore.setIsAuthenticated(true);
             
         } 

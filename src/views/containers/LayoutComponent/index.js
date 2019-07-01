@@ -13,8 +13,6 @@ import Progress from '../../components/Progress';
 import InpsComponent from '../../components/InpsComponent';
 import DetailStudyPlan from '../../components/DetailStuyPlan';
 import UpdateProgramComponent from '../../components/UpdateProgramComponent';
-import DeleteMatterComponent from '../../components/DeleteMatterComponent';
-import UpdateMatterForm from '../../components/UpdateMatterForm';
 import TrainingComponents from '../../components/TrainingComponents';
 import DeleteStudyPlanComponent from '../../components/DeleteStudyPlanComponent';
 import DeleteProgramComponent from '../../components/DeleteProgramComponent';
@@ -45,7 +43,7 @@ class LayoutComponent extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem( 'Authorization' ) == null) {
+    if (sessionStorage.getItem( 'Authorization' ) == null) {
       window.location.href = '/';
     }; 
   };
@@ -103,14 +101,8 @@ class LayoutComponent extends React.Component {
                     <Route exact path="/main/programs/update/program" component={(routeProps) => (
                       <UpdateProgramComponent {...routeProps}{...this.props} />
                     )} />
-                    <Route exact path="/main/programs/inps/studyplan/subject/delete" component={(routeProps) => (
-                      <DeleteMatterComponent {...routeProps}{...this.props} />
-                    )} />
                     <Route exact path="/main/programs/inps/delete" component={(routeProps) => (
                       <DeleteStudyPlanComponent {...routeProps}{...this.props} />
-                    )} />
-                    <Route exact path="/main/programs/inps/studyplan/subject/select/update" component={(routeProps) => (
-                      <UpdateMatterForm {...routeProps}{...this.props} />
                     )} />
                     <Route exact path="/main/training/components" component={(routeProps) => (
                       <TrainingComponents {...routeProps}{...this.props}/>

@@ -46,7 +46,7 @@ class InpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.programsComponentStore = this.props.stores.programsComponentStore;
-    this.programId = this.programsComponentStore.programClickData.programData.id;
+    this.programId = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData.id : null;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
   }
@@ -87,6 +87,10 @@ class InpsComponent extends React.Component {
 
 
   componentDidMount() {
+
+    if (sessionStorage.getItem( 'Authorization' ) == null || this.programId == null) {
+      window.location.href = '/';
+    }; 
     this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.programId);
     this.studyPlan.setStudyPlanDeleted(false);
