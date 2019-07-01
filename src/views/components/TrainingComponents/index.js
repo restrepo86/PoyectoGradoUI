@@ -72,12 +72,16 @@ class TrainingComponents extends React.Component {
 
   }
 
-  showModal = () => {
-    this.setState({ visible: true });
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
   }
 
   handleCancel = () => {
     this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   handleCreate = () => {
@@ -95,10 +99,6 @@ class TrainingComponents extends React.Component {
     });
   }
 
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
-  }
-
   componentDidMount() {
 
     if (!this.trainingComponentStore.trainingComponentsData) {
@@ -106,11 +106,11 @@ class TrainingComponents extends React.Component {
     }
     
   }
-
-  onClickTrainingComponentButton = (trainingComponent) => {
-    console.log('componente de Formacion', trainingComponent)
-  }
-
+  /**
+    onClickTrainingComponentButton = (trainingComponent) => {
+      console.log('componente de Formacion', trainingComponent)
+    }
+ */
   render() {
       
       const { redirect } = this.state;
