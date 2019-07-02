@@ -8,7 +8,8 @@ import {
   studyPlanService, 
   mattersService, 
   loginService,
-  trainingComponentService
+  trainingComponentService,
+  requirementServices
 } from './services/Services';
 import Process from './stores/Process';
 import './index.css';
@@ -20,6 +21,7 @@ import Matters from './stores/Matters';
 import InpComponentStore from './stores/InpComponentStore';
 import LoginStore from './stores/LoginStore';
 import TrainingComponentStore from './stores/TrainingComponentStore';
+import RequirementStore from './stores/RequirementStore';
 
 
 const process =  new Process();
@@ -30,6 +32,7 @@ const loginStore = new LoginStore(loginService, process);
 const trainingComponentStore = new TrainingComponentStore(trainingComponentService, process);
 const programsComponentStore = new ProgramsComponentStore();
 const inpComponentStore = new InpComponentStore();
+const requirementStore = new RequirementStore(requirementServices, process);
 
 const stores = { 
   programs, 
@@ -39,7 +42,8 @@ const stores = {
   loginStore, 
   process, 
   inpComponentStore,
-  trainingComponentStore 
+  trainingComponentStore,
+  requirementStore
 };
 
 const routes = (

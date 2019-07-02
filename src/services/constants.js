@@ -7,3 +7,4 @@ export const USER = 'usuario';
 export const LOGIN = 'login2';
 export const PLAN_ESTUDIO = 'planEstudio';
 export const COMPONENT = 'componente';
+export const REQUIREMENT = 'requisito';
