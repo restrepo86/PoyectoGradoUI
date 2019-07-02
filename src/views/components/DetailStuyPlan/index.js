@@ -119,7 +119,16 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   class extends React.Component {
 
     deleteSubject = (subjectId, mattersStore, programId, inp) => {
+      console.log(programId, inp)
       mattersStore.deleteMatterData(programId, inp, subjectId);
+    };
+
+    addRequirement = () => {
+
+    };
+
+    deleteRequirement = () => {
+
     };
 
     render() {
@@ -241,11 +250,31 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <center>
+
               <Button
                 onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
               >
                 Eliminar
               </Button>
+
+            </center>
+            
+              <br />
+            
+            <center>
+
+              <Button
+                onClick = {() => this.addRequirement(subjectData.gDriveFolderId, mattersStore, programId, inp)}
+              >
+                Agregar Requisito
+              </Button>
+
+              <Button
+                onClick = {() => this.deleteRequirement(subjectData.gDriveFolderId, mattersStore, programId, inp)}
+              >
+                Eliminar Requisito
+              </Button>
+
             </center>
 
           </Form>
@@ -484,6 +513,7 @@ class DetailStudyPlan extends React.Component {
 
   render() {
     console.log('mattersData', this.matters.mattersData);
+    console.log('inpData', this.inpComponentStore.inpData)
     return (
       <div>
         
@@ -521,7 +551,7 @@ class DetailStudyPlan extends React.Component {
             trainingComponentsData={this.state.trainingComponentsData}
             mattersStore={this.matters}
             programId={this.inpComponentStore.inpData.programId}
-            inp={this.inpComponentStore.inpData.inp}
+            inp={this.inpComponentStore.inpData.id}
           />
         </center>
 
