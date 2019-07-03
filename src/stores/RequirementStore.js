@@ -15,8 +15,6 @@ export default class RequirementStore {
 
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'GUARDANDO ...';
-    console.log('addRequirementDTO', addRequirementDTO)
-    console.log('subjectCode', subjectCode)
     this.requirementServices.addRequirement(addRequirementDTO, subjectCode)
       .then(response => {
         runInAction(() => {
