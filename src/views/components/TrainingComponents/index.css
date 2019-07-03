@@ -1,8 +1,7 @@
 .ant-card-head-wrapper {
-    display: -webkit-inline-box;
+    display: flex;
 }
-
 .ant-card-bordered {
-    min-width: 220px;
-    width: 250px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5%;
 }

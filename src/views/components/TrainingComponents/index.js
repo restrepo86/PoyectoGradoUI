@@ -122,25 +122,23 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{ gutter: 10, column: 3 }}
+              grid={{ gutter: 8, column: 4 }}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
-                    <Button 
-                        style={{ 
-                            backgroundColor: '#026F35', 
-                            color: '#fff',
-                            height: 'auto',  
-                        }}
-                        onClick={() => this.onClickTrainingComponentButton(trainingComponent)}
-                    >
                         <Card 
-                          title={trainingComponent.nombre}
-                          bodyStyle={{ background: trainingComponent.color }}>
-                            {`Abreviatura: ${trainingComponent.abreviatura}`}<br />
-                            {`Color en hexadecimal: ${(trainingComponent.color)}`}<br />
+                          title={trainingComponent.abreviatura}
+                          extra={<span style={{
+                            backgroundColor:trainingComponent.color,
+                            height: '25px',
+                            width: '25px',
+                            borderRadius: '50%',
+                            display: 'inline-block'  
+                          }} ></span>}
+                          hoverable={true}
+                          >
+                            <p>{trainingComponent.nombre}</p>
                         </Card>
-                    </Button>
                   </List.Item>
                 )}
             />
