@@ -15,11 +15,14 @@ export default class RequirementStore {
 
     this.process.processDTO.loading = true;
     this.process.processDTO.loadingMessage = 'GUARDANDO ...';
+    console.log('addRequirementDTO', addRequirementDTO)
+    console.log('subjectCode', subjectCode)
     this.requirementServices.addRequirement(addRequirementDTO, subjectCode)
       .then(response => {
         runInAction(() => {
           
             const { data } = response;
+            console.log('dataResponseAddRequirement', data);
             this.process.showMessage('Requisito Agregado Correctamente', 'success');
             this.process.processDTO.loading = false;
           
@@ -43,6 +46,7 @@ export default class RequirementStore {
         runInAction(() => {
           
             const { data } = response;
+            console.log('dataResponseUpdateRequirement', data);
             this.process.showMessage('Requisito Actualizado Correctamente', 'success');
             this.process.processDTO.loading = false;
 
@@ -65,6 +69,7 @@ export default class RequirementStore {
         runInAction(() => {
 
             const { data } = response;
+            console.log('dataResponseDeleteRequirement', data);
             this.process.showMessage('Requisito Eliminado Correctamente', 'success');
             this.process.processDTO.loading = false;
 

@@ -10,43 +10,25 @@ class RequirementServices extends ServiceBase {
     }
 
     addRequirement = async (addRequirementDTO, subjectCode) => {
+      console.log('addRequirementDTOServices', addRequirementDTO)
+      console.log('subjectCodeServices', subjectCode)
       this.setHeaders();
       const requestUrl = 
-               `${this.url}/
-                ${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/
-                ${this.urls.GET_PROGRAMS}/
-                ${this.urls.STUDY_PLAN}/
-                ${this.urls.MATTER}/
-                ${subjectCode}/
-                ${this.urls.REQUIREMENT}`;
+               `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${subjectCode}/${this.urls.REQUIREMENT}`;
       return await this.postRequest(requestUrl, addRequirementDTO)
     };
 
     updateRequirement = async (updateRequirementDTO, subjectCode, requirementId) => {
       this.setHeaders();
       const requestUrl = 
-               `${this.url}/
-                ${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/
-                ${this.urls.GET_PROGRAMS}/
-                ${this.urls.STUDY_PLAN}/
-                ${this.urls.MATTER}/
-                ${subjectCode}/
-                ${this.urls.REQUIREMENT}
-                ${requirementId}`;
+               `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${subjectCode}/${this.urls.REQUIREMENT}${requirementId}`;
       return await this.putRequest(requestUrl, updateRequirementDTO);
     };
 
     deleteRequirement = async (subjectCode, requirementId) => {
       this.setHeaders();
       const requestUrl = 
-               `${this.url}/
-                ${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/
-                ${this.urls.GET_PROGRAMS}/
-                ${this.urls.STUDY_PLAN}/
-                ${this.urls.MATTER}/
-                ${subjectCode}/
-                ${this.urls.REQUIREMENT}
-                ${requirementId}`;
+               `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.GET_PROGRAMS}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${subjectCode}/${this.urls.REQUIREMENT}${requirementId}`;
       return await this.deleteRequest(requestUrl);
     };
 

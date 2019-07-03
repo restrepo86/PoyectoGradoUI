@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
+import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -53,7 +54,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                   {trainingComponentsData.map(trainingComponent =>
                     <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
                   )}
-              </Select>
+                </Select>
               
               )}
             </Form.Item>
@@ -131,6 +132,37 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
     };
 
+    state = {
+      visible: false,
+    };
+  
+    showModalAddRequirement = () => {
+      this.setState({ visible: true });
+    };
+  
+    handleCancelAddRequirement = () => {
+      this.setState({ visible: false });
+    };
+  
+    handleCreateAddRequirement = (subjectCode, requirementStore) => {
+      const { form } = this.formRef.props;
+      form.validateFields((err, values) => {
+        if (err) {
+          return;
+        }
+        console.log('subjectCode', subjectCode);
+        console.log('Received values of form: ', values);
+        const addRequirementDTO = new AddRequirementDTO(values.codigoRequisito, values.tipoRequisito);
+        requirementStore.addRequirement(addRequirementDTO, subjectCode);
+        form.resetFields();
+        this.setState({ visible: false });
+      });
+    };
+  
+    saveFormRefAddRequirement = formRef => {
+      this.formRef = formRef;
+    };
+
     render() {
 
       const {
@@ -143,7 +175,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
         trainingComponentsData,
         mattersStore,
         programId, 
-        inp
+        inp,
+        requirementStore
       } = this.props;
 
       const { getFieldDecorator } = form;
@@ -262,12 +295,26 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               <br />
             
             <center>
+              
+              <div>
 
-              <Button
-                onClick = {() => this.addRequirement(subjectData.gDriveFolderId, mattersStore, programId, inp)}
-              >
-                Agregar Requisito
-              </Button>
+                <Button
+                  onClick = {() => this.showModalAddRequirement()}
+                >
+                  Agregar Requisito
+                </Button>
+
+                <AddRequirement
+                  wrappedComponentRef={this.saveFormRefAddRequirement}
+                  visible={this.state.visible}
+                  onCancel={this.handleCancelAddRequirement}
+                  onCreate={() => this.handleCreateAddRequirement(subjectData.codigo, requirementStore)}
+                  mattersData={mattersStore.mattersData}
+                  subjectData={subjectData}
+                />
+
+              </div>
+              
 
               <Button
                 onClick = {() => this.deleteRequirement(subjectData.gDriveFolderId, mattersStore, programId, inp)}
@@ -283,6 +330,59 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
     }
   }
 );
+
+const AddRequirement = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form, mattersData, subjectData } = this.props;
+      const { getFieldDecorator } = form;
+
+      console.log('dataaaaaaaaa', mattersData);
+      return (
+        <Modal
+          visible={visible}
+          title="Agregar Requisito"
+          okText="Agregar Requisito"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+            <Form.Item label="Tipo de Requisito">
+              {getFieldDecorator('tipoRequisito', {
+                rules: [{ required: true, message: 'Debe seleccionar un tipo de requisito!' }],
+              })(
+                <Select>
+                  
+                    <Option value='Prerequisito'>Prerequisito</Option>
+                    <Option value='Corequisito'>Corequisito</Option>
+                    <Option value='Requisito de Nivel'>Requisito de Nivel</Option>
+                  
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item label="Requisito">
+              {getFieldDecorator('codigoRequisito', {
+                rules: [{ required: true, message: 'Debe seleccionar un requisito!' }],
+              })(
+                
+                <Select>
+                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo != subjectData.codigo))
+                    .map(matterData =>
+                      <Option value={matterData.codigo}>{matterData.nombre}</Option>
+                    )}
+                </Select>
+
+              )}
+            </Form.Item>
+            
+          </Form>
+        </Modal>
+      );
+    }
+  },
+);
+
 
   
 const columnsNames = [{
@@ -336,6 +436,7 @@ class DetailStudyPlan extends React.Component {
     this.process = this.props.stores.process;
     this.inpComponentStore = this.props.stores.inpComponentStore;
     this.trainingComponentStore = this.props.stores.trainingComponentStore;
+    this.requirementStore = this.props.stores.requirementStore;
 
   }
   
@@ -552,6 +653,7 @@ class DetailStudyPlan extends React.Component {
             mattersStore={this.matters}
             programId={this.inpComponentStore.inpData.programId}
             inp={this.inpComponentStore.inpData.id}
+            requirementStore={this.requirementStore}
           />
         </center>
 
