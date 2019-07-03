@@ -128,7 +128,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
     state = {
       visible: false,
-      visibleModalUpdate: false
+      visibleModalUpdate: false,
+      visibleModalDelete: false
     };
   
     showModalAddRequirement = () => {
@@ -179,6 +180,30 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   
     saveFormRefUpdateRequirement = formRefUpdateRequirement => {
       this.formRefUpdateRequirement = formRefUpdateRequirement;
+    };
+
+    showModalDeleteRequirement = () => {
+      this.setState({ visibleModalDelete: true });
+    };
+  
+    handleCancelDeleteRequirement = () => {
+      this.setState({ visibleModalDelete: false });
+    };
+  
+    handleCreateDeleteRequirement = (subjectCode, requirementStore) => {
+      const { form } = this.formRefDeleteRequirement.props;
+      form.validateFields((err, values) => {
+        if (err) {
+          return;
+        }  
+        requirementStore.deleteRequirement(subjectCode, values.codigoRequisito);
+        form.resetFields();
+        this.setState({ visibleModalDelete: false });
+      });
+    };
+  
+    saveFormRefDeleteRequirement = formRefDeleteRequirement => {
+      this.formRefDeleteRequirement = formRefDeleteRequirement;
     };
 
     render() {
@@ -333,6 +358,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
 
                 <Button
+                  disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
                   onClick = {() => this.showModalUpdateRequirement()}
                 >
                   Actualizar Requisito
@@ -346,11 +372,21 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                   requisitos={subjectData.requisitos}
                 />
 
+
                 <Button
-                  onClick = {() => this.deleteRequirement(subjectData.gDriveFolderId, mattersStore, programId, inp)}
+                  disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
+                  onClick = {() => this.showModalDeleteRequirement()}
                 >
                   Eliminar Requisito
                 </Button>
+
+                <DeleteRequirement
+                  wrappedComponentRef={this.saveFormRefDeleteRequirement}
+                  visible={this.state.visibleModalDelete}
+                  onCancel={this.handleCancelDeleteRequirement}
+                  onCreate={() => this.handleCreateDeleteRequirement(subjectData.codigo, requirementStore)}
+                  requisitos={subjectData.requisitos}
+                />
               
                 </div>
 
@@ -467,6 +503,44 @@ const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
   },
 );
   
+const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form, requisitos } = this.props;
+      const { getFieldDecorator } = form;
+
+      return (
+        <Modal
+          visible={visible}
+          title="Eliminar Requisito"
+          okText="Eliminar Requisito"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+
+            <Form.Item label="Seleccione el requisito que desea eliminar">
+              {getFieldDecorator('codigoRequisito', {
+                rules: [{ required: true, message: 'Debe seleccionar un requisito!' }],
+              })(
+                
+                <Select>
+                  {requisitos.map(requisito =>
+                      <Option value={requisito.id}>{requisito.codigo}</Option>
+                    )}
+                </Select>
+
+              )}
+            </Form.Item>
+            
+          </Form>
+        </Modal>
+      );
+    }
+  },
+);
+
 const columnsNames = [{
   dataIndex: 'semestre1',
   title: 'Nivel 1',
