@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input } from "antd";
+import { List, Card, Button, Modal, Form, Input, Icon, Divider } from "antd";
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
 import "./index.css";
 
@@ -128,14 +128,22 @@ class TrainingComponents extends React.Component {
                   <List.Item>
                         <Card 
                           title={trainingComponent.abreviatura}
-                          extra={<span style={{
-                            backgroundColor:trainingComponent.color,
-                            height: '25px',
-                            width: '25px',
-                            borderRadius: '50%',
-                            display: 'inline-block'  
-                          }} ></span>}
-                          hoverable={true}
+                          extra={
+                            <div>
+                              <span style={{
+                                backgroundColor:trainingComponent.color,
+                                height: '25px',
+                                width: '25px',
+                                borderRadius: '50%',
+                                display: 'inline-block'  
+                              }}></span>
+                              <Divider type="vertical" />
+                              <a target="Edit" onClick={this.showModal}>
+                                <Icon type="edit" />
+                              </a>
+                            
+                            </div>
+                          }
                           >
                             <p>{trainingComponent.nombre}</p>
                         </Card>

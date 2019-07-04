@@ -65,7 +65,7 @@ class LayoutComponent extends React.Component {
           theme="light"
         >
           <img src={LogoUco} className="LogoUco" alt="LogoUco" />
-          <Menu style={style.parentMenu} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
+          <Menu theme={"light"} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
             
             <Menu.Item key="programs">
               <Icon type="book" theme="filled" />

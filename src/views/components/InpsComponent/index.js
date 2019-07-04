@@ -46,11 +46,7 @@ class InpsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.programsComponentStore = this.props.stores.programsComponentStore;
-<<<<<<< Updated upstream
     this.programId = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData.id : null;
-=======
-    this.sniesCode = this.programsComponentStore.programClickData.programData.id;
->>>>>>> Stashed changes
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
   }
