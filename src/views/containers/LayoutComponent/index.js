@@ -24,7 +24,7 @@ const {
 const style = {
   parentMenu : {
     background:'#026F35',
-    color: 'white'
+    color: '#a3a7ab'
   }
 }
 
@@ -65,16 +65,18 @@ class LayoutComponent extends React.Component {
           theme="light"
         >
           <img src={LogoUco} className="LogoUco" alt="LogoUco" />
-          <Menu style={style.parentMenu} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
+          <Menu theme={"light"} defaultSelectedKeys={[this.state.selectedMenuItem]} mode="inline">
             
             <Menu.Item key="programs">
-              <Icon type="desktop" />
-              <span><Link to="/main/programs">Programas</Link></span>
+              <Icon type="book" theme="filled" />
+              <span>Programas</span>
+              <Link to="/main/programs">Programas</Link>
             </Menu.Item>
 
             <Menu.Item key="trainingComponents">
-              <Icon type="desktop" />
-              <span><Link to="/main/training/components">Componentes de Formación</Link></span>
+              <Icon type="tag" theme="filled"/>
+              <span>Componentes de formacion</span>
+              <Link to="/main/training/components"></Link>
             </Menu.Item>
 
           </Menu>

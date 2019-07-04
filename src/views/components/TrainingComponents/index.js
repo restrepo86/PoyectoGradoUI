@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input } from "antd";
+import { List, Card, Button, Modal, Form, Input, Icon, Divider, Tooltip } from "antd";
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
 import UpdatetrainingComponentDTO from '../../../dto/UpdateTrainingComponentDTO';
 import "./index.css";
@@ -113,7 +113,6 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
   }
 );
 
-
 @observer
 class TrainingComponents extends React.Component {
 
@@ -207,47 +206,59 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{ gutter: 10, column: 3 }}
+              grid={{ gutter: 8, column: 4 }}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
-                    <Button 
-                        style={{ 
-                            color: '#fff',
-                            height: 'auto',  
-                        }}
-                        onClick={() => this.updateShowModal(trainingComponent)}
-                    >
                         <Card 
-                          title={trainingComponent.nombre}
-                          bodyStyle={{ background: trainingComponent.color }}>
-                            {`Abreviatura: ${trainingComponent.abreviatura}`}
-                            <br />
-                            <br />
+                          title={trainingComponent.abreviatura}
+                          extra={
+                            <div>
+                              <span style={{
+                                backgroundColor:trainingComponent.color,
+                                height: '25px',
+                                width: '25px',
+                                borderRadius: '50%',
+                                display: 'inline-block'  
+                              }}>
+                              </span>
+                              <Divider type="vertical" />
+                              <a>
+                              <Tooltip placement="top" title={"Editar Componente"}>
+                                <Icon type="edit" onClick={() => this.updateShowModal(trainingComponent)}/>
+                              </Tooltip>
+                              </a>
+                            
+                            </div>
+                          }
+                          >
+                            <p>{trainingComponent.nombre}</p>
                         </Card>
-                    </Button>
-                    
-                    <UpdateCreateForm
-                      wrappedComponentRef={this.updateFormRef}
-                      visible={this.state.visibleUpdateModal}
-                      onCancel={this.updateHandleCancel}
-                      onCreate={this.updateHandleCreate}
-                      trainingComponentData = {this.state.trainingComponent}
-                    />
-
+                        <UpdateCreateForm
+                          wrappedComponentRef={this.updateFormRef}
+                          visible={this.state.visibleUpdateModal}
+                          onCancel={this.updateHandleCancel}
+                          onCreate={this.updateHandleCreate}
+                          trainingComponentData = {this.state.trainingComponent}
+                        />
                   </List.Item>
                 )}
             />
             <br />
               <center>
-                
+              <Tooltip placement="top" title={"Agregar Componente de formación"}>
                 <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  type="primary"
+                  shape="circle"
+                  size="large"
+                  style={{ backgroundColor: '#026F35', borderColor:'#026F35', color: '#fff' }}
                   onClick={this.showModal}
                 >
-                  Agregar Componente de Formación
+
+                    <Icon type="plus"/>
+                  
                 </Button>
+                </Tooltip>
                
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
@@ -266,4 +277,3 @@ class TrainingComponents extends React.Component {
 }
 
 export default TrainingComponents;
-

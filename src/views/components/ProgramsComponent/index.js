@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Button } from 'antd';
+import { List, Button, Card, Icon, Tooltip } from 'antd';
 import { observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -51,17 +51,24 @@ class ProgramsComponent extends React.Component {
             dataSource={ this.registerProgramStore.programsData }
             renderItem={item => (
               <List.Item>
-                <List.Item.Meta
-                  title={
-                    <center>
-                      <Button
-                        onClick={() => this.clickProgramAction(item)}
-                      >
-                        {item.title}
-                      </Button>
-                    </center>
+                <center>
+                <Card 
+                  title={item.title} 
+                  extra={
+                    <a>
+                      <Link to = '/main/programs/update/program'>
+                        <Tooltip placement="top" title={"Editar Programa"}>
+                          <Icon type="edit" />
+                        </Tooltip>
+                      </Link>
+                    </a>
                   }
-                />
+                  onClick = {() => this.clickProgramAction(item)}
+                  hoverable = "true"
+                >
+                    Codigo SNIES: {item.programData.codigoSnies}
+                </Card>
+                </center>
               </List.Item>
             )}
           />
