@@ -213,7 +213,6 @@ class TrainingComponents extends React.Component {
                   <List.Item>
                     <Button 
                         style={{ 
-                            backgroundColor: '#026F35', 
                             color: '#fff',
                             height: 'auto',  
                         }}
