@@ -7,7 +7,7 @@ class StudyPlanService extends ServiceBase {
         this.url = url;
         this.headers = '';
         this.setHeaders();
-    }
+    };
 
     getStudyPlan = async (sniesCode) => {
        this.setHeaders();
@@ -19,12 +19,18 @@ class StudyPlanService extends ServiceBase {
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}`;
       return await this.postRequest(requestUrl, studyPlanRequestDTO)
-    }
+    };
 
     deleteStudyPlan = async (programId, inp) => {
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}`;
       return await this.deleteRequest(requestUrl);
+    };
+
+    getReportSubjectsByInp = async (programId, inp) => {  
+      this.setHeaders();
+      const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.REPORT}`;
+      return await this.getRequest({}, requestUrl)
     };
 
 }

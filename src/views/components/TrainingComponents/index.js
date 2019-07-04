@@ -277,4 +277,3 @@ class TrainingComponents extends React.Component {
 }
 
 export default TrainingComponents;
-

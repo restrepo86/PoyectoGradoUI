@@ -6,6 +6,7 @@ export default class StudyPlan {
   @observable process;
   @observable studyPlanData = [];
   @observable studyPlanDeleted = false;
+  @observable reportSubjectsByInpData;
 
   constructor(studyPlanService, process) {
     this.studyPlanService = studyPlanService;
@@ -71,6 +72,23 @@ export default class StudyPlan {
 
   };
 
+  @action
+  getReportSubjectsByInp = (programId, inp) => {
+
+    this.studyPlanService.getReportSubjectsByInp(programId, inp)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.reportSubjectsByInpData = data;
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+      });
+  };
+
+  
   setStudyPlanDeleted = (studyPlanDeleted) => {
     this.studyPlanDeleted = studyPlanDeleted;
   };
