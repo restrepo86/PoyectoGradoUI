@@ -25,7 +25,11 @@ class UpdateProgramComponent extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const programUpdateRequestDTO = new ProgramUpdateRequestDTO(values.updateProgramId, values.newProgramName);
+
+        const programSelected =   
+          this.programsData.filter(program => program.programData.id === values.updateProgramId)[0];
+
+        const programUpdateRequestDTO = new ProgramUpdateRequestDTO(programSelected.programData.codigoSnies, values.newProgramName);
         this.programStore.updateProgramsData(values.updateProgramId, programUpdateRequestDTO);
       }
     });
