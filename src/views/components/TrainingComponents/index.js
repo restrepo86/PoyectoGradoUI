@@ -1,8 +1,9 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input, Icon, Divider } from "antd";
+import { List, Card, Button, Modal, Form, Input, Icon, Divider, Tooltip } from "antd";
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
+import UpdatetrainingComponentDTO from '../../../dto/UpdateTrainingComponentDTO';
 import "./index.css";
 
 
@@ -57,6 +58,61 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   }
 );
 
+const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
+
+  class extends React.Component {
+    render() {
+      const {
+        visible, onCancel, onCreate, form, trainingComponentData
+      } = this.props;
+      
+      const { getFieldDecorator } = form;
+      
+      return (
+        <Modal
+          visible={visible}
+          title="Actualizar Componente de Formación"
+          okText="Actualizar"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+        
+          <Form layout="vertical">
+
+            <Form.Item label="Nombre">
+              {getFieldDecorator('nombre', {
+                initialValue: trainingComponentData.nombre,
+                rules: [{ required: true, message: 'por favor ingrese un nombre para el componente de formación!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Abreviatura">
+              {getFieldDecorator('abreviatura', {
+                initialValue: trainingComponentData.abreviatura,
+                rules: [{ required: true, message: 'por favor ingrese una abreviatura para el componente de formación!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+            <Form.Item label="Color">
+              {getFieldDecorator('color', {
+                initialValue: trainingComponentData.color,
+                rules: [{ required: true, message: 'por favor ingrese un color para el componente de formación!' }],
+              })(
+                <Input />
+              )}
+            </Form.Item>
+
+          </Form>
+        </Modal>
+      );
+    }
+  }
+);
+
 @observer
 class TrainingComponents extends React.Component {
 
@@ -69,7 +125,18 @@ class TrainingComponents extends React.Component {
 
     redirect: false,
     visible: false,
+    visibleUpdateModal: false,
+    trainingComponent: {}
 
+  }
+
+  componentDidMount() {
+
+    if (!this.trainingComponentStore.trainingComponentsData || this.trainingComponentStore.updateSuccess) {
+        this.trainingComponentStore.getTrainingComponents();
+        this.trainingComponentStore.setUpdateSuccess(false);
+    }
+    
   }
 
   saveFormRef = (formRef) => {
@@ -99,18 +166,35 @@ class TrainingComponents extends React.Component {
     });
   }
 
-  componentDidMount() {
-
-    if (!this.trainingComponentStore.trainingComponentsData) {
-        this.trainingComponentStore.getTrainingComponents();
-    }
-    
+  updateFormRef = (updateForm) => {
+    this.updateForm = updateForm;
   }
-  /**
-    onClickTrainingComponentButton = (trainingComponent) => {
-      console.log('componente de Formacion', trainingComponent)
-    }
- */
+
+  updateHandleCancel = () => {
+    this.setState({ visibleUpdateModal: false });
+  }
+
+  updateShowModal = (trainingComponent) => {
+    this.setState({ visibleUpdateModal: true, trainingComponent: trainingComponent });
+  }
+
+  updateHandleCreate = () => {
+    const form = this.updateForm.props.form;
+    form.validateFields((err, values) => {
+
+      if (err) {
+        return;
+      }
+      console.log('training', this.state.trainingComponent.id)
+      console.log('updateValues', values);
+      const updatetrainingComponentDTO = new UpdatetrainingComponentDTO(values.nombre, values.abreviatura, values.color);
+      this.trainingComponentStore.updateTrainigComponent(updatetrainingComponentDTO, this.state.trainingComponent.id);
+
+      form.resetFields();
+      this.setState({ visibleUpdateModal: false });
+    });
+  }
+
   render() {
       
       const { redirect } = this.state;
@@ -136,10 +220,13 @@ class TrainingComponents extends React.Component {
                                 width: '25px',
                                 borderRadius: '50%',
                                 display: 'inline-block'  
-                              }}></span>
+                              }}>
+                              </span>
                               <Divider type="vertical" />
-                              <a target="Edit" onClick={this.showModal}>
-                                <Icon type="edit" />
+                              <a>
+                              <Tooltip placement="top" title={"Editar Componente"}>
+                                <Icon type="edit" onClick={() => this.updateShowModal(trainingComponent)}/>
+                              </Tooltip>
                               </a>
                             
                             </div>
@@ -147,31 +234,39 @@ class TrainingComponents extends React.Component {
                           >
                             <p>{trainingComponent.nombre}</p>
                         </Card>
+                        <UpdateCreateForm
+                          wrappedComponentRef={this.updateFormRef}
+                          visible={this.state.visibleUpdateModal}
+                          onCancel={this.updateHandleCancel}
+                          onCreate={this.updateHandleCreate}
+                          trainingComponentData = {this.state.trainingComponent}
+                        />
                   </List.Item>
                 )}
             />
             <br />
               <center>
+              <Tooltip placement="top" title={"Agregar Componente de formación"}>
                 <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  type="primary"
+                  shape="circle"
+                  size="large"
+                  style={{ backgroundColor: '#026F35', borderColor:'#026F35', color: '#fff' }}
                   onClick={this.showModal}
                 >
-                  Agregar Componente de Formación
+
+                    <Icon type="plus"/>
+                  
                 </Button>
-                <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  onClick={this.updateStudyPlan}
-                >
-                  Actualizar Componente de Formación
-                </Button>
+                </Tooltip>
+               
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
                   visible={this.state.visible}
                   onCancel={this.handleCancel}
                   onCreate={this.handleCreate}
                 />
+
               </center>
             
           </div>
