@@ -55,7 +55,9 @@ class ProgramsComponent extends React.Component {
                 <Card 
                   title={item.title} 
                   extra={
-                    <a>
+                    <a
+                      onClick = {(e) => {e.stopPropagation();}}
+                    >
                       <Link to = '/main/programs/update/program'>
                         <Tooltip placement="top" title={"Editar Programa"}>
                           <Icon type="edit" />
