@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input } from "antd";
+import { List, Card, Button, Modal, Form, Input, Tooltip, Divider } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 
@@ -119,20 +119,29 @@ class InpsComponent extends React.Component {
               dataSource={this.studyPlan.studyPlanData}
                 renderItem={item => (
                   <List.Item>
-                    <Button 
-                        style={{ 
-                            backgroundColor: '#026F35', 
-                            color: '#fff',
-                            height: 'auto'    
-                        }}
-                        onClick={() => this.onClickInpButton(item)}
-                    >
-                        <Card title={item.inp}>
-                          {`Creditos: ${item.creditos}`}<br />
-                          {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
-                          {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
-                        </Card>
-                    </Button>
+
+                    <Card
+                      style={{textAlignVertical: "center",textAlign: "center",}}
+                      title={item.inp} 
+                      extra={
+                        <Tooltip placement="top" title={"Descargar Reporte"}>
+                          <Button 
+                            type="primary" 
+                            shape="circle" 
+                            icon="download" 
+                            onClick = {(e) => {e.stopPropagation()}}
+                          />
+                        </Tooltip>
+                      }
+                      onClick={() => this.onClickInpButton(item)}
+                      hoverable = "true"
+                    > 
+                      <p style={{textAlignVertical: "center",textAlign: "center",}}>
+                        Creditos: {item.creditos} <br/>
+                        Creado {(item.fechaDeRegistro).substring(0, 10)} <br/>
+                        Modificado {(item.fechaDeModificacion).substring(0, 10)}
+                      </p>
+                    </Card>
                   </List.Item>
                 )}
             />
