@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Table, pagination, Form, Input, Modal, Button, Select } from 'antd';
+import { Table, pagination, Form, Input, Modal, Button, Select, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
@@ -121,7 +121,6 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   class extends React.Component {
 
     deleteSubject = (subjectId, mattersStore, programId, inp) => {
-      console.log(programId, inp)
       mattersStore.deleteMatterData(programId, inp, subjectId);
     };
 
@@ -225,6 +224,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       const { getFieldDecorator } = form;
       const Option = Select.Option;
       const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
+      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
 
       return (
         <Modal
@@ -328,13 +328,39 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             <center>
 
               <Button
+              
                 onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
               >
                 Eliminar
               </Button>
-
+                
             </center>
             
+              <br />
+              <div>
+
+                Prerequisitos <br/>
+                { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
+                  .map(prerequisito => 
+                      <Tag color="#026F35">{ prerequisito.codigo }</Tag>
+                  ) 
+                }
+
+                <br/>Corequisitos <br/>
+                { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
+                  .map(corequisito => 
+                      <Tag color="#026F35">{ corequisito.codigo }</Tag>
+                  ) 
+                }
+
+                <br/>Requisitos de Nivel <br/>
+                { requisitos.filter(requisito => requisito.tipo === 'Requisito de nivel')
+                  .map(requisitoDeNivel => 
+                      <Tag color="#026F35">{ requisitoDeNivel.codigo }</Tag>
+                  ) 
+                }
+              
+              </div>
               <br />
             
             <center>
@@ -543,43 +569,43 @@ const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
 
 const columnsNames = [{
   dataIndex: 'semestre1',
-  title: 'Nivel 1',
+  title: 'semestre 1',
   key: "1",
 }, {
   dataIndex: 'semestre2',
-  title: 'Nivel 2',
+  title: 'semestre 2',
   key: "2",
 }, {
   dataIndex: 'semestre3',
-  title: 'Nivel 3',
+  title: 'semestre 3',
   key: "3",
 }, {
   dataIndex: 'semestre4',
-  title: 'Nivel 4',
+  title: 'semestre 4',
   key: "4",
 }, {
   dataIndex: 'semestre5',
-  title: 'Nivel 5',
+  title: 'semestre 5',
   key: "5",
 }, {
   dataIndex: 'semestre6',
-  title: 'Nivel 6',
+  title: 'semestre 6',
   key: "6",
 }, {
   dataIndex: 'semestre7',
-  title: 'Nivel 7',
+  title: 'semestre 7',
   key: "7",
 }, {
   dataIndex: 'semestre8',
-  title: 'Nivel 8',
+  title: 'semestre 8',
   key: "8",
 }, {
   dataIndex: 'semestre9',
-  title: 'Nivel 9',
+  title: 'semestre 9',
   key: "9",
 }, {
   dataIndex: 'semestre10',
-  title: 'Nivel 10',
+  title: 'semestre 10',
   key: "10",
 }];
 
@@ -757,6 +783,7 @@ class DetailStudyPlan extends React.Component {
       }
     }
     const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
+    console.log('dataTable', semesters);
     return semesters;
     
   };
@@ -775,7 +802,6 @@ class DetailStudyPlan extends React.Component {
       <div>
         
         <Table
-          rowKey={record => record.uid}
           columns={columnsNames}
           dataSource={this.mattersBySemester(this.matters.mattersData)}
           scroll={{ x: 2300 }}
