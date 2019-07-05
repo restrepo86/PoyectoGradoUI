@@ -206,7 +206,7 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{ gutter: 8, column: 4 }}
+              grid={{gutter: 16, column: 3}}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
