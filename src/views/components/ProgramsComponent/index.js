@@ -47,7 +47,7 @@ class ProgramsComponent extends React.Component {
       return(
         <div>
           <List
-            itemLayout="horizontal"
+            grid={{gutter: 16, column: 3}}
             dataSource={ this.registerProgramStore.programsData }
             renderItem={item => (
               <List.Item>
