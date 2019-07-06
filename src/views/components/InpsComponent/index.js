@@ -49,22 +49,22 @@ class InpsComponent extends React.Component {
     this.programId = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData.id : null;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
-  }
+  };
 
   state = {
 
     redirect: false,
     visible: false,
 
-  }
+  };
 
   showModal = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     const form = this.formRef.props.form;
@@ -79,11 +79,11 @@ class InpsComponent extends React.Component {
       form.resetFields();
       this.setState({ visible: false });
     });
-  }
+  };
 
   saveFormRef = (formRef) => {
     this.formRef = formRef;
-  }
+  };
 
 
   componentDidMount() {
@@ -94,14 +94,21 @@ class InpsComponent extends React.Component {
     this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.programId);
     this.studyPlan.setStudyPlanDeleted(false);
-  }
+  };
 
   onClickInpButton = (item) => {
 
     this.inpComponentStore.setInpData(item);
     this.setState({ redirect: true }); 
     
-  }
+  };
+
+  onClickDownloadReport = async (e, inpSelected) => {
+    
+    e.stopPropagation();
+    this.studyPlan.getReportSubjectsByInp(inpSelected.programId, inpSelected.inp);
+    
+  };
 
   render() {
       
@@ -129,7 +136,7 @@ class InpsComponent extends React.Component {
                             type="primary" 
                             shape="circle" 
                             icon="download" 
-                            onClick = {(e) => {e.stopPropagation()}}
+                            onClick = {(e) => {this.onClickDownloadReport(e, item)}}
                           />
                         </Tooltip>
                       }

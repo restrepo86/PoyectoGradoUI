@@ -1,4 +1,5 @@
-import { observable, runInAction, action } from 'mobx';
+import { observable, runInAction, action, autorun } from 'mobx';
+import FileSaver from 'file-saver';
 
 export default class StudyPlan {
 
@@ -73,9 +74,9 @@ export default class StudyPlan {
   };
 
   @action
-  getReportSubjectsByInp = (programId, inp) => {
+  getReportSubjectsByInp = async (programId, inp) => {
 
-    this.studyPlanService.getReportSubjectsByInp(programId, inp)
+    await this.studyPlanService.getReportSubjectsByInp(programId, inp)
       .then(response => {
         runInAction(() => {
           const { data } = response;
@@ -87,6 +88,18 @@ export default class StudyPlan {
         this.process.showMessage(message, 'error');
       });
   };
+
+  download = autorun(() => {
+    if (this.reportSubjectsByInpData) {
+      const blob = new Blob([this.reportSubjectsByInpData], { 'type': 'application/vnd.ms-excel' });
+      FileSaver.saveAs(
+         blob,
+          'INFORME_PLAN_DE_ESTUDIO'
+            .concat('.xls')
+      );
+    }
+    this.fileBytes = null;
+  });
 
   
   setStudyPlanDeleted = (studyPlanDeleted) => {
