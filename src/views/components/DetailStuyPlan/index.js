@@ -325,6 +325,13 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
+            <div>
+                Fecha de Creación { ( subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '' ).substring(0, 10) }
+                <br/>
+                Fecha de Modificación { ( subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '' ).substring(0, 10) }
+                <br/><br/>
+            </div>
+
             <center>
 
               <Button
