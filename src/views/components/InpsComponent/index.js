@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input } from "antd";
+import { List, Card, Button, Modal, Form, Input, Tooltip, Divider } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 
@@ -49,22 +49,22 @@ class InpsComponent extends React.Component {
     this.programId = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData.id : null;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
-  }
+  };
 
   state = {
 
     redirect: false,
     visible: false,
 
-  }
+  };
 
   showModal = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     const form = this.formRef.props.form;
@@ -79,11 +79,11 @@ class InpsComponent extends React.Component {
       form.resetFields();
       this.setState({ visible: false });
     });
-  }
+  };
 
   saveFormRef = (formRef) => {
     this.formRef = formRef;
-  }
+  };
 
 
   componentDidMount() {
@@ -94,14 +94,21 @@ class InpsComponent extends React.Component {
     this.programsComponentStore.setProgramClickSuccess(false);
     this.studyPlan.getStudyPlanData(this.programId);
     this.studyPlan.setStudyPlanDeleted(false);
-  }
+  };
 
   onClickInpButton = (item) => {
 
     this.inpComponentStore.setInpData(item);
     this.setState({ redirect: true }); 
     
-  }
+  };
+
+  onClickDownloadReport = async (e, inpSelected) => {
+    
+    e.stopPropagation();
+    this.studyPlan.getReportSubjectsByInp(inpSelected.programId, inpSelected.inp);
+    
+  };
 
   render() {
       
@@ -119,20 +126,29 @@ class InpsComponent extends React.Component {
               dataSource={this.studyPlan.studyPlanData}
                 renderItem={item => (
                   <List.Item>
-                    <Button 
-                        style={{ 
-                            backgroundColor: '#026F35', 
-                            color: '#fff',
-                            height: 'auto'    
-                        }}
-                        onClick={() => this.onClickInpButton(item)}
-                    >
-                        <Card title={item.inp}>
-                          {`Creditos: ${item.creditos}`}<br />
-                          {`Fecha de Registro: ${(item.fechaDeRegistro).substring(0, 10)}`}<br />
-                          {`Fecha de Modificación: ${(item.fechaDeModificacion).substring(0, 10)}`}<br />
-                        </Card>
-                    </Button>
+
+                    <Card
+                      style={{textAlignVertical: "center",textAlign: "center",}}
+                      title={item.inp} 
+                      extra={
+                        <Tooltip placement="top" title={"Descargar Reporte"}>
+                          <Button 
+                            type="primary" 
+                            shape="circle" 
+                            icon="download" 
+                            onClick = {(e) => {this.onClickDownloadReport(e, item)}}
+                          />
+                        </Tooltip>
+                      }
+                      onClick={() => this.onClickInpButton(item)}
+                      hoverable = "true"
+                    > 
+                      <p style={{textAlignVertical: "center",textAlign: "center",}}>
+                        Creditos: {item.creditos} <br/>
+                        Creado {(item.fechaDeRegistro).substring(0, 10)} <br/>
+                        Modificado {(item.fechaDeModificacion).substring(0, 10)}
+                      </p>
+                    </Card>
                   </List.Item>
                 )}
             />

@@ -47,7 +47,7 @@ class ProgramsComponent extends React.Component {
       return(
         <div>
           <List
-            itemLayout="horizontal"
+            grid={{gutter: 16, column: 3}}
             dataSource={ this.registerProgramStore.programsData }
             renderItem={item => (
               <List.Item>
@@ -55,7 +55,9 @@ class ProgramsComponent extends React.Component {
                 <Card 
                   title={item.title} 
                   extra={
-                    <a>
+                    <a
+                      onClick = {(e) => {e.stopPropagation();}}
+                    >
                       <Link to = '/main/programs/update/program'>
                         <Tooltip placement="top" title={"Editar Programa"}>
                           <Icon type="edit" />

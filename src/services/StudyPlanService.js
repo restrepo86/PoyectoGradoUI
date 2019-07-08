@@ -30,7 +30,7 @@ class StudyPlanService extends ServiceBase {
     getReportSubjectsByInp = async (programId, inp) => {  
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.REPORT}`;
-      return await this.getRequest({}, requestUrl)
+      return await this.getBinaryRequest({}, requestUrl)
     };
 
 }

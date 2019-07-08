@@ -52,6 +52,20 @@ class ServiceBase {
         return this.resolvePromise(response);
     };
 
+    getBinaryRequest = (params, url) => {
+        url = this.replacePathParams(url, params);
+        const { headers } = this;
+        const serviceData = {
+           method: 'GET',
+           url: `${url}`,
+           headers,
+           responseType: 'arraybuffer',
+        };
+        const response = this.myInvoke(serviceData);
+        return this.resolvePromise(response);
+    };
+
+
     postRequest = async (url, data) => {
         const { headers } = this;
         const serviceData = {
