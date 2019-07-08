@@ -20,14 +20,14 @@ class CardMatter extends Component {
             <Card
                 bodyStyle={{ background: this.props.componenteDeFormacion.color }}
                 actions={[
-                    <li>
+                    <div>
                     <Popover placement="leftBottom" content={content} title="Title">
                         {this.props.componenteDeFormacion.codigo},
                     </Popover>
-                    </li>,
-                    <li>{this.props.creditos}</li>,
-                    <li>{this.props.horasTeoricas}</li>,
-                    <li>{this.props.horasLaboratorio}</li>
+                    </div>,
+                    <div>{this.props.creditos}</div>,
+                    <div>{this.props.horasTeoricas}</div>,
+                    <div>{this.props.horasLaboratorio}</div>
                 ]}
             >
                 <Meta 

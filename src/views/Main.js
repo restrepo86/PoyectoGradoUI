@@ -23,12 +23,6 @@ class Main extends React.Component {
                      <Route path="/main" component={(routeProps) => (
                         <LayoutComponent {...routeProps} {...props}/>
                      )} />
-                  <Route exact path="/archivosAsignatura" component={(routeProps) => (
-                     <DriveViewer />
-                  )} />
-                     <Route exact path="/login/register" component={(routeProps) => (
-                        <RegistrationForm {...routeProps} {...props} />
-                     )} />
                   </Switch>
                </Router>
                   
