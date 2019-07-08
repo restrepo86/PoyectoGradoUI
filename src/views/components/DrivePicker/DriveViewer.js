@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import GooglePicker from 'react-google-picker';
 import { Icon, Tooltip } from "antd";
+import PickerConfig from '../../../credentials.json';
 
 class DriveViewer extends Component{
   render(){
    return (
-      <GooglePicker clientId={'522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com'}
-              developerKey={'AIzaSyDw4u6zH5eaYRAr9f_EpEi8274BucRqmwU'}
-              scope={['https://www.googleapis.com/auth/drive.file']}
+      <GooglePicker clientId={PickerConfig.clientId}
+              developerKey={PickerConfig.googlePicker.developerKey}
+              scope={[PickerConfig.googlePicker.scope]}
               onChange={data => console.log('on change:', data)}
               onAuthFailed={data => console.log('on auth failed:', data)}
               multiselect={true}
@@ -34,7 +35,7 @@ class DriveViewer extends Component{
                     .addView(view)
                     .addView(uploadView)
                     .setOAuthToken(oauthToken)
-                    .setDeveloperKey('AIzaSyDw4u6zH5eaYRAr9f_EpEi8274BucRqmwU')
+                    .setDeveloperKey(PickerConfig.googlePicker.developerKey)
                     .setCallback((data)=>{
                       if (data.action === google.picker.Action.PICKED) {
                           var fileId = data.docs[0].id;
