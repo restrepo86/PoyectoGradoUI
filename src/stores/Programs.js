@@ -64,7 +64,7 @@ export default class Programs {
     this.programsService.updateProgram(programId, programUpdateRequestDTO)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
+         
           this.process.showMessage('Programa Actualizado Correctamente', 'success');
           this.process.processDTO.loading = false;
           this.updateSuccess = true;
@@ -83,7 +83,6 @@ export default class Programs {
     this.programsService.deleteProgram(programId)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
           this.deleteSuccess = true;
           this.process.showMessage('Programa Eliminado Correctamente', 'success');
           this.process.processDTO.loading = false;

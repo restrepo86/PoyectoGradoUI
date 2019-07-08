@@ -3,7 +3,6 @@ import { GoogleLogin } from 'react-google-login';
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import LoginUserDTO from '../../../../dto/LoginUserDTO';
-//import JsonConfig from '../../../../credentials.json';
 
 @observer
 class LoginComponent extends React.Component {
@@ -35,7 +34,6 @@ class LoginComponent extends React.Component {
     
             sessionStorage.setItem( 'Authorization', this.loginStore.validateLoginUserResponse.accesstoken );
             sessionStorage.setItem( 'GAuthorization', response.accessToken );
-            this.loginStore.setLoginOutDisabled(false);
             this.loginStore.setIsAuthenticated(true);
 
             

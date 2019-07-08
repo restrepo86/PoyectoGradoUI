@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Table, pagination, Form, Input, Modal, Button, Select, Tag } from 'antd';
-import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
@@ -223,7 +222,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
       const { getFieldDecorator } = form;
       const Option = Select.Option;
-      const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
+      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
       const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
 
       return (
@@ -468,7 +467,7 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
               })(
                 
                 <Select>
-                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo != subjectData.codigo))
+                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo !== subjectData.codigo))
                     .map(matterData =>
                       <Option value={matterData.codigo}>{matterData.nombre}</Option>
                     )}
