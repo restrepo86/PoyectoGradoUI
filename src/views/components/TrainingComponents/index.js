@@ -185,8 +185,7 @@ class TrainingComponents extends React.Component {
       if (err) {
         return;
       }
-      console.log('training', this.state.trainingComponent.id)
-      console.log('updateValues', values);
+ 
       const updatetrainingComponentDTO = new UpdatetrainingComponentDTO(values.nombre, values.abreviatura, values.color);
       this.trainingComponentStore.updateTrainigComponent(updatetrainingComponentDTO, this.state.trainingComponent.id);
 
