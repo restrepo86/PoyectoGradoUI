@@ -24,3 +24,9 @@
   color: #ffffff;
   border-right: #f8c00c
 }
+
+::selection {
+  color: #fff;
+  background: #43985d;
+}
+

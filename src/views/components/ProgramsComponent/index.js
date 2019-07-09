@@ -79,21 +79,21 @@ class ProgramsComponent extends React.Component {
 
             <Button 
               type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              //style={{ backgroundColor: '#026F35', color: '#fff' }}
               
             >
               <Link to='/main/programs/save/program'>Agregar Programa</Link>
             </Button>
             <Button 
               type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              //style={{ backgroundColor: '#026F35', color: '#fff' }}
               
             >
               <Link to = '/main/programs/update/program'>Actualizar Programa</Link>
             </Button>
             <Button 
               type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
+              //style={{ backgroundColor: '#026F35', color: '#fff' }}
               
             >
               <Link to = '/main/programs/delete'>Borrar Programa</Link>

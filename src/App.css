@@ -26,3 +26,37 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+a {
+  color: #43985d;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  -webkit-text-decoration-skip: objects;
+}
+a:hover {
+  color: #63a675;
+}
+a:active {
+  color: #2d7344;
+}
+a:active,
+a:hover {
+  text-decoration: none;
+  outline: 0;
+}
+a[disabled] {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+html {
+  --antd-wave-shadow-color: #43985d;
+}
+
+::selection {
+  color: #fff;
+  background: #43985d;
+}

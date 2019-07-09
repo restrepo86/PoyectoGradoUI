@@ -5,7 +5,7 @@ import {
 import { observer } from 'mobx-react';
 import { Route, Link } from 'react-router-dom';
 import LogoUco from '../../../image/logo-uco.png';
-import './style.css';
+//import './index.css';
 import ProgramsComponent from '../../components/ProgramsComponent';
 import RegisterProgram from '../../components/RegisterProgram';
 import Progress from '../../components/Progress';

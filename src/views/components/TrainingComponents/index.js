@@ -251,7 +251,7 @@ class TrainingComponents extends React.Component {
                   type="primary"
                   shape="circle"
                   size="large"
-                  style={{ backgroundColor: '#026F35', borderColor:'#026F35', color: '#fff' }}
+                  //style={{ backgroundColor: '#026F35', borderColor:'#026F35', color: '#fff' }}
                   onClick={this.showModal}
                 >
 
