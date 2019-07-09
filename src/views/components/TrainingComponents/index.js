@@ -206,7 +206,7 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{gutter: 16, column: 3}}
+              grid={{gutter: 80, column: 3}}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
@@ -218,7 +218,7 @@ class TrainingComponents extends React.Component {
                                 backgroundColor:trainingComponent.color,
                                 height: '25px',
                                 width: '25px',
-                                borderRadius: '50%',
+                                borderRadius: '10%',
                                 display: 'inline-block'  
                               }}>
                               </span>
