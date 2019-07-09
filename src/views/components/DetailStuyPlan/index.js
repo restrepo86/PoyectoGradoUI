@@ -6,6 +6,7 @@ import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
+import DriveViewer from '../../components/DrivePicker/DriveViewer';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -231,13 +232,16 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           style={{ backgroundColor: '#026F35', color: '#fff' }}
           visible={visibleSubject}
           title={nameSubject}
-          okText="Actualizar"
+          okText="Actualizar Asignatura"
           onCancel={onCancel}
           onOk={onCreateSubjectUpdate}
           
         >
           <Form layout="vertical">
-
+            <center>
+              <DriveViewer { ...subjectData } />
+            </center>
+            <br />
             <Form.Item label="Código">
               {getFieldDecorator('codigo', {
                 initialValue: subjectData.codigo,
@@ -337,7 +341,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               
                 onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
               >
-                Eliminar
+                Eliminar Asignatura
               </Button>
                 
             </center>
