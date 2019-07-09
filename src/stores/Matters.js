@@ -20,7 +20,7 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          this.mattersData =  data;//.map((subject, index) => subject['key'] = index);
+          this.mattersData =  data;
         });
       })
       .catch(error => {

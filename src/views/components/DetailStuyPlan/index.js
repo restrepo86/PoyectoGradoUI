@@ -575,43 +575,43 @@ const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
 
 const columnsNames = [{
   dataIndex: 'semestre1',
-  title: 'semestre 1',
+  title: 'Nivel 1',
   key: "1",
 }, {
   dataIndex: 'semestre2',
-  title: 'semestre 2',
+  title: 'Nivel 2',
   key: "2",
 }, {
   dataIndex: 'semestre3',
-  title: 'semestre 3',
+  title: 'Nivel 3',
   key: "3",
 }, {
   dataIndex: 'semestre4',
-  title: 'semestre 4',
+  title: 'Nivel 4',
   key: "4",
 }, {
   dataIndex: 'semestre5',
-  title: 'semestre 5',
+  title: 'Nivel 5',
   key: "5",
 }, {
   dataIndex: 'semestre6',
-  title: 'semestre 6',
+  title: 'Nivel 6',
   key: "6",
 }, {
   dataIndex: 'semestre7',
-  title: 'semestre 7',
+  title: 'Nivel 7',
   key: "7",
 }, {
   dataIndex: 'semestre8',
-  title: 'semestre 8',
+  title: 'Nivel 8',
   key: "8",
 }, {
   dataIndex: 'semestre9',
-  title: 'semestre 9',
+  title: 'Nivel 9',
   key: "9",
 }, {
   dataIndex: 'semestre10',
-  title: 'semestre 10',
+  title: 'Nivel 10',
   key: "10",
 }];
 
@@ -789,9 +789,7 @@ class DetailStudyPlan extends React.Component {
       }
     }
 
-    const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
- 
-    return semesters;
+    return semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
     
   };
 
