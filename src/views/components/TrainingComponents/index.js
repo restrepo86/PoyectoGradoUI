@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { List, Card, Button, Modal, Form, Input, Icon, Divider, Tooltip } from "antd";
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
 import UpdatetrainingComponentDTO from '../../../dto/UpdateTrainingComponentDTO';
-import "./index.css";
+//import "./index.css";
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(

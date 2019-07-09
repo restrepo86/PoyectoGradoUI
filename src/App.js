@@ -1,8 +1,9 @@
 import React from 'react';
 import Main from './views/Main';
 import { observer } from 'mobx-react';
-import './styles/ucoStyle.css';
-//import './styles/variables.less';
+//import './styles/ucoStyle.css';
+//import '~antd/dist/antd.less'; 
+import './styles/variables.less';
 //import './App.css';
 
 
