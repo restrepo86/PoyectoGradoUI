@@ -649,7 +649,7 @@ class DetailStudyPlan extends React.Component {
     
     const form = this.formRefAddSubject.props.form;
     form.validateFields((err, values) => {
-      console.log('values', values)
+
       if (err) {
         return;
       }
@@ -685,7 +685,7 @@ class DetailStudyPlan extends React.Component {
 
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
-      console.log('valuesUpdate', values)
+  
       if (err) {
         return;
       }
@@ -710,7 +710,6 @@ class DetailStudyPlan extends React.Component {
   };
 
   openModal = (propiedadesAsignatura) => {
-    console.log('propiedadesAsignatura', propiedadesAsignatura);
     this.showModalSubject();
     this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
   };
@@ -779,17 +778,19 @@ class DetailStudyPlan extends React.Component {
   };
 
   orderBySemester = (datosAsignaturas) => {
+    
     const totalSemester = 10;
-    const semesterOrdered = [];
+    const semesterOrdered = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    
     for (let idx = 1; idx <= totalSemester; idx++) {
       const semester = this.groupBySemester(datosAsignaturas, idx);
       if (semester) {
-        semesterOrdered[idx - 1] = {};
         this.buildSemesters(idx, semester, semesterOrdered, totalSemester);
       }
     }
+
     const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
-    console.log('dataTable', semesters);
+ 
     return semesters;
     
   };
@@ -802,8 +803,7 @@ class DetailStudyPlan extends React.Component {
   };
 
   render() {
-    console.log('mattersData', this.matters.mattersData);
-    console.log('inpData', this.inpComponentStore.inpData)
+
     return (
       <div>
         
