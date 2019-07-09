@@ -26,12 +26,12 @@ class DriveViewer extends Component {
             .setIncludeFolders(true)
             .setMimeTypes('application/vnd.google-apps.folder')
             .setSelectFolderEnabled(true)
-            .setParent(this.props.gDriveFolderId) //gFolderID returned from asignatura
+            .setParent(this.props.gDriveFolderId)
             .setMode(listViewMode);
             
             const uploadView = new google.picker.DocsUploadView()
             .setIncludeFolders(true)
-            .setParent(this.props.gDriveFolderId) //gFolderId returned from asignatura
+            .setParent(this.props.gDriveFolderId)
 
             const picker = new window.google.picker.PickerBuilder()
             .enableFeature(google.picker.Feature.SIMPLE_UPLOAD_ENABLED)
