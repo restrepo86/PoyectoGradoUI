@@ -76,9 +76,14 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
+    state = {
+      color: '',
+    };
+
     render() {
       const {
-        visible, onCancel, onCreate, form, trainingComponentData
+        visible, onCancel, onCreate, form, trainingComponentData, color
       } = this.props;
       
       const { getFieldDecorator } = form;
@@ -119,6 +124,24 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
               })(
                 <Input />
               )}
+            </Form.Item>
+
+            <Form.Item label="Color">
+              {getFieldDecorator('color', {
+                rules: [{ required: true, message: 'seleccione un color' }],
+              })(
+                <Input disabled='true' style={{display: 'none'}}/>
+              )}
+              
+              <ChromePicker
+                color = { this.state.color }
+                onChange={ pickedColor => {
+                  this.setState({ color: pickedColor.hex });
+                  this.props.form.setFieldsValue({
+                    color: pickedColor.hex
+                  })
+                } }
+              />
             </Form.Item>
 
           </Form>
@@ -186,11 +209,14 @@ class TrainingComponents extends React.Component {
   }
 
   updateHandleCancel = () => {
-    this.setState({ visibleUpdateModal: false });
+    this.setState({ visibleUpdateModal: false, trainingComponent: {}});
   }
 
   updateShowModal = (trainingComponent) => {
-    this.setState({ visibleUpdateModal: true, trainingComponent: trainingComponent });
+    this.setState({ 
+      visibleUpdateModal: true, 
+      trainingComponent: trainingComponent
+    });
   }
 
   updateHandleCreate = () => {
@@ -205,7 +231,7 @@ class TrainingComponents extends React.Component {
       this.trainingComponentStore.updateTrainigComponent(updatetrainingComponentDTO, this.state.trainingComponent.id);
 
       form.resetFields();
-      this.setState({ visibleUpdateModal: false });
+      this.updateHandleCancel();
     });
   }
 
