@@ -145,7 +145,7 @@ class LayoutComponent extends React.Component {
                         <Route exact path="/main/programs/delete" component={(routeProps) => (
                           <DeleteProgramComponent {...routeProps}{...this.props}/>
                         )} />
-
+          
                   </div>
                 </Content>
             

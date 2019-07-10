@@ -55,7 +55,7 @@ class ProgramsComponent extends React.Component {
                 <Card 
                   title={item.title} 
                   extra={
-                    <a
+                    <div
                       onClick = {(e) => {e.stopPropagation();}}
                     >
                       <Link to = '/main/programs/update/program'>
@@ -63,7 +63,7 @@ class ProgramsComponent extends React.Component {
                           <Icon type="edit" />
                         </Tooltip>
                       </Link>
-                    </a>
+                    </div>
                   }
                   onClick = {() => this.clickProgramAction(item)}
                   hoverable = "true"
