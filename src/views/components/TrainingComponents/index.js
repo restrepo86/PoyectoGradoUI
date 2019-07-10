@@ -77,23 +77,46 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
 
-    state = {
-      color: '',
-    };
+    constructor(props) {
+      super(props);
+      console.log('Initial Constructor', props.trainingComponentData.color);
+      this.state = {
+          isPicked: false
+      };
+      console.log('isPicket', this.state.isPicked);
+  }
+
+  cleanIsPicked = () => {this.setState({isPicked: false})}
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps', newProps.trainingComponentData.color);
+    console.log('isPicked????', this.state.isPicked);
+
+    if (!this.state.isPicked){
+      this.setState({color: newProps.trainingComponentData.color});
+    }
+  }
 
     render() {
       const {
-        visible, onCancel, onCreate, form, trainingComponentData, color
+        visible, onCancel, onCreate, form, trainingComponentData, destroyOnClose
       } = this.props;
       
       const { getFieldDecorator } = form;
 
+
       return (
         <Modal
           visible={visible}
+          destroyOnClose={destroyOnClose}
+          centered={true}
           title="Actualizar Componente de Formación"
           okText="Actualizar"
-          onCancel={onCancel}
+          onCancel={ (e) => {
+            this.cleanIsPicked(); 
+            onCancel();
+          }
+        }
           onOk={onCreate}
         >
         
@@ -116,27 +139,17 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
                 <Input />
               )}
             </Form.Item>
-
-            <Form.Item label="Color">
-              {getFieldDecorator('color', {
-                initialValue: trainingComponentData.color,
-                rules: [{ required: true, message: 'por favor ingrese un color para el componente de formación!' }],
-              })(
-                <Input />
-              )}
-            </Form.Item>
-
             <Form.Item label="Color">
               {getFieldDecorator('color', {
                 rules: [{ required: true, message: 'seleccione un color' }],
               })(
-                <Input disabled='true' style={{display: 'none'}}/>
+                <Input disabled={true} style={{display:'none'}}/>
               )}
-              
               <ChromePicker
                 color = { this.state.color }
                 onChange={ pickedColor => {
-                  this.setState({ color: pickedColor.hex });
+                  this.setState({isPicked: true})
+                  this.setState({ color: pickedColor.hex});
                   this.props.form.setFieldsValue({
                     color: pickedColor.hex
                   })
@@ -277,6 +290,7 @@ class TrainingComponents extends React.Component {
                         <UpdateCreateForm
                           wrappedComponentRef={this.updateFormRef}
                           visible={this.state.visibleUpdateModal}
+                          destroyOnClose={'true'}
                           onCancel={this.updateHandleCancel}
                           onCreate={this.updateHandleCreate}
                           trainingComponentData = {this.state.trainingComponent}
