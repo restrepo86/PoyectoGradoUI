@@ -5,11 +5,17 @@ import { List, Card, Button, Modal, Form, Input, Icon, Divider, Tooltip } from "
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
 import UpdatetrainingComponentDTO from '../../../dto/UpdateTrainingComponentDTO';
 import "./index.css";
+import { ChromePicker } from 'react-color';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
+    state = {
+      color: '#fff',
+    };
+
     render() {
       const {
         visible, onCancel, onCreate, form,
@@ -45,10 +51,19 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Color">
               {getFieldDecorator('color', {
-                rules: [{ required: true, message: 'por favor ingrese un color para el componente de formación!' }],
+                rules: [{ required: true, message: 'seleccione un color' }],
               })(
-                <Input />
+                <Input disabled='true' style={{display: 'none'}}/>
               )}
+              <ChromePicker
+                color = {this.state.color}
+                onChange={ pickedColor => {
+                  this.setState({ color: pickedColor.hex });
+                  this.props.form.setFieldsValue({
+                    color: pickedColor.hex
+                  })
+                } }
+              />
             </Form.Item>
 
           </Form>
@@ -67,7 +82,7 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
       } = this.props;
       
       const { getFieldDecorator } = form;
-      
+
       return (
         <Modal
           visible={visible}
