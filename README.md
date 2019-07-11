@@ -11,9 +11,9 @@ Para desplegar los servicios en tu maquina primero debes tener instalado:
   2. https://docs.docker.com/compose/install/ docker-compose
   
 Una vez instalados seguir los siguientes pasos:
-  1. Clonar el repo del back [PUPE-HTTP](git@github.com:johncastano/uco-pupe.git)
+  1. Clonar el repo del back [PUPE-HTTP](https://github.com/johncastano/uco-pupe)
     Una vez clonado el repo debes crear la imagen de este ejecutando el `sbt docker:publishLocal` sobre el proyecto.
-  2. Clonar el repo del front [PUPE-UI](git@github.com:restrepo86/PoyectoGradoUI.git)
+  2. Clonar el repo del front [PUPE-UI](https://github.com/restrepo86/PoyectoGradoUI)
     Una vez clanado debes construir la imagen con el comando `docker build . -t pupe-ui`
   3. Por último parado sobre este proyecto en tu maquina ejecutar `docker-compose up`
 
