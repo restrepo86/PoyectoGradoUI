@@ -9,7 +9,7 @@ services:
     restart: always
     ports:
       - "5432:5432"
-  web:
+  pupe-http:
     image: pupe:0.1.0-SNAPSHOT
     build: .
     ports:
@@ -18,9 +18,8 @@ services:
       - postgresql
     links:
       - postgresql:postgreshost
-  ui:
+  pupe-ui:
     image: pupe-ui
     build: .
     ports:
       - "3000:3000"
-networks: {mynetwork: {}}
