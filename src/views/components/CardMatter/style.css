@@ -1,0 +1,13 @@
+.ant-card-head{
+    padding: 0px;
+}
+
+
+.ant-divider-vertical{
+    top: 0em;
+    height: 2em;
+}
+
+.ant-title-asignatura{
+    flex-grow: 1;
+}

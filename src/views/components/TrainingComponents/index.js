@@ -265,8 +265,15 @@ class TrainingComponents extends React.Component {
                   <List.Item>
                         <Card 
                           title={trainingComponent.abreviatura}
+                          size={"small"}
                           extra={
                             <div>
+                              <a>
+                              <Tooltip placement="top" title={"Editar Componente"}>
+                                <Icon type="edit" onClick={() => this.updateShowModal(trainingComponent)}/>
+                              </Tooltip>
+                              </a>
+                              <Divider type="vertical" />
                               <span style={{
                                 backgroundColor:trainingComponent.color,
                                 height: '25px',
@@ -275,12 +282,6 @@ class TrainingComponents extends React.Component {
                                 display: 'inline-block'  
                               }}>
                               </span>
-                              <Divider type="vertical" />
-                              <a>
-                              <Tooltip placement="top" title={"Editar Componente"}>
-                                <Icon type="edit" onClick={() => this.updateShowModal(trainingComponent)}/>
-                              </Tooltip>
-                              </a>
                             
                             </div>
                           }

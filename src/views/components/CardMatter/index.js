@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import "antd/dist/antd.css";
-import { Card } from "antd";
+//import "antd/dist/antd.css";
+import { Card, Divider, Tooltip } from "antd";
 import './style.css';
 
 const { Meta } = Card;
+const dividerStyle = {
+    top: '0em',
+    height: '2em'
+}
 
 class CardMatter extends Component {
     
@@ -11,22 +15,35 @@ class CardMatter extends Component {
         
         return(
             <Card
-                bodyStyle={{ background: this.props.componenteDeFormacion.color }}
+            headStyle={{
+                height:'auto',
+                padding: '0px',
+                textAlign: 'center',
+                verticalAlign: 'middle'
+            }}
+            hoverable={true}
+            title={
+                <div style={{display:'flex'}}>
+                    <div 
+                    style={{   
+                            flexGrow: '1', 
+                            color:'#fff', 
+                            backgroundColor:this.props.componenteDeFormacion.color,
+                            fontWeight: 'bold'
+                        }}><Tooltip placement="top" title={"Componente de formacion"}>{this.props.componenteDeFormacion.abreviatura}</Tooltip></div>
+                    <div style={{flexGrow: '1'}}><Tooltip placement="top" title={"Creditos"}>{this.props.creditos}</Tooltip></div>
+                    <Divider type="vertical" style={dividerStyle}/>
+                    <div style={{flexGrow: '1'}}><Tooltip placement="top" title={"Horas teoricas"}>{this.props.horasTeoricas}</Tooltip></div>
+                    <Divider type="vertical" style={dividerStyle}/>
+                    <div style={{flexGrow: '1'}} ><Tooltip placement="top" title={"Horas laboratorio"}>{this.props.horasLaboratorio}</Tooltip></div>
+                 </div>
+                }
                 actions={[
-                    <div>
-                    
-                        {this.props.componenteDeFormacion.codigo},
-
-                    </div>,
-                    <div>{this.props.creditos}</div>,
-                    <div>{this.props.horasTeoricas}</div>,
-                    <div>{this.props.horasLaboratorio}</div>
+                    <div>{this.props.codigo}</div>
                 ]}
+                size="small"
             >
-                <Meta 
-                    title={this.props.nombre} 
-                    description={this.props.codigo}       
-                />
+            <h1>{this.props.nombre}</h1>
             </Card>
         );
     }

@@ -130,15 +130,20 @@ class InpsComponent extends React.Component {
                     <Card
                       style={{textAlignVertical: "center",textAlign: "center",}}
                       title={item.inp}
+                      size={"small"}
+                      extra={
+                        <div onClick = {(e) => {e.stopPropagation();}}>
+                          <Link to = '/main/programs/inps/delete'>
+                            <Tooltip placement="top" title={"Borrar INP"}>
+                              <Icon type="delete" />
+                            </Tooltip>
+                          </Link>
+                        </div>
+                      }
                       actions={[
                         <Tooltip placement="top" title={"Descargar Reporte"}>
                           <Icon type="download" onClick = {(e) => {this.onClickDownloadReport(e, item)}}/>
-                        </Tooltip>, 
-                        <Link to = '/main/programs/inps/delete'>
-                          <Tooltip placement="top" title={"Borrar INP"}>
-                            <Icon type="delete" />
-                          </Tooltip>
-                        </Link>
+                        </Tooltip>
                       ]}
                       onClick={() => this.onClickInpButton(item)}
                       hoverable = "true"

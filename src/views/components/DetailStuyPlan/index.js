@@ -574,42 +574,52 @@ const columnsNames = [{
   dataIndex: 'semestre1',
   title: 'Nivel 1',
   key: "1",
+  align: 'center'
 }, {
   dataIndex: 'semestre2',
   title: 'Nivel 2',
   key: "2",
+  align: 'center'
 }, {
   dataIndex: 'semestre3',
   title: 'Nivel 3',
   key: "3",
+  align: 'center'
 }, {
   dataIndex: 'semestre4',
   title: 'Nivel 4',
   key: "4",
+  align: 'center'
 }, {
   dataIndex: 'semestre5',
   title: 'Nivel 5',
   key: "5",
+  align: 'center'
 }, {
   dataIndex: 'semestre6',
   title: 'Nivel 6',
   key: "6",
+  align: 'center'
 }, {
   dataIndex: 'semestre7',
   title: 'Nivel 7',
   key: "7",
+  align: 'center'
 }, {
   dataIndex: 'semestre8',
   title: 'Nivel 8',
   key: "8",
+  align: 'center'
 }, {
   dataIndex: 'semestre9',
   title: 'Nivel 9',
   key: "9",
+  align: 'center'
 }, {
   dataIndex: 'semestre10',
   title: 'Nivel 10',
   key: "10",
+  align: 'center'
 }];
 
 @observer
@@ -740,14 +750,9 @@ class DetailStudyPlan extends React.Component {
       .map((asignatura, index) => {
         const cardAsignatura = { key: index, name: asignatura.nivel };
         cardAsignatura[asignatura.keyIndex] = 
-          <Button
-            style={{ 
-              height: 'auto'    
-            }}
-            onClick = {() => this.openModal({...asignatura})}
-          >
+        <span onClick = {() => this.openModal({...asignatura})}>
             <CardMatter {...asignatura} />
-          </Button>;
+        </span>
         return cardAsignatura;
       });
   };
@@ -808,6 +813,7 @@ class DetailStudyPlan extends React.Component {
           scroll={{ x: 2300 }}
           size="small"
           pagination={pagination}
+          align={"center"}
         />
         <br/>
         <center>
