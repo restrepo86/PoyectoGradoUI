@@ -7,8 +7,9 @@
 
 ## Deployment
 Para desplegar los servicios en tu maquina primero debes tener instalado:
-  - https://docs.docker.com/install/  docker
-  - https://docs.docker.com/compose/install/ docker compose
+  1. https://docs.docker.com/install/  docker
+  2. https://docs.docker.com/compose/install/ docker-compose
+  
 Una vez instalados seguir los siguientes pasos:
   1. Clonar el repo del back [PUPE-HTTP](git@github.com:johncastano/uco-pupe.git)
     Una vez clonado el repo debes crear la imagen de este ejecutando el `sbt docker:publishLocal` sobre el proyecto.
