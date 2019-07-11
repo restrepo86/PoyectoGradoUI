@@ -53,7 +53,6 @@ class DeleteStudyPlanComponent extends React.Component {
                     type="primary"
                     htmlType="submit" 
                     className="login-form-button"
-                    style={{ backgroundColor: '#026F35', color: '#fff' }}
                 >
                     Eliminar
                 </Button>

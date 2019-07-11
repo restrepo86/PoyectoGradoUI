@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import LayoutComponent from './containers/LayoutComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginComponent from './components/GoogleAPIComponents/LoginComponent';
+import '../styles/variables.less';
 
 @observer
 class Main extends React.Component {

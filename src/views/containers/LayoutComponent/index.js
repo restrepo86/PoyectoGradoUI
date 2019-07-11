@@ -74,16 +74,18 @@ class LayoutComponent extends React.Component {
 
       <div style={appStyle.boxContainer}>
         <div style={appStyle.titleContainer}>
-        
+          <div style={{position:'relative', marginBottom: '15px', marginTop: '15px'}}>
             <h1 style={appStyle.windowTitle}>
-                Gestión Programas UCO                                                                                      <br/>
-                <Button
-                    onClick = { () => this.logOut(this.props.stores.loginStore) }
-                >
-                    Cerrar Sesión
-                </Button>
-            
+                Gestión Programas UCO
             </h1>
+            <Button
+              type={'link'}
+              style={{color:'#fff', position: 'absolute', right:'0', top:'0'}}
+              onClick = { () => this.logOut(this.props.stores.loginStore) }
+            >
+                Cerrar Sesión
+            </Button>
+          </div>
             
         </div>
 

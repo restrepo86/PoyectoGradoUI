@@ -259,7 +259,7 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{gutter: 80, column: 3}}
+              grid={{gutter: 16, column: 3}}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
@@ -305,7 +305,6 @@ class TrainingComponents extends React.Component {
                   type="primary"
                   shape="circle"
                   size="large"
-                  style={{ backgroundColor: '#026F35', borderColor:'#026F35', color: '#fff' }}
                   onClick={this.showModal}
                 >
 

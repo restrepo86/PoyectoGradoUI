@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Table, pagination, Form, Input, Modal, Button, Select, Tag } from 'antd';
+import { Table, pagination, Form, Input, Modal, Button, Select, Tag, InputNumber, DatePicker, Popconfirm } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
 import DriveViewer from '../../components/DrivePicker/DriveViewer';
-
+import moment from 'moment';
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
@@ -64,7 +64,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasTeoricasAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={3}/>
               )}
             </Form.Item>
 
@@ -72,7 +72,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasLaboratorioAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={0}/>
               )}
             </Form.Item>
 
@@ -80,7 +80,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasPracticasAgregar', {
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={3}/>
               )}
             </Form.Item>
 
@@ -88,7 +88,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('trabajoIndependienteEstudianteAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={0}/>
               )}
             </Form.Item>
 
@@ -96,7 +96,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={1} max={10} defaultValue={1}/>
               )}
             </Form.Item>
 
@@ -104,7 +104,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('creditosAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={1} max={10} defaultValue={3}/>
               )}
             </Form.Item>
             
@@ -225,16 +225,24 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       const Option = Select.Option;
       const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
       const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
+      const dateFormat = 'YYYY-MM-DD';
 
       return (
         <Modal
-          
-          style={{ backgroundColor: '#026F35', color: '#fff' }}
           visible={visibleSubject}
           title={nameSubject}
-          okText="Actualizar Asignatura"
+          centered
+          width={700}
           onCancel={onCancel}
-          onOk={onCreateSubjectUpdate}
+          footer={[
+            <Button type="primary" onClick={onCancel}>Cerrar</Button>,
+            <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Si" cancelText="No">
+              <Button>Eliminar</Button>
+            </Popconfirm>,
+            <Popconfirm placement="top" title={"Estas segur@ que deseas actualizar esta asignatura"} onConfirm={onCreateSubjectUpdate} okText="Si" cancelText="No">
+              <Button>Actualizar</Button>
+            </Popconfirm>
+          ]}
           
         >
           <Form layout="vertical">
@@ -279,7 +287,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasTeoricas,
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={subjectData.horasTeoricas}/>
               )}
             </Form.Item>
 
@@ -288,7 +296,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasLaboratorio,
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={subjectData.horasLaboratorio}/>
               )}
             </Form.Item>
 
@@ -297,7 +305,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasPracticas,
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={subjectData.horasPracticas}/>
               )}
             </Form.Item>
 
@@ -306,7 +314,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasIndependientesDelEstudiante,
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
-                <Input />
+                <InputNumber min={0} max={10} defaultValue={subjectData.horasIndependientesDelEstudiante}/>
               )}
             </Form.Item>
 
@@ -315,7 +323,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.nivel,
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={1} max={10} defaultValue={subjectData.nivel}/>
               )}
             </Form.Item>
 
@@ -324,55 +332,41 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.creditos,
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
-                <Input />
+                <InputNumber min={1} max={10} defaultValue={subjectData.creditos}/>
               )}
             </Form.Item>
 
-            <div>
-                Fecha de Creación { ( subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '' ).substring(0, 10) }
-                <br/>
-                Fecha de Modificación { ( subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '' ).substring(0, 10) }
-                <br/><br/>
-            </div>
-
-            <center>
-
-              <Button
-              
-                onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
-              >
-                Eliminar Asignatura
-              </Button>
-                
-            </center>
+            <Form.Item label="Fecha de creacion:">
+            <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
+            </Form.Item>
             
-              <br />
-              <div>
+            <Form.Item label="Ultima modificacion:">
+            <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
+            </Form.Item>
 
-                Prerequisitos <br/>
-                { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
+            <Form.Item label="Prerequisitos">
+              { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
                   .map(prerequisito => 
                       <Tag color="#026F35">{ prerequisito.codigo }</Tag>
                   ) 
-                }
+              }
+            </Form.Item>
 
-                <br/>Corequisitos <br/>
-                { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
+            <Form.Item label="Corequisitos">
+              { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
                   .map(corequisito => 
                       <Tag color="#026F35">{ corequisito.codigo }</Tag>
                   ) 
-                }
+              }
+            </Form.Item>
 
-                <br/>Requisitos de Nivel <br/>
-                { requisitos.filter(requisito => requisito.tipo === 'Requisito de nivel')
+            <Form.Item label="Requisitos de nivel">
+              { requisitos.filter(requisito => requisito.tipo === 'Requisito de nivel')
                   .map(requisitoDeNivel => 
                       <Tag color="#026F35">{ requisitoDeNivel.codigo }</Tag>
                   ) 
-                }
-              
-              </div>
-              <br />
-            
+              }
+            </Form.Item>      
             <center>
               
               <div>
@@ -391,7 +385,6 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                   mattersData={mattersStore.mattersData}
                   subjectData={subjectData}
                 />
-
 
                 <Button
                   disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
@@ -819,8 +812,7 @@ class DetailStudyPlan extends React.Component {
         <br/>
         <center>
           <Button 
-            type="primary" 
-            style={{ backgroundColor: '#026F35', color: '#fff' }}
+            type="primary"
             onClick={this.showModal}
           >
             Agregar Asignatura

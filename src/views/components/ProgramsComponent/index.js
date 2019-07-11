@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Button, Card, Icon, Tooltip } from 'antd';
+import { List, Button, Card, Icon, Tooltip, Divider } from 'antd';
 import { observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -63,7 +63,14 @@ class ProgramsComponent extends React.Component {
                           <Icon type="edit" />
                         </Tooltip>
                       </Link>
+                      <Divider type="vertical" />
+                      <Link to = '/main/programs/delete'>
+                        <Tooltip placement="top" title={"Borrar Programa"}>
+                          <Icon type="delete" />
+                        </Tooltip>
+                      </Link>
                     </div>
+
                   }
                   onClick = {() => this.clickProgramAction(item)}
                   hoverable = "true"
@@ -76,29 +83,9 @@ class ProgramsComponent extends React.Component {
           />
           <br/>
           <center>
-
-            <Button 
-              type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-              
-            >
+            <Button type="primary">
               <Link to='/main/programs/save/program'>Agregar Programa</Link>
             </Button>
-            <Button 
-              type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-              
-            >
-              <Link to = '/main/programs/update/program'>Actualizar Programa</Link>
-            </Button>
-            <Button 
-              type="primary"
-              style={{ backgroundColor: '#026F35', color: '#fff' }}
-              
-            >
-              <Link to = '/main/programs/delete'>Borrar Programa</Link>
-            </Button>
-
           </center>
         </div>
         

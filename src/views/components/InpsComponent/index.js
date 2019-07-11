@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input, Tooltip } from "antd";
+import { List, Card, Button, Modal, Form, Input, Tooltip, Divider, Icon } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 
@@ -129,17 +129,17 @@ class InpsComponent extends React.Component {
 
                     <Card
                       style={{textAlignVertical: "center",textAlign: "center",}}
-                      title={item.inp} 
-                      extra={
+                      title={item.inp}
+                      actions={[
                         <Tooltip placement="top" title={"Descargar Reporte"}>
-                          <Button 
-                            type="primary" 
-                            shape="circle" 
-                            icon="download" 
-                            onClick = {(e) => {this.onClickDownloadReport(e, item)}}
-                          />
-                        </Tooltip>
-                      }
+                          <Icon type="download" onClick = {(e) => {this.onClickDownloadReport(e, item)}}/>
+                        </Tooltip>, 
+                        <Link to = '/main/programs/inps/delete'>
+                          <Tooltip placement="top" title={"Borrar INP"}>
+                            <Icon type="delete" />
+                          </Tooltip>
+                        </Link>
+                      ]}
                       onClick={() => this.onClickInpButton(item)}
                       hoverable = "true"
                     > 
@@ -155,21 +155,11 @@ class InpsComponent extends React.Component {
             <br />
               <center>
                 <Button 
-                  type="primary" 
-                  style={{ backgroundColor: '#026F35', color: '#fff' }}
+                  type="primary"
                   onClick={this.showModal}
                 >
                   Agregar Plan de Estudio
                 </Button>
-              
-                <Link to = '/main/programs/inps/delete'>
-                  <Button 
-                    type="primary" 
-                    style={{ backgroundColor: '#026F35', color: '#fff' }}
-                  >
-                    Borrar Plan de Estudio
-                  </Button>
-                </Link>
                 <CollectionCreateForm
                   wrappedComponentRef={this.saveFormRef}
                   visible={this.state.visible}

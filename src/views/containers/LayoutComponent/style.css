@@ -8,19 +8,3 @@
   height: 100px;
   width: 200px;
 }
-
-.ant-menu-item:active {
-  background-color: #43985d;
-  color: #ffffff;
-  border-right: #f8c00c
-}
-
-.ant-menu-item-active {
-  color: #007034;
-}
-
-.ant-menu-item-selected {
-  background-color: #43985d;
-  color: #ffffff;
-  border-right: #f8c00c
-}

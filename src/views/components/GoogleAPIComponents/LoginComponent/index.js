@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import LoginUserDTO from '../../../../dto/LoginUserDTO';
 import LogoUco from '../../../../image/logo-uco.png'
+import PickerConfig from '../../../../credentials.json';
 
 @observer
 class LoginComponent extends React.Component {
@@ -56,8 +57,8 @@ class LoginComponent extends React.Component {
                     </div>
                     <div>
                     <GoogleLogin
-                        clientId={"522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com"}
-                        scope={"https://www.googleapis.com/auth/drive.file"}
+                        clientId={PickerConfig.clientId}
+                        scope={PickerConfig.googlePicker.scope}
                         buttonText="Ingresar"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
