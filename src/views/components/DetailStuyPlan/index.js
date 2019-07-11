@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Table, pagination, Form, Input, Modal, Button, Select, Tag } from 'antd';
-import { Link } from 'react-router-dom';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
+import DriveViewer from '../../components/DrivePicker/DriveViewer';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -223,7 +223,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
       const { getFieldDecorator } = form;
       const Option = Select.Option;
-      const trainingComponentSubject =  { ... subjectData.componenteDeFormacion };
+      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
       const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
 
       return (
@@ -232,13 +232,16 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           style={{ backgroundColor: '#026F35', color: '#fff' }}
           visible={visibleSubject}
           title={nameSubject}
-          okText="Actualizar"
+          okText="Actualizar Asignatura"
           onCancel={onCancel}
           onOk={onCreateSubjectUpdate}
           
         >
           <Form layout="vertical">
-
+            <center>
+              <DriveViewer { ...subjectData } />
+            </center>
+            <br />
             <Form.Item label="Código">
               {getFieldDecorator('codigo', {
                 initialValue: subjectData.codigo,
@@ -338,7 +341,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               
                 onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}
               >
-                Eliminar
+                Eliminar Asignatura
               </Button>
                 
             </center>
@@ -468,7 +471,7 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
               })(
                 
                 <Select>
-                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo != subjectData.codigo))
+                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo !== subjectData.codigo))
                     .map(matterData =>
                       <Option value={matterData.codigo}>{matterData.nombre}</Option>
                     )}
@@ -576,43 +579,43 @@ const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
 
 const columnsNames = [{
   dataIndex: 'semestre1',
-  title: 'semestre 1',
+  title: 'Nivel 1',
   key: "1",
 }, {
   dataIndex: 'semestre2',
-  title: 'semestre 2',
+  title: 'Nivel 2',
   key: "2",
 }, {
   dataIndex: 'semestre3',
-  title: 'semestre 3',
+  title: 'Nivel 3',
   key: "3",
 }, {
   dataIndex: 'semestre4',
-  title: 'semestre 4',
+  title: 'Nivel 4',
   key: "4",
 }, {
   dataIndex: 'semestre5',
-  title: 'semestre 5',
+  title: 'Nivel 5',
   key: "5",
 }, {
   dataIndex: 'semestre6',
-  title: 'semestre 6',
+  title: 'Nivel 6',
   key: "6",
 }, {
   dataIndex: 'semestre7',
-  title: 'semestre 7',
+  title: 'Nivel 7',
   key: "7",
 }, {
   dataIndex: 'semestre8',
-  title: 'semestre 8',
+  title: 'Nivel 8',
   key: "8",
 }, {
   dataIndex: 'semestre9',
-  title: 'semestre 9',
+  title: 'Nivel 9',
   key: "9",
 }, {
   dataIndex: 'semestre10',
-  title: 'semestre 10',
+  title: 'Nivel 10',
   key: "10",
 }];
 
@@ -650,7 +653,7 @@ class DetailStudyPlan extends React.Component {
     
     const form = this.formRefAddSubject.props.form;
     form.validateFields((err, values) => {
-      console.log('values', values)
+
       if (err) {
         return;
       }
@@ -686,7 +689,7 @@ class DetailStudyPlan extends React.Component {
 
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
-      console.log('valuesUpdate', values)
+  
       if (err) {
         return;
       }
@@ -711,7 +714,6 @@ class DetailStudyPlan extends React.Component {
   };
 
   openModal = (propiedadesAsignatura) => {
-    console.log('propiedadesAsignatura', propiedadesAsignatura);
     this.showModalSubject();
     this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
   };
@@ -780,18 +782,18 @@ class DetailStudyPlan extends React.Component {
   };
 
   orderBySemester = (datosAsignaturas) => {
+    
     const totalSemester = 10;
-    const semesterOrdered = [];
+    const semesterOrdered = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    
     for (let idx = 1; idx <= totalSemester; idx++) {
       const semester = this.groupBySemester(datosAsignaturas, idx);
       if (semester) {
-        semesterOrdered[idx - 1] = {};
         this.buildSemesters(idx, semester, semesterOrdered, totalSemester);
       }
     }
-    const semesters = semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
-    console.log('dataTable', semesters);
-    return semesters;
+
+    return semesterOrdered.filter(semesterData => Object.keys(semesterData).length > 0);
     
   };
 
@@ -803,8 +805,7 @@ class DetailStudyPlan extends React.Component {
   };
 
   render() {
-    console.log('mattersData', this.matters.mattersData);
-    console.log('inpData', this.inpComponentStore.inpData)
+
     return (
       <div>
         

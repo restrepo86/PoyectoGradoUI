@@ -63,7 +63,6 @@ export default class TrainingComponentStore {
         .then(response => {
           runInAction(() => {
             
-            const { data } = response;
             this.process.showMessage('Componente de Formación Actualizado Correctamente', 'success');
             this.process.processDTO.loading = false;
             this.updateSuccess = true;

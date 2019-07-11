@@ -7,7 +7,6 @@ export default class LoginStore {
     @observable validateLoginUserResponse;
     @observable addNewUserSuccess = false;
     @observable isAuthenticated = false;
-    @observable loginOutDisabled = false;
 
     constructor(loginService, process) {
         this.loginService = loginService;
@@ -38,10 +37,6 @@ export default class LoginStore {
 
     setIsAuthenticated = (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
-    };
-
-    setLoginOutDisabled = (loginOutDisabled) => {
-        this.loginOutDisabled = loginOutDisabled;
     };
 
 }

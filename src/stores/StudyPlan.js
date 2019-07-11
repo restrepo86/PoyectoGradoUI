@@ -38,7 +38,6 @@ export default class StudyPlan {
     this.studyPlanService.saveStudyPlan(studyPlanRequestDTO, programId)
       .then(response => {
         runInAction(() => {
-          const { dataSave } = response;
           this.process.showMessage('Plan de Estudio Guardado Correctamente', 'success');
           this.process.processDTO.loading = false;
         });
@@ -59,7 +58,6 @@ export default class StudyPlan {
     this.studyPlanService.deleteStudyPlan(programId, inp)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
           this.studyPlanDeleted = true;
           this.process.showMessage('Plan de Estudio Eliminado Correctamente', 'success');
           this.process.processDTO.loading = false;

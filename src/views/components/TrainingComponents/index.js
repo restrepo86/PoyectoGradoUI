@@ -5,11 +5,17 @@ import { List, Card, Button, Modal, Form, Input, Icon, Divider, Tooltip } from "
 import TrainingComponentRequestDTO from '../../../dto/TrainingComponentRequestDTO';
 import UpdatetrainingComponentDTO from '../../../dto/UpdateTrainingComponentDTO';
 import "./index.css";
+import { ChromePicker } from 'react-color';
 
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
+    state = {
+      color: '#fff',
+    };
+
     render() {
       const {
         visible, onCancel, onCreate, form,
@@ -45,10 +51,19 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Color">
               {getFieldDecorator('color', {
-                rules: [{ required: true, message: 'por favor ingrese un color para el componente de formación!' }],
+                rules: [{ required: true, message: 'seleccione un color' }],
               })(
-                <Input />
+                <Input disabled='true' style={{display: 'none'}}/>
               )}
+              <ChromePicker
+                color = {this.state.color}
+                onChange={ pickedColor => {
+                  this.setState({ color: pickedColor.hex });
+                  this.props.form.setFieldsValue({
+                    color: pickedColor.hex
+                  })
+                } }
+              />
             </Form.Item>
 
           </Form>
@@ -61,19 +76,47 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
+    constructor(props) {
+      super(props);
+      console.log('Initial Constructor', props.trainingComponentData.color);
+      this.state = {
+          isPicked: false
+      };
+      console.log('isPicket', this.state.isPicked);
+  }
+
+  cleanIsPicked = () => {this.setState({isPicked: false})}
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps', newProps.trainingComponentData.color);
+    console.log('isPicked????', this.state.isPicked);
+
+    if (!this.state.isPicked){
+      this.setState({color: newProps.trainingComponentData.color});
+    }
+  }
+
     render() {
       const {
-        visible, onCancel, onCreate, form, trainingComponentData
+        visible, onCancel, onCreate, form, trainingComponentData, destroyOnClose
       } = this.props;
       
       const { getFieldDecorator } = form;
-      
+
+
       return (
         <Modal
           visible={visible}
+          destroyOnClose={destroyOnClose}
+          centered={true}
           title="Actualizar Componente de Formación"
           okText="Actualizar"
-          onCancel={onCancel}
+          onCancel={ (e) => {
+            this.cleanIsPicked(); 
+            onCancel();
+          }
+        }
           onOk={onCreate}
         >
         
@@ -96,14 +139,22 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
                 <Input />
               )}
             </Form.Item>
-
             <Form.Item label="Color">
               {getFieldDecorator('color', {
-                initialValue: trainingComponentData.color,
-                rules: [{ required: true, message: 'por favor ingrese un color para el componente de formación!' }],
+                rules: [{ required: true, message: 'seleccione un color' }],
               })(
-                <Input />
+                <Input disabled={true} style={{display:'none'}}/>
               )}
+              <ChromePicker
+                color = { this.state.color }
+                onChange={ pickedColor => {
+                  this.setState({isPicked: true})
+                  this.setState({ color: pickedColor.hex});
+                  this.props.form.setFieldsValue({
+                    color: pickedColor.hex
+                  })
+                } }
+              />
             </Form.Item>
 
           </Form>
@@ -171,11 +222,14 @@ class TrainingComponents extends React.Component {
   }
 
   updateHandleCancel = () => {
-    this.setState({ visibleUpdateModal: false });
+    this.setState({ visibleUpdateModal: false, trainingComponent: {}});
   }
 
   updateShowModal = (trainingComponent) => {
-    this.setState({ visibleUpdateModal: true, trainingComponent: trainingComponent });
+    this.setState({ 
+      visibleUpdateModal: true, 
+      trainingComponent: trainingComponent
+    });
   }
 
   updateHandleCreate = () => {
@@ -185,13 +239,12 @@ class TrainingComponents extends React.Component {
       if (err) {
         return;
       }
-      console.log('training', this.state.trainingComponent.id)
-      console.log('updateValues', values);
+ 
       const updatetrainingComponentDTO = new UpdatetrainingComponentDTO(values.nombre, values.abreviatura, values.color);
       this.trainingComponentStore.updateTrainigComponent(updatetrainingComponentDTO, this.state.trainingComponent.id);
 
       form.resetFields();
-      this.setState({ visibleUpdateModal: false });
+      this.updateHandleCancel();
     });
   }
 
@@ -206,7 +259,7 @@ class TrainingComponents extends React.Component {
           <div>
 
             <List
-              grid={{gutter: 16, column: 3}}
+              grid={{gutter: 80, column: 3}}
               dataSource={this.trainingComponentStore.trainingComponentsData}
                 renderItem={trainingComponent => (
                   <List.Item>
@@ -218,7 +271,7 @@ class TrainingComponents extends React.Component {
                                 backgroundColor:trainingComponent.color,
                                 height: '25px',
                                 width: '25px',
-                                borderRadius: '50%',
+                                borderRadius: '10%',
                                 display: 'inline-block'  
                               }}>
                               </span>
@@ -237,6 +290,7 @@ class TrainingComponents extends React.Component {
                         <UpdateCreateForm
                           wrappedComponentRef={this.updateFormRef}
                           visible={this.state.visibleUpdateModal}
+                          destroyOnClose={'true'}
                           onCancel={this.updateHandleCancel}
                           onCreate={this.updateHandleCreate}
                           trainingComponentData = {this.state.trainingComponent}

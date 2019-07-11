@@ -3,6 +3,7 @@ import { GoogleLogin } from 'react-google-login';
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import LoginUserDTO from '../../../../dto/LoginUserDTO';
+import LogoUco from '../../../../image/logo-uco.png'
 
 @observer
 class LoginComponent extends React.Component {
@@ -34,10 +35,8 @@ class LoginComponent extends React.Component {
     
             sessionStorage.setItem( 'Authorization', this.loginStore.validateLoginUserResponse.accesstoken );
             sessionStorage.setItem( 'GAuthorization', response.accessToken );
-            this.loginStore.setLoginOutDisabled(false);
             this.loginStore.setIsAuthenticated(true);
 
-            
         } 
 
     };
@@ -52,6 +51,10 @@ class LoginComponent extends React.Component {
 
             <div>
                 <center>
+                    <div>
+                        <img src={LogoUco} className="LogoUco" alt="LogoUco" /> <br /> <br /> <br />
+                    </div>
+                    <div>
                     <GoogleLogin
                         clientId={"522970314042-7e8o5tkbepbksj91knjdm7ailjosg3l3.apps.googleusercontent.com"}
                         scope={"https://www.googleapis.com/auth/drive.file"}
@@ -59,6 +62,7 @@ class LoginComponent extends React.Component {
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
                     />
+                    </div>
                 </center>
             </div>
 

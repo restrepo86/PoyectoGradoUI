@@ -20,7 +20,7 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
-          this.mattersData = data;
+          this.mattersData =  data;
         });
       })
       .catch(error => {
@@ -37,7 +37,6 @@ export default class Matters {
     this.mattersService.saveMatter(programId, inp, asignaturaRequest)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
           this.process.showMessage('Asignatura Guardada Correctamente', 'success');
           this.process.processDTO.loading = false;
         });
@@ -56,7 +55,6 @@ export default class Matters {
     this.mattersService.updateMatter(programId, inp, updateMatterRequestDTO, subjectId)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
           this.updateSuccess = true;
           this.process.showMessage('Asignatura Actualizada Correctamente', 'success');
           this.process.processDTO.loading = false;
@@ -78,7 +76,6 @@ export default class Matters {
     this.mattersService.deleteMatter(programId, inp, matterId)
       .then(response => {
         runInAction(() => {
-          const { data } = response;
           this.deleteSuccess = true;
           this.process.showMessage('Asignatura Eliminada Correctamente', 'success');
           this.process.processDTO.loading = false;
