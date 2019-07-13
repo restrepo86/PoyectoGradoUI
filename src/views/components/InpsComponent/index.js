@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input, Tooltip, Icon } from "antd";
+import { List, Card, Button, Modal, Form, Tooltip, Icon, InputNumber } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 
@@ -26,9 +26,9 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Ingrese el INP">
               {getFieldDecorator('inp', {
-                rules: [{ required: true, message: 'por favor ingrese un INP para el plan de estudio!' }],
+                rules: [{ required: true, message: 'por favor ingrese un INP numérico para el plan de estudio!' }],
               })(
-                <Input />
+                <InputNumber />
               )}
             </Form.Item>
 
@@ -73,7 +73,7 @@ class InpsComponent extends React.Component {
       if (err) {
         return;
       }
-      const studyPlanRequestDTO = new StudyPlanRequestDTO(values.inp);
+      const studyPlanRequestDTO = new StudyPlanRequestDTO(`${values.inp}`);
       this.studyPlan.saveStudyPlanData(studyPlanRequestDTO, this.programId);
 
       form.resetFields();
