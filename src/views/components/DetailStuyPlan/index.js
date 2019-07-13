@@ -423,10 +423,20 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 const AddRequirement = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
+    state = {
+      tipoRequisitoSelected: ''
+    };
+
+    tipoRequisitoSelected = (value) => {
+      this.setState({ tipoRequisitoSelected: value });
+    };
     
     render() {
       const { visible, onCancel, onCreateAddRequirement, form, mattersData, subjectData } = this.props;
       const { getFieldDecorator } = form;
+      const requisitosDeNivel = 
+        ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
 
       return (
         <Modal
@@ -441,7 +451,7 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('tipoRequisito', {
                 rules: [{ required: true, message: 'Debe seleccionar un tipo de requisito!' }],
               })(
-                <Select>
+                <Select onChange={this.tipoRequisitoSelected}>
                   
                     <Option value='Prerequisito'>Prerequisito</Option>
                     <Option value='Corequisito'>Corequisito</Option>
@@ -456,7 +466,13 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
               })(
                 
                 <Select>
-                  {mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo !== subjectData.codigo))
+                  { this.state.tipoRequisitoSelected === 'Requisito de Nivel' ? 
+                    requisitosDeNivel.filter(requisito => requisito.slice(6, 7) < subjectData.nivel)
+                      .map((requisitoNivel, index) => (
+                        <Option key={ index } value={ requisitoNivel }>{ requisitoNivel }</Option>
+                      ))
+                    :
+                    mattersData.filter(matter => (matter.nivel <= subjectData.nivel) && (matter.codigo !== subjectData.codigo))
                     .map(matterData =>
                       <Option value={matterData.codigo}>{matterData.nombre}</Option>
                     )}
