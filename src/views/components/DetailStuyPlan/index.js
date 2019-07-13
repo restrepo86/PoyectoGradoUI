@@ -84,14 +84,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Horas Trabajo Independiente del Estudiante">
-              {getFieldDecorator('trabajoIndependienteEstudianteAgregar', {
-                rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
-              })(
-                <InputNumber min={0} max={10} defaultValue={0}/>
-              )}
-            </Form.Item>
-
             <Form.Item label="Nivel">
               {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
@@ -314,7 +306,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasIndependientesDelEstudiante,
                 rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
               })(
-                <InputNumber min={0} max={10} defaultValue={subjectData.horasIndependientesDelEstudiante}/>
+                <InputNumber disabled = {true}/>
               )}
             </Form.Item>
 
