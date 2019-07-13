@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { List, Card, Button, Modal, Form, Input, Tooltip, Divider, Icon } from "antd";
+import { List, Card, Button, Modal, Form, Input, Tooltip, Icon } from "antd";
 import StudyPlanRequestDTO from '../../../dto/StudyPlanRequestDTO';
 import "./index.css";
 

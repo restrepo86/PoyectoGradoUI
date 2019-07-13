@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Card, Divider, Tooltip } from "antd";
 import './style.css';
 
-const { Meta } = Card;
 const dividerStyle = {
     top: '0em',
     height: '2em'

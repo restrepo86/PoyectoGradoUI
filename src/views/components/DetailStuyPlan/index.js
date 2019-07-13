@@ -1,6 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Table, pagination, Form, Input, Modal, Button, Select, Tag, InputNumber, DatePicker, Popconfirm } from 'antd';
+import { 
+  Table, 
+  pagination, 
+  Form, 
+  Input, 
+  Modal, 
+  Button, 
+  Select, 
+  Popover, 
+  InputNumber, 
+  DatePicker, 
+  Popconfirm 
+  } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
@@ -120,7 +132,9 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
     state = {
       visible: false,
       visibleModalUpdate: false,
-      visibleModalDelete: false
+      visibleModalDelete: false, 
+      popoverVisible: false, 
+      subjetBySniesCodeData: {}
     };
   
     showModalAddRequirement = () => {
@@ -195,6 +209,17 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   
     saveFormRefDeleteRequirement = formRefDeleteRequirement => {
       this.formRefDeleteRequirement = formRefDeleteRequirement;
+    };
+
+    handleVisibleChangePopover = visible => {
+      this.setState({ popoverVisible: visible });
+    };
+
+    clickPrerequisito = async (codigoPrerequisito, mattersStore) => {
+      
+      await mattersStore.getMatterBySniesCode(codigoPrerequisito);
+      this.setState({ subjetBySniesCodeData: mattersStore.subjetBySniesCodeData });
+    
     };
 
     render() {
@@ -339,7 +364,19 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Prerequisitos">
               { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
                   .map(prerequisito => 
-                      <Tag color="#026F35">{ prerequisito.codigo }</Tag>
+                      <Popover
+                        content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                        title={this.state.subjetBySniesCodeData.nombre}
+                        trigger="click"
+                        onVisibleChange={this.handleVisibleChangePopover}
+                      >
+                        <Button 
+                          type="primary"
+                          onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}
+                        >
+                          { prerequisito.codigo }
+                        </Button>
+                      </Popover>
                   ) 
               }
             </Form.Item>
@@ -347,7 +384,19 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Corequisitos">
               { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
                   .map(corequisito => 
-                      <Tag color="#026F35">{ corequisito.codigo }</Tag>
+                    <Popover
+                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                      title={this.state.subjetBySniesCodeData.nombre}
+                      trigger="click"
+                      onVisibleChange={this.handleVisibleChangePopover}
+                    >
+                      <Button 
+                        type="primary"
+                        onClick = {() => this.clickPrerequisito(corequisito.codigo, mattersStore)}
+                      >
+                        { corequisito.codigo }
+                      </Button>
+                    </Popover>
                   ) 
               }
             </Form.Item>
@@ -355,7 +404,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Requisitos de nivel">
               { requisitos.filter(requisito => requisito.tipo === 'Requisito de nivel')
                   .map(requisitoDeNivel => 
-                      <Tag color="#026F35">{ requisitoDeNivel.codigo }</Tag>
+                      <Button type="primary">{ requisitoDeNivel.codigo }</Button>
                   ) 
               }
             </Form.Item>      
@@ -391,6 +440,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                   onCancel={this.handleCancelUpdateRequirement}
                   onCreate={() => this.handleCreateUpdateRequirement(subjectData.codigo, requirementStore)}
                   requisitos={subjectData.requisitos}
+                  subjectData={subjectData}
                 />
 
 
@@ -491,8 +541,9 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
 const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
+
     render() {
-      const { visible, onCancel, onCreate, form, requisitos } = this.props;
+      const { visible, onCancel, onCreate, form, requisitos, subjectData } = this.props;
       const { getFieldDecorator } = form;
 
       return (
@@ -505,31 +556,30 @@ const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
         >
           <Form layout="vertical">
 
+            <Form.Item label="Tipo de Requisito">
+              {getFieldDecorator('tipoRequisito', {
+                rules: [{ required: true, message: 'Debe seleccionar un tipo de requisito!' }],
+              })(
+                <Select >
+                  
+                    <Option value='Prerequisito'>Prerequisito</Option>
+                    <Option value='Corequisito'>Corequisito</Option>
+                  
+                </Select>
+              )}
+            </Form.Item>
+
             <Form.Item label="Seleccione el requisito que desea actualizar">
               {getFieldDecorator('codigoRequisito', {
                 rules: [{ required: true, message: 'Debe seleccionar un requisito!' }],
               })(
                 
                 <Select>
-                  {requisitos.map(requisito =>
+                  { requisitos.map(requisito =>
                       <Option value={requisito.id}>{requisito.codigo}</Option>
-                    )}
+                  )}
                 </Select>
 
-              )}
-            </Form.Item>
-
-            <Form.Item label="Tipo de Requisito">
-              {getFieldDecorator('tipoRequisito', {
-                rules: [{ required: true, message: 'Debe seleccionar un tipo de requisito!' }],
-              })(
-                <Select>
-                  
-                    <Option value='Prerequisito'>Prerequisito</Option>
-                    <Option value='Corequisito'>Corequisito</Option>
-                    <Option value='Requisito de Nivel'>Requisito de Nivel</Option>
-                  
-                </Select>
               )}
             </Form.Item>
             

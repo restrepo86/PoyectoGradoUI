@@ -15,6 +15,13 @@ class MattersService extends ServiceBase {
       return await this.getRequest({}, responseUrl);
     };
 
+    getMatterBySniesCode = async (sniesCode) => {
+      this.setHeaders();
+      const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${sniesCode}`;
+      return await this.getRequest({}, responseUrl);
+    };
+
+
     saveMatter = async (programId, inp, asignaturaRequest) => {
       this.setHeaders();
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}`;
