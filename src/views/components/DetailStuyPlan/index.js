@@ -64,7 +64,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasTeoricasAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={3}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -72,7 +72,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasLaboratorioAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={0}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -80,7 +80,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('horasPracticasAgregar', {
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={3}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -88,7 +88,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
-                <InputNumber min={1} max={10} defaultValue={1}/>
+                <InputNumber min={1} max={10} />
               )}
             </Form.Item>
 
@@ -96,7 +96,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('creditosAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
-                <InputNumber min={1} max={10} defaultValue={3}/>
+                <InputNumber min={1} max={10} />
               )}
             </Form.Item>
             
@@ -279,7 +279,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasTeoricas,
                 rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={subjectData.horasTeoricas}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -288,7 +288,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasLaboratorio,
                 rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={subjectData.horasLaboratorio}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -297,7 +297,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.horasPracticas,
                 rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
               })(
-                <InputNumber min={0} max={10} defaultValue={subjectData.horasPracticas}/>
+                <InputNumber min={0} max={10} />
               )}
             </Form.Item>
 
@@ -315,7 +315,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.nivel,
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
-                <InputNumber min={1} max={10} defaultValue={subjectData.nivel}/>
+                <InputNumber min={1} max={10} />
               )}
             </Form.Item>
 
@@ -324,7 +324,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 initialValue: subjectData.creditos,
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
-                <InputNumber min={1} max={10} defaultValue={subjectData.creditos}/>
+                <InputNumber min={1} max={10} />
               )}
             </Form.Item>
 
