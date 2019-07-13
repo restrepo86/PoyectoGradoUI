@@ -123,7 +123,7 @@ class InpsComponent extends React.Component {
 
             <List
               grid={{ gutter: 10, column: 3 }}
-              dataSource={this.studyPlan.studyPlanData}
+              dataSource={this.studyPlan.studyPlanData.sort((a, b) => b.inp - a.inp)}
                 renderItem={item => (
                   <List.Item>
 
