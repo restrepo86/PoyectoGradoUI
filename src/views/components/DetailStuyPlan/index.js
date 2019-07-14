@@ -11,7 +11,10 @@ import {
   Popover, 
   InputNumber, 
   DatePicker, 
-  Popconfirm 
+  Popconfirm, 
+  Radio, 
+  Row,
+  Col
   } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
@@ -59,44 +62,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                 <Input />
               )}
             </Form.Item>
-
-            <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteDeFormacionNombreAgregar')(
-               
-                <Select>
-                  {trainingComponentsData.map(trainingComponent =>
-                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
-                  )}
-                </Select>
-              
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Teóricas">
-              {getFieldDecorator('horasTeoricasAgregar', {
-                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Laboratorio">
-              {getFieldDecorator('horasLaboratorioAgregar', {
-                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Prácticas">
-              {getFieldDecorator('horasPracticasAgregar', {
-                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Nivel">
+            <Form.Item label="Nivel" layout='inline'>
               {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
@@ -104,14 +70,55 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Form.Item label="Créditos">
+            <Form.Item label="Créditos" layout='inline'>
               {getFieldDecorator('creditosAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
               })(
                 <InputNumber min={1} max={10} />
               )}
             </Form.Item>
-            
+
+            <Row align="center">
+              <h3>Horas</h3>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Teóricas">
+                  {getFieldDecorator('horasTeoricasAgregar', {
+                    rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+                    })
+                    (<InputNumber min={0} max={10} /> )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Laboratorio">
+                  {getFieldDecorator('horasLaboratorioAgregar', {
+                  rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+                })(<InputNumber min={0} max={10} />)}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Prácticas">
+                  {getFieldDecorator('horasPracticasAgregar', {
+                    rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+      
+            <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteDeFormacionNombreAgregar', {
+                    rules: [{ required: true, message: 'Por favor seleccione un componente de formacion!' }],
+                  })(
+               
+                  <Radio.Group buttonStyle="solid">
+                  {trainingComponentsData.map(trainingComponent =>
+                  <Radio.Button value={trainingComponent.nombre}>{trainingComponent.abreviatura}</Radio.Button>)}
+              </Radio.Group>
+              )}
+              
+            </Form.Item>
+
           </Form>
         </Modal>
       );
