@@ -11,7 +11,8 @@ import {
   Popover, 
   InputNumber, 
   DatePicker, 
-  Popconfirm, 
+  Popconfirm,
+  Tooltip, 
   Radio, 
   Row,
   Col
@@ -44,6 +45,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           okText="Agregar"
           onCancel={onCancel}
           onOk={onCreate}
+          destroyOnClose={'true'}
         >
           <Form layout="vertical">
 
@@ -113,7 +115,11 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                
                   <Radio.Group buttonStyle="solid">
                   {trainingComponentsData.map(trainingComponent =>
-                  <Radio.Button value={trainingComponent.nombre}>{trainingComponent.abreviatura}</Radio.Button>)}
+                  <Radio.Button value={trainingComponent.nombre}>
+                  <Tooltip placement="bottom" title={trainingComponent.nombre}>
+                  {trainingComponent.abreviatura}
+                  </Tooltip>
+                  </Radio.Button>)}
               </Radio.Group>
               )}
               
