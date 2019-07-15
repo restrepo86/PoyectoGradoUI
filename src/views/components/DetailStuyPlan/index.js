@@ -28,6 +28,17 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
 
+    constructor(props) {
+      super(props);
+      this.state = {
+        nivelData: 0
+      }
+    };
+    
+    handleNivel = (value) => {
+      this.setState({ nivelData: value })
+    };
+
     render() {
 
       const {
@@ -36,7 +47,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
       const { getFieldDecorator } = form;
       const Option = Select.Option;
-
+      const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9']
       return (
         <Modal
           visible={visible}
@@ -66,7 +77,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('nivelAgregar', {
                 rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
               })(
-                <InputNumber min={1} max={10} />
+                <InputNumber onChange={this.handleNivel} min={1} max={10} />
               )}
             </Form.Item>
 
@@ -78,7 +89,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               )}
             </Form.Item>
 
-            <Row align="center">
+            <Row>
               <h3>Horas</h3>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <Form.Item label="Teóricas">
@@ -106,19 +117,32 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               </Col>
             </Row>
       
-            <Form.Item label="Componente de Formación">
+            <Form.Item label="Seleccione un Componente de Formación">
               {getFieldDecorator('componenteDeFormacionNombreAgregar', {
                     rules: [{ required: true, message: 'Por favor seleccione un componente de formacion!' }],
                   })(
                
                   <Radio.Group buttonStyle="solid">
-                  {trainingComponentsData.map(trainingComponent =>
-                  <Radio.Button value={trainingComponent.nombre}>{trainingComponent.abreviatura}</Radio.Button>)}
+                  {trainingComponentsData.map((trainingComponent, index) =>
+                  <Radio.Button key={index} value={trainingComponent.nombre}>{trainingComponent.abreviatura}</Radio.Button>)}
               </Radio.Group>
               )}
-              
             </Form.Item>
 
+            <Form.Item label="Requisito de Nivel">
+              {getFieldDecorator('requisitoNivel', {
+                rules: [{ required: true, message: 'Por favor seleccione un requisito de nivel!' }],
+              })(
+               
+                <Select>
+                  { 
+                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < this.state.nivelData).map((requisito, index) =>
+                    <Option key={index} value={requisito}>{requisito}</Option>
+                  )}
+                </Select>
+              
+              )}
+            </Form.Item>
           </Form>
         </Modal>
       );
@@ -298,8 +322,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               })(
                
                 <Select>
-                  {trainingComponentsData.map(trainingComponent =>
-                    <Option value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
+                  {trainingComponentsData.map((trainingComponent, index) =>
+                    <Option key={index} value={trainingComponent.nombre}>{trainingComponent.nombre}</Option>
                   )}
                 </Select>
               
@@ -492,6 +516,7 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
     render() {
       const { visible, onCancel, onCreateAddRequirement, form, mattersData, subjectData } = this.props;
       const { getFieldDecorator } = form;
+      const Option = Select.Option;
       const requisitosDeNivel = 
         ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
 
@@ -552,7 +577,7 @@ const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
     render() {
       const { visible, onCancel, onCreate, form, requisitos, subjectData } = this.props;
       const { getFieldDecorator } = form;
-
+      const Option = Select.Option;
       return (
         <Modal
           visible={visible}
@@ -603,7 +628,7 @@ const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
     render() {
       const { visible, onCancel, onCreate, form, requisitos } = this.props;
       const { getFieldDecorator } = form;
-
+      const Option = Select.Option;
       return (
         <Modal
           visible={visible}
@@ -735,7 +760,8 @@ class DetailStudyPlan extends React.Component {
           values.horasLaboratorioAgregar, 
           values.nivelAgregar,
           values.horasPracticasAgregar,
-          values.trabajoIndependienteEstudianteAgregar);
+          values.trabajoIndependienteEstudianteAgregar,
+          values.requisitoNivel);
 
       this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO, this.programId);
 
