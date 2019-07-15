@@ -5,6 +5,7 @@ export default class Matters {
   @observable process;
   @observable mattersData = [];
   @observable subjetBySniesCodeData = {};
+  @observable descriptionsData = [];
   @observable matterUpdateSelected;
   @observable matterUpdateIsSelected = false;
   @observable deleteSuccess = false;
@@ -103,6 +104,35 @@ export default class Matters {
         this.process.showMessage(message, 'error');
         this.process.processDTO.loading = false;
         
+      });
+  };
+
+  @action
+  getDescriptionsBySniesCode = async (sniesCode) => {
+    await this.mattersService.getDescriptionsBySniesCode(sniesCode)
+      .then(response => {
+        runInAction(() => {
+          const { data } = response;
+          this.descriptionsData =  data;
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
+      });
+  };
+
+
+  @action
+  addDescriptionBySubject = async (sniesCode) => {
+    await this.mattersService.addDescriptionBySubject(sniesCode)
+      .then(response => {
+        runInAction(() => {
+        });
+      })
+      .catch(error => {
+        const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.showMessage(message, 'error');
       });
   };
 

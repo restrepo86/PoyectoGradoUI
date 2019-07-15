@@ -41,7 +41,18 @@ class MattersService extends ServiceBase {
       const requestUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${programId}/${this.urls.STUDY_PLAN}/${inp}/${this.urls.MATTER}/${matterId}`;
       return await this.deleteRequest(requestUrl);
     };
-  
+
+    addDescriptionBySubject = async (sniesCode, descripcionCambioDTO) => {
+      this.setHeaders();
+      const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${sniesCode}/${this.urls.CHANGE}`;
+      return await this.postRequest(responseUrl, descripcionCambioDTO);
+    };
+
+    getDescriptionsBySniesCode = async (sniesCode) => {
+      this.setHeaders();
+      const responseUrl = `${this.url}/${this.urls.PROGRAM_MANAGEMENT_PACK_URL}/${this.urls.PROGRAM}/${this.urls.STUDY_PLAN}/${this.urls.MATTER}/${sniesCode}/${this.urls.CHANGES}`;
+      return await this.getRequest({}, responseUrl);
+    };
 
 }
 
