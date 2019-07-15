@@ -399,7 +399,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
               })(
                 <Select>
                   { 
-                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < this.state.nivelData).map((requisito, index) =>
+                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
                     <Option key={index} value={requisito}>{requisito}</Option>
                   )}
                 </Select>
