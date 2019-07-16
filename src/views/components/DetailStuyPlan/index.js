@@ -291,6 +291,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           centered
           width={700}
           onCancel={onCancel}
+          destroyOnClose={'true'}
           footer={[
             <Button type="primary" onClick={onCancel}>Cerrar</Button>,
             <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Si" cancelText="No">
@@ -411,7 +412,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 <Select style={{width:120}}>
                 <Option key={0} value={"No"}>No</Option>
                   { 
-                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < this.state.nivelData).map((requisito, index) =>
+                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
                     <Option key={index+1} value={requisito}>{requisito}</Option>
                   )}
                 </Select>
