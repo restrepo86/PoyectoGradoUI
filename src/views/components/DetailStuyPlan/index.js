@@ -22,7 +22,8 @@ import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
-import StepLineChangeControlComponent from '../StepChangeControlComponent'
+import StepLineChangeControlComponent from '../StepChangeControlComponent';
+import TimelineChangesFolder from '../TimelineChangesFolder';
 import moment from 'moment';
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -174,6 +175,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visibleModalUpdate: false,
       visibleModalDelete: false, 
       visibleModalStepChangeControl: false,
+      visibleModalTimelineChangesControl: false,
       popoverVisible: false, 
       subjetBySniesCodeData: {}
     };
@@ -271,8 +273,25 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       this.setState({ visibleModalStepChangeControl: false });
     };
     
-    handleUploadFile = () => {
+    handleUploadFile = (process) => {
+      process.showMessage('Proceso terminado correctamente', 'success');
       this.setState({ visibleModalStepChangeControl: false });
+    };
+  
+    timelineFormRef = formRefTime => {
+      this.formRefTime = formRefTime;
+    };
+
+    showModalTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: true });
+    };
+
+    cancelModalTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: false });
+    };
+    
+    handleTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: false });
     };
   
     uploapFormRefFile = formRefFile => {
@@ -336,8 +355,27 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 wrappedComponentRef={this.uploapFormRefFile}
                 visible={this.state.visibleModalStepChangeControl}
                 onCancel={this.cancelModalStepChangeControl}
-                onCreate={this.handleUploadFile}
+                onCreate={() => this.handleUploadFile(process)}
                 process={process}
+                matterStore={mattersStore}
+                subjectData={subjectData}
+              />
+
+              <br/>
+              <br/>
+
+              <Button
+                type="primary"
+                onClick = {() => this.showModalTimelineChangesFolder()}
+              >
+                Ver historico de cambios en planeador
+              </Button>
+
+              <TimelineChangesFolder
+                wrappedComponentRef={this.timelineFormRef}
+                visible={this.state.visibleModalTimelineChangesControl}
+                onCancel={this.cancelModalTimelineChangesFolder}
+                onCreate={this.handleTimelineChangesFolder}
                 matterStore={mattersStore}
                 subjectData={subjectData}
               />
@@ -616,7 +654,7 @@ const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
   class extends React.Component {
 
     render() {
-      const { visible, onCancel, onCreate, form, requisitos, subjectData } = this.props;
+      const { visible, onCancel, onCreate, form, requisitos } = this.props;
       const { getFieldDecorator } = form;
       const Option = Select.Option;
       return (

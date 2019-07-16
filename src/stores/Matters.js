@@ -11,6 +11,7 @@ export default class Matters {
   @observable matterUpdateIsSelected = false;
   @observable deleteSuccess = false;
   @observable updateSuccess = false;
+  @observable updateHistory = false;
 
   constructor(mattersService, process) {
     this.mattersService = mattersService;
@@ -114,6 +115,7 @@ export default class Matters {
       .then(response => {
         runInAction(() => {
           const { data } = response;
+          this.updateHistory = true;
           this.descriptionsData =  data;
         });
       })
@@ -126,8 +128,6 @@ export default class Matters {
 
   @action
   addDescriptionBySubject = async (sniesCode, descripcionCambioDTO) => {
-    //this.process.processDTO.loading = true;
-    //this.process.processDTO.loadingMessage = 'AGREGANDO DESCRIPCIÓN ...';
     await this.mattersService.addDescriptionBySubject(sniesCode, descripcionCambioDTO)
       .then(response => {
         runInAction(() => {
@@ -156,6 +156,10 @@ export default class Matters {
 
   setUpdateSuccess = (updateSuccess) => {
     this.updateSuccess = updateSuccess;
+  };
+
+  setUpdateHistory = (updateHistory) => {
+    this.updateHistory = updateHistory;
   };
 
 }
