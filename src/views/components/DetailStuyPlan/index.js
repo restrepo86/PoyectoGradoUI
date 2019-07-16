@@ -22,7 +22,7 @@ import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
-import DriveViewer from '../../components/DrivePicker/DriveViewer';
+import StepLineChangeControlComponent from '../StepChangeControlComponent'
 import moment from 'moment';
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -113,8 +113,9 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                 <Form.Item label="Teóricas">
                   {getFieldDecorator('horasTeoricasAgregar', {
                     rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
-                    })
-                    (<InputNumber min={0} max={10} /> )}
+                    })(
+                      <InputNumber min={0} max={10} /> 
+                    )}
                 </Form.Item>
               </Col>
               <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -172,6 +173,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visible: false,
       visibleModalUpdate: false,
       visibleModalDelete: false, 
+      visibleModalStepChangeControl: false,
       popoverVisible: false, 
       subjetBySniesCodeData: {}
     };
@@ -261,6 +263,22 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
     
     };
 
+    showModalStepChangeControl = () => {
+      this.setState({ visibleModalStepChangeControl: true });
+    };
+
+    cancelModalStepChangeControl = () => {
+      this.setState({ visibleModalStepChangeControl: false });
+    };
+    
+    handleUploadFile = () => {
+      this.setState({ visibleModalStepChangeControl: false });
+    };
+  
+    uploapFormRefFile = formRefFile => {
+      this.formRefFile = formRefFile;
+    };
+
     render() {
 
       const {
@@ -274,7 +292,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
         mattersStore,
         programId, 
         inp,
-        requirementStore
+        requirementStore,
+        process
       } = this.props;
 
       const { getFieldDecorator } = form;
@@ -304,8 +323,25 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           
         >
           <Form layout="vertical">
+
             <center>
-              <DriveViewer { ...subjectData } />
+              <Button
+                type="primary"
+                onClick = {() => this.showModalStepChangeControl()}
+              >
+                Cargar Planeador
+              </Button>
+
+              <StepLineChangeControlComponent
+                wrappedComponentRef={this.uploapFormRefFile}
+                visible={this.state.visibleModalStepChangeControl}
+                onCancel={this.cancelModalStepChangeControl}
+                onCreate={this.handleUploadFile}
+                process={process}
+                matterStore={mattersStore}
+                subjectData={subjectData}
+              />
+
             </center>
             <br />
             <Form.Item label="Código">
@@ -939,6 +975,7 @@ class DetailStudyPlan extends React.Component {
             programId={this.inpComponentStore.inpData.programId}
             inp={this.inpComponentStore.inpData.id}
             requirementStore={this.requirementStore}
+            process={this.process}
           />
         </center>
 

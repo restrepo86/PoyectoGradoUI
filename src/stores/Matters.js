@@ -5,6 +5,7 @@ export default class Matters {
   @observable process;
   @observable mattersData = [];
   @observable subjetBySniesCodeData = {};
+  @observable addDescriptionResponse;
   @observable descriptionsData = [];
   @observable matterUpdateSelected;
   @observable matterUpdateIsSelected = false;
@@ -124,14 +125,19 @@ export default class Matters {
 
 
   @action
-  addDescriptionBySubject = async (sniesCode) => {
-    await this.mattersService.addDescriptionBySubject(sniesCode)
+  addDescriptionBySubject = async (sniesCode, descripcionCambioDTO) => {
+    //this.process.processDTO.loading = true;
+    //this.process.processDTO.loadingMessage = 'AGREGANDO DESCRIPCIÓN ...';
+    await this.mattersService.addDescriptionBySubject(sniesCode, descripcionCambioDTO)
       .then(response => {
         runInAction(() => {
+          const { data } = response;
+          this.addDescriptionResponse = data;  
         });
       })
       .catch(error => {
         const message = error.response ? `${error.response.data.codigo}: ${error.response.data.mensaje}` : 'ERROR';
+        this.process.processDTO.loading = false;        
         this.process.showMessage(message, 'error');
       });
   };

@@ -1,9 +1,9 @@
 class DescripcionCambioDTO {
 
-    descripcion;
+    mensaje;
 
-    constructor(descripcion) {
-        this.descripcion = descripcion;
+    constructor(mensaje) {
+        this.mensaje = mensaje;
     };
 
 }

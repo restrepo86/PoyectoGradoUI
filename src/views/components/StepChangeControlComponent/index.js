@@ -1,28 +1,11 @@
 import React from 'react';
-import { Steps, Button, message, Input } from 'antd';
+import DriveViewer from '../DrivePicker/DriveViewer';
+import { Steps, Button, Input, Modal, Form, message } from 'antd';
+import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import "./index.css";
 
 const { TextArea } = Input;
 const { Step } = Steps;
-
-const steps = [
-  {
-    title: 'Agregar descripción',
-    content: <TextArea rows={4} />,
-  },
-  {
-    title: 'Cargar Archivo',
-    content: 'Second-content',
-  },
-  { 
-    title: 'Subiendo Archivo',
-    content: ''
-  },
-  {
-    title: 'Control de Cambios Exitoso',
-    content: 'Last-content',
-  },
-];
 
 
 class StepLineChangeControlComponent extends React.Component {
@@ -31,12 +14,27 @@ class StepLineChangeControlComponent extends React.Component {
     super(props);
     this.state = {
       current: 0,
+      descriptionValue: '',
+      statusStep: 'wait'
     };
   };
 
-  next = () => {
-    const current = this.state.current + 1;
-    this.setState({ current });
+  next = async (matterStore, subjectData) => {
+    if (this.state.descriptionValue !== '' && this.state.current + 1 === 1) {
+      const descripcionCambioDTO = new DescripcionCambioDTO(this.state.descriptionValue);
+      await matterStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
+      if (matterStore.addDescriptionResponse) {
+        const current = this.state.current + 1;
+        this.setState({ current });
+      } else {
+        message.success('No se pudo conectar el servicio para subir archivo!');
+      }
+    
+    } else {
+      message.success('Debe ingresar una descripción del cambio!');
+    }
+   
+    
   };
 
   prev = () => {
@@ -44,27 +42,51 @@ class StepLineChangeControlComponent extends React.Component {
     this.setState({ current });
   };
 
+  handleChangeDescription = (e) => {
+    this.setState({ descriptionValue: e.target.value })
+  };
   
   render() {
 
+    const {
+      visible, onCancel, onCreate, process, matterStore, subjectData
+    } = this.props;
+
+    const steps = 
+    [
+      {
+        title: 'Agregar descripción',
+        content: 
+          <div>
+            Descripción del cambio
+            <TextArea onChange={this.handleChangeDescription} rows={4} />,
+          </div>
+      },
+      {
+        title: 'Cargar Archivo',
+        content: <DriveViewer { ...subjectData } />,
+      }
+    ];
+
+
     const { current } = this.state;
 
-    const {
-      visible, onCancel, onCreate,
-    } = this.props;
-    
+   
     return (
     
       <Modal
+        style={{ width: 1000 }}
+        bodyStyle={{ width: 1000 }}
+        width={1000}
         visible={visible}
         title="Carga de Planeadores de Asignaturas"
-        okText="Agregar"
+        okText="Aceptar"
         onCancel={onCancel}
         onOk={onCreate}
       >
         
         <div>
-          <Steps current={current}>
+          <Steps current={current} status='wait'>
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
             ))}
@@ -72,18 +94,13 @@ class StepLineChangeControlComponent extends React.Component {
           <div className="steps-content">{steps[current].content}</div>
           <div className="steps-action">
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => this.next()}>
+              <Button type="primary" onClick={() => this.next(matterStore, subjectData)}>
                 Siguiente
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button type="primary" onClick={() => message.success('Archivo Cargado Correctamente')}>
+              <Button type="primary" onClick={() => process.showMessage('Proceso terminado correctamente', 'success')}>
                 Terminar Proceso
-              </Button>
-            )}
-            {current > 0 && (
-              <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                Anterior
               </Button>
             )}
           </div>

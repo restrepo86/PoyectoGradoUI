@@ -50,7 +50,7 @@ class DriveViewer extends Component {
       >
         <a>
             <Tooltip placement="top" title={"Planes de Asignatura"}>
-                <Icon type="file-word" style={{fontSize: '30px', color: '#43985d'}}/>
+                <Icon type='folder-add' style={{fontSize: '60px', color: '#43985d'}}/>
             </Tooltip>
         </a>
       </GooglePicker>
