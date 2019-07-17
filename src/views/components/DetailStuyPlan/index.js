@@ -15,7 +15,8 @@ import {
   Tooltip, 
   Radio, 
   Row,
-  Col
+  Col,
+  Icon
   } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
@@ -169,7 +170,6 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       mattersStore.deleteMatterData(programId, inp, subjectId);
     };
 
-
     state = {
       visible: false,
       visibleModalUpdate: false,
@@ -177,6 +177,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visibleModalStepChangeControl: false,
       visibleModalTimelineChangesControl: false,
       popoverVisible: false, 
+      expand: false,
       subjetBySniesCodeData: {}
     };
   
@@ -298,6 +299,219 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       this.formRefFile = formRefFile;
     };
 
+    toggle = () => {
+      const { expand } = this.state;
+      this.setState({ expand: !expand });
+    };
+
+    getFields(form, trainingComponentsData, subjectData, mattersStore) {
+
+      const { getFieldDecorator } = form;
+      const children = [];
+      const Option = Select.Option;
+      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
+      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
+      const dateFormat = 'YYYY-MM-DD';
+      const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
+
+     
+      children.push(
+        <Col span={8} key={0} style={{ display: 'block' }}>
+          <Form.Item label="Código">
+            {getFieldDecorator('codigo', {
+              initialValue: subjectData.codigo,
+              rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+        
+      children.push(
+        <Col span={8} key={1} style={{ display: 'block' }}>
+          <Form.Item label="Nombre">
+            {getFieldDecorator('nombre', {
+              initialValue: subjectData.nombre,
+              rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+
+      children.push(
+        <Col span={8} key={2} style={{ display: 'block' }}>
+          <Form.Item label="Créditos">
+            {getFieldDecorator('creditos', {
+              initialValue: subjectData.creditos,
+              rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+            })(
+              <InputNumber min={1} max={10} />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={3} style={{ display: 'block' }}>
+          <Form.Item label="Nivel">
+            {getFieldDecorator('nivel', {
+              initialValue: subjectData.nivel,
+              rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
+            })(
+              <InputNumber onChange={this.handleNivel} min={1} max={10} />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={4} style={{ display: 'block' }}>
+           <Form.Item label="Componente de Formación">
+              {getFieldDecorator('componenteFormacion', {
+                  initialValue: trainingComponentSubject.nombre,
+              })(
+                <Radio.Group buttonStyle="solid">
+                  {
+                    trainingComponentsData.map((trainingComponent, index) =>
+                      <Radio.Button key={index} value={trainingComponent.nombre}>
+                        <Tooltip placement="bottom" title={trainingComponent.nombre}>
+                          {trainingComponent.abreviatura}
+                        </Tooltip>
+                      </Radio.Button>
+                      )
+                  }
+                </Radio.Group>
+              )}
+            </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={5} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Horas Teóricas">
+            {getFieldDecorator('horasTeoricas', {
+              initialValue: subjectData.horasTeoricas,
+              rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+            })(
+              <InputNumber min={0} max={10} />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={6} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Horas Laboratorio">
+            {getFieldDecorator('horasLaboratorio', {
+              initialValue: subjectData.horasLaboratorio,
+              rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+            })(
+              <InputNumber min={0} max={10} />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={7} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Horas Prácticas">
+            {getFieldDecorator('horasPracticas', {
+              initialValue: subjectData.horasPracticas,
+              rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+            })(
+              <InputNumber min={0} max={10} />
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={8} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Horas Trabajo Independiente del Estudiante">
+            {getFieldDecorator('trabajoIndependienteEstudiante', {
+              initialValue: subjectData.horasIndependientesDelEstudiante,
+              rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
+            })(
+              <InputNumber disabled = {true}/>
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={9} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Fecha de creacion:">
+            <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={10} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Ultima modificacion:">
+            <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={11} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Requisito de nivel">
+            {getFieldDecorator('requisitoNivel', {
+              initialValue: subjectData.requisitoNivel,
+            })(
+              <Select style={{width:120}}>
+              <Option key={0} value={"No"}>No</Option>
+                { 
+                  requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
+                  <Option key={index+1} value={requisito}>{requisito}</Option>
+                )}
+              </Select>
+            )}
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={12} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Prerequisitos">
+            { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
+                .map(prerequisito => 
+                    <Popover
+                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                      title={this.state.subjetBySniesCodeData.nombre}
+                      trigger="click"
+                      onVisibleChange={this.handleVisibleChangePopover}
+                    >
+                      <Button 
+                        onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}
+                      >
+                        { prerequisito.codigo }
+                      </Button>
+                    </Popover>
+                ) 
+            }
+          </Form.Item>
+        </Col>,
+      );
+      children.push(
+        <Col span={8} key={13} style={{ display: this.state.expand ? 'block' : 'none' }}>
+          <Form.Item label="Corequisitos">
+            { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
+                .map(corequisito => 
+                  <Popover
+                    content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                    title={this.state.subjetBySniesCodeData.nombre}
+                    trigger="click"
+                    onVisibleChange={this.handleVisibleChangePopover}
+                  >
+                    <Button 
+                      onClick = {() => this.clickPrerequisito(corequisito.codigo, mattersStore)}
+                    >
+                      { corequisito.codigo }
+                    </Button>
+                  </Popover>
+                ) 
+            }
+          </Form.Item>
+        </Col>,
+      );
+      return children;
+    }
+
     render() {
 
       const {
@@ -315,13 +529,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
         process
       } = this.props;
 
-      const { getFieldDecorator } = form;
-      const Option = Select.Option;
-      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
-      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
-      const dateFormat = 'YYYY-MM-DD';
-      const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
-
+   
       return (
         <Modal
           visible={visibleSubject}
@@ -383,179 +591,10 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             </center>
             <br />
 
-            <Row>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Código">
-                  {getFieldDecorator('codigo', {
-                    initialValue: subjectData.codigo,
-                    rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
-                  })(
-                    <Input />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Nombre">
-                  {getFieldDecorator('nombre', {
-                    initialValue: subjectData.nombre,
-                    rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
-                  })(
-                    <Input />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Créditos">
-                  {getFieldDecorator('creditos', {
-                    initialValue: subjectData.creditos,
-                    rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
-                  })(
-                    <InputNumber min={1} max={10} />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Nivel">
-                  {getFieldDecorator('nivel', {
-                    initialValue: subjectData.nivel,
-                    rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
-                  })(
-                    <InputNumber onChange={this.handleNivel} min={1} max={10} />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 6, offset: 1 }} lg={{ span: 14, offset: 2 }}>
-                <Form.Item label="Componente de Formación">
-                  {getFieldDecorator('componenteFormacion', {
-                      initialValue: trainingComponentSubject.nombre,
-                  })(
-                    <Radio.Group buttonStyle="solid">
-                      {
-                        trainingComponentsData.map((trainingComponent, index) =>
-                          <Radio.Button key={index} value={trainingComponent.nombre}>
-                            <Tooltip placement="bottom" title={trainingComponent.nombre}>
-                              {trainingComponent.abreviatura}
-                            </Tooltip>
-                          </Radio.Button>
-                          )
-                      }
-                    </Radio.Group>
-                  )}
-                </Form.Item>
-              </Col>
-                        
-            </Row>
+            <Row gutter={24}>{this.getFields(form, trainingComponentsData, subjectData, mattersStore)}</Row>
 
             <Row>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Horas Teóricas">
-                  {getFieldDecorator('horasTeoricas', {
-                    initialValue: subjectData.horasTeoricas,
-                    rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
-                  })(
-                    <InputNumber min={0} max={10} />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Horas Laboratorio">
-                  {getFieldDecorator('horasLaboratorio', {
-                    initialValue: subjectData.horasLaboratorio,
-                    rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
-                  })(
-                    <InputNumber min={0} max={10} />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Form.Item label="Horas Prácticas">
-                  {getFieldDecorator('horasPracticas', {
-                    initialValue: subjectData.horasPracticas,
-                    rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
-                  })(
-                    <InputNumber min={0} max={10} />
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 16, offset: 2 }}>
-                <Form.Item label="Horas Trabajo Independiente del Estudiante">
-                  {getFieldDecorator('trabajoIndependienteEstudiante', {
-                    initialValue: subjectData.horasIndependientesDelEstudiante,
-                    rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
-                  })(
-                    <InputNumber disabled = {true}/>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
-                <Form.Item label="Fecha de creacion:">
-                  <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
-                </Form.Item>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
-                <Form.Item label="Ultima modificacion:">
-                  <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Form.Item label="Requisito de nivel">
-              {getFieldDecorator('requisitoNivel', {
-                initialValue: subjectData.requisitoNivel,
-              })(
-                <Select style={{width:120}}>
-                <Option key={0} value={"No"}>No</Option>
-                  { 
-                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
-                    <Option key={index+1} value={requisito}>{requisito}</Option>
-                  )}
-                </Select>
-              )}
-            </Form.Item>
-
-            <Form.Item label="Prerequisitos">
-              { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
-                  .map(prerequisito => 
-                      <Popover
-                        content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                        title={this.state.subjetBySniesCodeData.nombre}
-                        trigger="click"
-                        onVisibleChange={this.handleVisibleChangePopover}
-                      >
-                        <Button 
-                          type="primary"
-                          onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}
-                        >
-                          { prerequisito.codigo }
-                        </Button>
-                      </Popover>
-                  ) 
-              }
-            </Form.Item>
-
-            <Form.Item label="Corequisitos">
-              { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
-                  .map(corequisito => 
-                    <Popover
-                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                      title={this.state.subjetBySniesCodeData.nombre}
-                      trigger="click"
-                      onVisibleChange={this.handleVisibleChangePopover}
-                    >
-                      <Button 
-                        type="primary"
-                        onClick = {() => this.clickPrerequisito(corequisito.codigo, mattersStore)}
-                      >
-                        { corequisito.codigo }
-                      </Button>
-                    </Popover>
-                  ) 
-              }
-            </Form.Item>
-   
-            <center>
-              
-              <div>
+              <Col span={24} style={{ textAlign: 'right' }}>
 
                 <Button
                   onClick = {() => this.showModalAddRequirement()}
@@ -573,6 +612,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 />
 
                 <Button
+                  style={{ marginLeft: 12 }}
                   disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
                   onClick = {() => this.showModalUpdateRequirement()}
                 >
@@ -590,6 +630,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
 
                 <Button
+                  style={{ marginLeft: 12 }}
                   disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
                   onClick = {() => this.showModalDeleteRequirement()}
                 >
@@ -603,11 +644,12 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                   onCreate={() => this.handleCreateDeleteRequirement(subjectData.codigo, requirementStore)}
                   requisitos={subjectData.requisitos}
                 />
-              
-                </div>
 
-            </center>
-
+                <a style={{ marginLeft: 25, fontSize: 15 }} onClick={this.toggle}>
+                  Ver Mas Información <Icon type={this.state.expand ? 'up' : 'down'} />
+                </a>
+              </Col>
+            </Row>      
           </Form>
         </Modal>
       );
