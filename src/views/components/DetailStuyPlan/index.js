@@ -382,102 +382,122 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
             </center>
             <br />
-            <Form.Item label="Código">
-              {getFieldDecorator('codigo', {
-                initialValue: subjectData.codigo,
-                rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
-              })(
-                <Input />
-              )}
-            </Form.Item>
 
-            <Form.Item label="Nombre">
-              {getFieldDecorator('nombre', {
-                initialValue: subjectData.nombre,
-                rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
-              })(
-                <Input />
-              )}
-            </Form.Item>
+            <Row>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Código">
+                  {getFieldDecorator('codigo', {
+                    initialValue: subjectData.codigo,
+                    rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+                  })(
+                    <Input />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Nombre">
+                  {getFieldDecorator('nombre', {
+                    initialValue: subjectData.nombre,
+                    rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+                  })(
+                    <Input />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Créditos">
+                  {getFieldDecorator('creditos', {
+                    initialValue: subjectData.creditos,
+                    rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+                  })(
+                    <InputNumber min={1} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Nivel">
+                  {getFieldDecorator('nivel', {
+                    initialValue: subjectData.nivel,
+                    rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
+                  })(
+                    <InputNumber onChange={this.handleNivel} min={1} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 6, offset: 1 }} lg={{ span: 14, offset: 2 }}>
+                <Form.Item label="Componente de Formación">
+                  {getFieldDecorator('componenteFormacion', {
+                      initialValue: trainingComponentSubject.nombre,
+                  })(
+                    <Radio.Group buttonStyle="solid">
+                      {
+                        trainingComponentsData.map((trainingComponent, index) =>
+                          <Radio.Button key={index} value={trainingComponent.nombre}>
+                            <Tooltip placement="bottom" title={trainingComponent.nombre}>
+                              {trainingComponent.abreviatura}
+                            </Tooltip>
+                          </Radio.Button>
+                          )
+                      }
+                    </Radio.Group>
+                  )}
+                </Form.Item>
+              </Col>
+                        
+            </Row>
 
-            <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion', {
-                  initialValue: trainingComponentSubject.nombre,
-              })(
-               
-                <Radio.Group buttonStyle="solid">
-                {trainingComponentsData.map((trainingComponent, index) =>
-                <Radio.Button key={index} value={trainingComponent.nombre}>
-                <Tooltip placement="bottom" title={trainingComponent.nombre}>
-                {trainingComponent.abreviatura}
-                </Tooltip>
-                </Radio.Button>)}
-            </Radio.Group>
-              
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Teóricas">
-              {getFieldDecorator('horasTeoricas', {
-                initialValue: subjectData.horasTeoricas,
-                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Laboratorio">
-              {getFieldDecorator('horasLaboratorio', {
-                initialValue: subjectData.horasLaboratorio,
-                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Prácticas">
-              {getFieldDecorator('horasPracticas', {
-                initialValue: subjectData.horasPracticas,
-                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
-              })(
-                <InputNumber min={0} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Horas Trabajo Independiente del Estudiante">
-              {getFieldDecorator('trabajoIndependienteEstudiante', {
-                initialValue: subjectData.horasIndependientesDelEstudiante,
-                rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
-              })(
-                <InputNumber disabled = {true}/>
-              )}
-            </Form.Item>
-
-            <Form.Item label="Nivel">
-              {getFieldDecorator('nivel', {
-                initialValue: subjectData.nivel,
-                rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
-              })(
-                <InputNumber onChange={this.handleNivel} min={1} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Créditos">
-              {getFieldDecorator('creditos', {
-                initialValue: subjectData.creditos,
-                rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
-              })(
-                <InputNumber min={1} max={10} />
-              )}
-            </Form.Item>
-
-            <Form.Item label="Fecha de creacion:">
-            <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
-            </Form.Item>
-            
-            <Form.Item label="Ultima modificacion:">
-            <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
-            </Form.Item>
+            <Row>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Teóricas">
+                  {getFieldDecorator('horasTeoricas', {
+                    initialValue: subjectData.horasTeoricas,
+                    rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Laboratorio">
+                  {getFieldDecorator('horasLaboratorio', {
+                    initialValue: subjectData.horasLaboratorio,
+                    rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Prácticas">
+                  {getFieldDecorator('horasPracticas', {
+                    initialValue: subjectData.horasPracticas,
+                    rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 16, offset: 2 }}>
+                <Form.Item label="Horas Trabajo Independiente del Estudiante">
+                  {getFieldDecorator('trabajoIndependienteEstudiante', {
+                    initialValue: subjectData.horasIndependientesDelEstudiante,
+                    rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
+                  })(
+                    <InputNumber disabled = {true}/>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
+                <Form.Item label="Fecha de creacion:">
+                  <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
+                <Form.Item label="Ultima modificacion:">
+                  <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
+                </Form.Item>
+              </Col>
+            </Row>
 
             <Form.Item label="Requisito de nivel">
               {getFieldDecorator('requisitoNivel', {
