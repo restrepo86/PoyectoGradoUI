@@ -717,6 +717,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   </Col>
                 </Row>
                 <Row>
+                  <br/>
                   <h4>Horas</h4>
                   <Col span={6}>
                     <h4>Teoricas</h4>
@@ -738,6 +739,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   </Col>
                 </Row>
                 <Row>
+                <br/>
                   <h4>Requisitos</h4>
                   <Col span={8}>
                     <p>Requisito de nivel</p>
@@ -783,8 +785,9 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   && <Col span={8}><Tooltip placement="top" title={"Eliminar"}><Button shape="circle" icon="delete" onClick = {() => this.showModalDeleteRequirement()}/></Tooltip></Col>
                   }
                 </Row>
+                <br/>
                 <Row justify="center" align="middle">
-                  <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                  <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 1 }}>
                     <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
                   </Col>
                   <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
@@ -797,6 +800,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
               </Col>
             </Row>
           </div>
+          <br/>
           <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
             <Col span={8}>
               <Tooltip placement="bottom" title={"Descripcion de cambios"}>
