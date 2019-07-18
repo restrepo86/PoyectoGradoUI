@@ -700,9 +700,15 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
           footer={[<Button type="primary" onClick={onCancel}>Cerrar</Button>]}
         >
           <div>
-            <Row type="flex" justify="center" align="top">
-              <Col span={18} push={6} style={{textAlign:"center"}}>
+            <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
+              <Col span={18} push={3} style={{textAlign:"center"}}>
                 <Row>
+                  <Col span={6} style={{backgroundColor:componenteDeFormacion.color, color:"#ffffff", fontWeight:"bold"}}>
+                    [{componenteDeFormacion.abreviatura}] {componenteDeFormacion.nombre}
+                  </Col>
+                </Row>
+                <Row>
+                  <br/>
                   <Col span={8}>
                     <h3>Codigo</h3>
                     <p>{subjectData.codigo}</p>
@@ -717,7 +723,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   </Col>
                 </Row>
                 <Row>
-                  <br/>
+                  
                   <h3>Horas</h3>
                   <Col span={6}>
                     <h4>Teoricas</h4>
@@ -739,7 +745,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   </Col>
                 </Row>
                 <Row>
-                <br/>
+                
                   <h3>Requisitos</h3>
                   <Col span={8}>
                     <h4>Requisito de nivel</h4>
@@ -787,7 +793,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                 </Row>
                 <br/>
                 <Row justify="center" align="middle">
-                  <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 1 }}>
+                  <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 5 }}>
                     <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
                   </Col>
                   <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
@@ -795,9 +801,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                   </Col>
                 </Row>
               </Col>
-              <Col span={6} pull={18} style={{backgroundColor:componenteDeFormacion.color, color:"#ffffff", fontWeight:"bold"}}>
-                [{componenteDeFormacion.abreviatura}] {componenteDeFormacion.nombre}
-              </Col>
+         
             </Row>
           </div>
           <br/>
