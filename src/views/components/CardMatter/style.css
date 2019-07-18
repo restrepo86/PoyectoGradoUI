@@ -2,7 +2,10 @@
     padding: 0px;
 }
 
-
+.ant-card-bordered {
+    min-width: 150px;
+    max-width: 300px;
+}
 .ant-divider-vertical{
     top: 0em;
     height: 2em;
@@ -11,3 +14,7 @@
 .ant-title-asignatura{
     flex-grow: 1;
 }
+
+
+
+
