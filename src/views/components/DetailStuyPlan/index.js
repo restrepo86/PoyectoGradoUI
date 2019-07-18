@@ -178,7 +178,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visibleModalTimelineChangesControl: false,
       popoverVisible: false, 
       expand: false,
-      subjetBySniesCodeData: {}
+      subjetBySniesCodeData: {},
+      nivelData: ''
     };
   
     showModalAddRequirement = () => {
@@ -304,6 +305,14 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       this.setState({ expand: !expand });
     };
 
+    handleNivel = (value) => {
+      this.setState({ nivelData: value })
+    };
+
+    inicializarNivelData = (nivelActualAsignatura) => {
+      return this.state.nivelData === '' ? nivelActualAsignatura : this.state.nivelData;
+    };
+
     getFields(form, trainingComponentsData, subjectData, mattersStore) {
 
       const { getFieldDecorator } = form;
@@ -313,7 +322,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
       const dateFormat = 'YYYY-MM-DD';
       const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
-
+      const nivelData = this.inicializarNivelData(subjectData.nivel);
      
       children.push(
         <Col span={8} key={0} style={{ display: 'block' }}>
@@ -456,8 +465,9 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
             })(
               <Select style={{width:120}}>
               <Option key={0} value={"No"}>No</Option>
-                { 
-                  requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
+                {    
+                  
+                  requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < nivelData).map((requisito, index) =>
                   <Option key={index+1} value={requisito}>{requisito}</Option>
                 )}
               </Select>
