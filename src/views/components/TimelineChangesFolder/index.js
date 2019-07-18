@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Modal, Form, Timeline } from 'antd';
+import { Modal, Form, Timeline, Button, Icon } from 'antd';
 import "./index.css";
 
 @observer
@@ -23,7 +23,7 @@ class TimelineChangesFolder extends React.Component {
     render() {
 
         const {
-            visible, onCancel, onCreate
+            visible, onCancel
         } = this.props;
 
         return (
@@ -33,16 +33,20 @@ class TimelineChangesFolder extends React.Component {
                 bodyStyle={{ width: 1000 }}
                 width={1000}
                 visible={visible}
-                title="Cambios en Planeador de Asignatura"
-                okText="Aceptar"
+                title="Descripción de cambios"
                 onCancel={onCancel}
-                onOk={onCreate}
                 destroyOnClose={true}
+                footer={[<Button type="primary" onClick={onCancel}>Cerrar</Button>]}
             >
                 <Timeline mode="alternate">
                     {
                         this.matterStore.descriptionsData.map((descripcionCambio, index) => 
-                            <Timeline.Item key={index}>{ descripcionCambio.mensaje } { descripcionCambio.fecha.substring(0, 10)}</Timeline.Item>
+                            <Timeline.Item key={index} dot={<Icon type="clock-circle-o"/>}> 
+                                <h4 style={{color:'#43985d'}}>{descripcionCambio.fecha.substring(0, 10)} {descripcionCambio.fecha.substring(11, 19)}</h4>                                
+                                { descripcionCambio.mensaje.split("*").map( (line, index) => 
+                                    <p key={index} style={{marginBottom:'0em'}}>{line}</p>
+                                )}
+                            </Timeline.Item>
                         )
                     }
                 </Timeline>

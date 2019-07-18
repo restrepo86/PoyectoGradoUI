@@ -335,7 +335,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           onCancel={onCancel}
           destroyOnClose={'true'}
           footer={[
-            <Button type="primary" onClick={onCancel}>Cerrar</Button>,
+            <Button type="primary" onClick={onCancel}>Cancelar</Button>,
             <Popconfirm placement="top" title={"Estas segur@ que deseas actualizar esta asignatura"} onConfirm={onCreateSubjectUpdate} okText="Si" cancelText="No">
               <Button>Actualizar</Button>
             </Popconfirm>
