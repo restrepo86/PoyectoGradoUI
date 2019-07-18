@@ -704,21 +704,21 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
               <Col span={18} push={6} style={{textAlign:"center"}}>
                 <Row>
                   <Col span={8}>
-                    <h4>Codigo</h4>
+                    <h3>Codigo</h3>
                     <p>{subjectData.codigo}</p>
                   </Col>
                   <Col span={8}>
-                    <h4>Nivel</h4>
+                    <h3>Nivel</h3>
                     <p>{subjectData.nivel}</p>
                   </Col>
                   <Col span={8}>
-                    <h4>Créditos</h4>
+                    <h3>Créditos</h3>
                     <p>{subjectData.creditos}</p>
                   </Col>
                 </Row>
                 <Row>
                   <br/>
-                  <h4>Horas</h4>
+                  <h3>Horas</h3>
                   <Col span={6}>
                     <h4>Teoricas</h4>
                     <p>{subjectData.horasTeoricas}</p>
@@ -734,19 +734,19 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                     </Tooltip>
                   </Col>
                   <Col span={6}>
-                    <h4>Practicas</h4>
+                    <h3>Practicas</h3>
                     <p>{subjectData.horasPracticas}</p>
                   </Col>
                 </Row>
                 <Row>
                 <br/>
-                  <h4>Requisitos</h4>
+                  <h3>Requisitos</h3>
                   <Col span={8}>
-                    <p>Requisito de nivel</p>
+                    <h4>Requisito de nivel</h4>
                     <p>{subjectData.requisitoNivel}</p>
                   </Col>
                   <Col span={8}>
-                    <p>Prerequisitos</p>
+                    <h4>Prerequisitos</h4>
                       { requisitos.filter(requisito => requisito.tipo === 'Prerequisito').map(prerequisito => 
                         <Popover
                           content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
@@ -761,7 +761,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                       )}
                   </Col>
                   <Col span={8}>
-                    <p>Corequisitos</p>
+                    <h4>Corequisitos</h4>
                     { requisitos.filter(requisito => requisito.tipo === 'Corequisito').map(prerequisito => 
                       <Popover
                         content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
