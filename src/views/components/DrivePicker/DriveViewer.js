@@ -43,6 +43,9 @@ class DriveViewer extends Component {
                   console.log('responseGoogle', data)
                   if (data.action === google.picker.Action.PICKED) {
                       var fileUrl = data.docs[0].url;
+                      if (data.docs[0].uploadState === 'success') {
+                        this.props.setIsUploadFile(true);
+                      }
                       window.open(fileUrl, '_blank');
                   }
                 });

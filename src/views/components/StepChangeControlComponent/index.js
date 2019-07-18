@@ -1,5 +1,6 @@
 import React from 'react';
 import DriveViewer from '../DrivePicker/DriveViewer';
+import { observer } from 'mobx-react';
 import { Steps, Button, Input, Modal, Form, message } from 'antd';
 import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import "./index.css";
@@ -7,7 +8,7 @@ import "./index.css";
 const { TextArea } = Input;
 const { Step } = Steps;
 
-
+@observer
 class StepLineChangeControlComponent extends React.Component {
 
   constructor(props) {
@@ -19,21 +20,34 @@ class StepLineChangeControlComponent extends React.Component {
     };
   };
 
-  next = async (matterStore, subjectData) => {
-    if (this.state.descriptionValue !== '' && this.state.current + 1 === 1) {
-      const descripcionCambioDTO = new DescripcionCambioDTO(this.state.descriptionValue);
-      await matterStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
-      if (matterStore.addDescriptionResponse) {
-        const current = this.state.current + 1;
-        this.setState({ current });
-      } else {
-        message.error('No se pudo conectar el servicio para subir archivo!');
-      }
+  next = async (stepChangeControlStore) => {
     
+    if (this.state.descriptionValue !== '') {
+      stepChangeControlStore.setDescription(this.state.descriptionValue);
+      stepChangeControlStore.setIsDescription(true);
+      const current = this.state.current + 1;
+      this.setState({ current });
     } else {
       message.warning('Debe ingresar una descripción del cambio!');
     }
    
+  };
+
+  finish = async(process, stepChangeControlStore, matterStore, subjectData) => {
+    console.log(stepChangeControlStore.isUploadFile);
+    if (stepChangeControlStore.isUploadFile && stepChangeControlStore.isDescription) {
+      
+      const descripcionCambioDTO = new DescripcionCambioDTO(this.state.descriptionValue);
+      await matterStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
+      if (matterStore.addDescriptionResponse) {
+        stepChangeControlStore.setIsUploadFile(false);
+        process.showMessage('Proceso terminado correctamente', 'success');  
+      } else {
+        process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
+      }
+    } else {
+      message.warning('Debe cargar un archivo para finalizar!');
+    }
     
   };
 
@@ -95,12 +109,12 @@ class StepLineChangeControlComponent extends React.Component {
           <div className="steps-content" style={{paddingTop: '0px'}}>{steps[this.state.current].content}</div>
           <div className="steps-action">
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => this.next(matterStore, subjectData)}>
+              <Button type="primary" onClick={() => this.next(stepChangeControlStore)}>
                 Siguiente
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button type="primary" onClick={() => process.showMessage('Proceso terminado correctamente', 'success')}>
+              <Button type="primary" onClick={() => this.finish(process, stepChangeControlStore, matterStore, subjectData)}>
                 Finalizar
               </Button>
             )}
