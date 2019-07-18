@@ -27,11 +27,11 @@ class StepLineChangeControlComponent extends React.Component {
         const current = this.state.current + 1;
         this.setState({ current });
       } else {
-        message.success('No se pudo conectar el servicio para subir archivo!');
+        message.error('No se pudo conectar el servicio para subir archivo!');
       }
     
     } else {
-      message.success('Debe ingresar una descripción del cambio!');
+      message.warning('Debe ingresar una descripción del cambio!');
     }
    
     
@@ -59,12 +59,12 @@ class StepLineChangeControlComponent extends React.Component {
         content: 
           <div>
             Descripción del cambio
-            <TextArea onChange={this.handleChangeDescription} rows={4} />,
+            <TextArea onChange={this.handleChangeDescription} rows={8} />
           </div>
       },
       {
         title: 'Cargar Archivo',
-        content: <DriveViewer { ...subjectData } />,
+        content: <DriveViewer { ...subjectData } />
       }
     ];
 
@@ -81,6 +81,7 @@ class StepLineChangeControlComponent extends React.Component {
         visible={visible}
         title="Carga de Planeadores de Asignaturas"
         okText="Aceptar"
+        destroyOnClose={true}
         onCancel={onCancel}
         onOk={onCreate}
       >
@@ -91,7 +92,7 @@ class StepLineChangeControlComponent extends React.Component {
               <Step key={item.title} title={item.title} />
             ))}
           </Steps>
-          <div className="steps-content">{steps[current].content}</div>
+          <div className="steps-content" style={{paddingTop: '0px'}}>{steps[this.state.current].content}</div>
           <div className="steps-action">
             {current < steps.length - 1 && (
               <Button type="primary" onClick={() => this.next(matterStore, subjectData)}>
@@ -100,7 +101,7 @@ class StepLineChangeControlComponent extends React.Component {
             )}
             {current === steps.length - 1 && (
               <Button type="primary" onClick={() => process.showMessage('Proceso terminado correctamente', 'success')}>
-                Terminar Proceso
+                Finalizar
               </Button>
             )}
           </div>
