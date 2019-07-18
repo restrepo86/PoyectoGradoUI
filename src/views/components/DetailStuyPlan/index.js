@@ -178,7 +178,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visibleModalStepChangeControl: false,
       visibleModalTimelineChangesControl: false,
       popoverVisible: false,
-      subjetBySniesCodeData: {}
+      subjetBySniesCodeData: {},
+      nivelData: ''
     };
   
     showModalAddRequirement = () => {
@@ -299,6 +300,14 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       this.formRefFile = formRefFile;
     };
 
+    handleNivel = (value) => {
+      this.setState({ nivelData: value })
+    };
+
+    inicializarNivelData = (nivelActualAsignatura) => {
+      return this.state.nivelData === '' ? nivelActualAsignatura : this.state.nivelData;
+    };
+
     render() {
 
       const {
@@ -315,6 +324,8 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       const Option = Select.Option;
       const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
       const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
+
+      const nivelData = this.inicializarNivelData(subjectData.nivel);
    
       return (
         <Modal
@@ -401,7 +412,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
                 <Select style={{width:120}}>
                 <Option key={0} value={"No"}>No</Option>
                   { 
-                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
+                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < nivelData).map((requisito, index) =>
                     <Option key={index+1} value={requisito}>{requisito}</Option>
                   )}
                 </Select>
