@@ -16,15 +16,18 @@ import {
   Radio, 
   Row,
   Col,
-  Tag
+  Tag,
+  message
   } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
 import UpdateMatterRequestDTO from '../../../dto/UpdateMatterRequestDTO';
 import AddRequirementDTO from '../../../dto/AddRequirementDTO';
 import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
+import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import StepLineChangeControlComponent from '../StepChangeControlComponent';
 import TimelineChangesFolder from '../TimelineChangesFolder';
+
 import moment from 'moment';
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
@@ -271,11 +274,6 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
     };
 
     cancelModalStepChangeControl = () => {
-      this.setState({ visibleModalStepChangeControl: false });
-    };
-    
-    handleUploadFile = (process) => {
-      process.showMessage('Proceso terminado correctamente', 'success');
       this.setState({ visibleModalStepChangeControl: false });
     };
   
@@ -590,13 +588,25 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       this.setState({ visibleModalStepChangeControl: false });
     };
     
-    handleUploadFile = (process) => {
-      process.showMessage('Proceso terminado correctamente', 'success');
+    handleUploadFile = async(process, mattersStore, subjectData, stepChangeControlStore) => {
+      
+      if (stepChangeControlStore.isUploadFile && stepChangeControlStore.isDescription) {
+      
+        const descripcionCambioDTO = new DescripcionCambioDTO(stepChangeControlStore.description);
+        await mattersStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
+        if (mattersStore.addDescriptionResponse) {
+          stepChangeControlStore.setIsUploadFile(false);
+          process.showMessage('Proceso terminado correctamente', 'success');  
+        } else {
+          process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
+        }
+      } else {
+        message.warning('Debe cargar un archivo para finalizar!');
+      }
       this.setState({ visibleModalStepChangeControl: false });
+
     };
   
-
-    // Descripcion cambios acciones
     timelineFormRef = formRefTime => {
       this.formRefTime = formRefTime;
     };
@@ -809,7 +819,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                 wrappedComponentRef={this.uploapFormRefFile}
                 visible={this.state.visibleModalStepChangeControl}
                 onCancel={this.cancelModalStepChangeControl}
-                onCreate={() => this.handleUploadFile(process)}
+                onCreate={() => this.handleUploadFile(process, mattersStore, subjectData, stepChangeControlStore)}
                 process={process}
                 matterStore={mattersStore}
                 subjectData={subjectData}

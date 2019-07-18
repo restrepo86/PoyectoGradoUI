@@ -4,6 +4,7 @@ export default class StepChangeControlStore {
 
     @observable isDescription = false;
     @observable isUploadFile = false;
+    @observable description =  '';
     @observable process;
 
     constructor(process) {
@@ -16,6 +17,10 @@ export default class StepChangeControlStore {
 
     setIsUploadFile = (isUploadFile) => {
         this.isUploadFile = isUploadFile;
+    };
+
+    setDescription = (description) => {
+        this.description = description;
     };
     
 }
