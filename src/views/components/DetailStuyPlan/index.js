@@ -16,7 +16,8 @@ import {
   Radio, 
   Row,
   Col,
-  Icon
+  Icon,
+  Tag
   } from 'antd';
 import CardMatter from '../CardMatter';
 import AsignaturaRequestDTO from '../../../dto/AsignaturaRequestDTO';
@@ -316,7 +317,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
 
      
       children.push(
-        <Col span={8} key={0} style={{ display: 'block' }}>
+        <Col span={8} key={0} >
           <Form.Item label="Código">
             {getFieldDecorator('codigo', {
               initialValue: subjectData.codigo,
@@ -329,7 +330,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       );
         
       children.push(
-        <Col span={8} key={1} style={{ display: 'block' }}>
+        <Col span={8} key={1}>
           <Form.Item label="Nombre">
             {getFieldDecorator('nombre', {
               initialValue: subjectData.nombre,
@@ -529,6 +530,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
         process
       } = this.props;
 
+      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
    
       return (
         <Modal
@@ -549,6 +551,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           ]}
           
         >
+
           <Form layout="vertical">
 
             <center>
@@ -657,6 +660,415 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
   }
 );
 
+const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
+  class extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.matters = this.props.stores.matters;
+      this.process = this.props.stores.process;
+      this.inpComponentStore = this.props.stores.inpComponentStore;
+      this.trainingComponentStore = this.props.stores.trainingComponentStore;
+      this.requirementStore = this.props.stores.requirementStore;
+    }
+
+    state = {
+      visible: false,
+      visibleUpdateSubject: false,
+      visibleModalUpdate: false,
+      visibleModalDelete: false, 
+      visibleModalStepChangeControl: false,
+      visibleModalTimelineChangesControl: false,
+      popoverVisible: false, 
+      expand: false,
+      subjetBySniesCodeData: {}
+    };
+
+    deleteSubject = (subjectId, mattersStore, programId, inp) => {
+      mattersStore.deleteMatterData(programId, inp, subjectId);
+    };
+
+   //agregar requisitos acciones
+    showModalAddRequirement = () => {
+      this.setState({ visible: true });
+    };
+  
+    handleCancelAddRequirement = () => {
+      this.setState({ visible: false });
+    };
+  
+    handleCreateAddRequirement = (subjectCode, requirementStore) => {
+      const { form } = this.formRefAddRequirement.props;
+      form.validateFields((err, values) => {
+        if (err) {
+          return;
+        }
+        const addRequirementDTO = new AddRequirementDTO(values.codigoRequisito, values.tipoRequisito);
+        requirementStore.addRequirement(addRequirementDTO, subjectCode);
+        form.resetFields();
+        this.setState({ visible: false });
+      });
+    };
+  
+    saveFormRefAddRequirement = formRefAddRequirement => {
+      this.formRefAddRequirement = formRefAddRequirement;
+    };
+
+    //actualizar requisitos acciones
+    showModalUpdateRequirement = () => {
+      this.setState({ visibleModalUpdate: true });
+    };
+  
+    handleCancelUpdateRequirement = () => {
+      this.setState({ visibleModalUpdate: false });
+    };
+  
+    handleCreateUpdateRequirement = (subjectCode, requirementStore) => {
+      const { form } = this.formRefUpdateRequirement.props;
+      form.validateFields((err, values) => {
+        if (err) {
+          return;
+        }  
+        const updateRequirementDTO = new UpdateRequirementDTO(values.tipoRequisito);
+        requirementStore.updateRequirement(updateRequirementDTO, subjectCode, values.codigoRequisito);
+        form.resetFields();
+        this.setState({ visibleModalUpdate: false });
+      });
+    };
+  
+    saveFormRefUpdateRequirement = formRefUpdateRequirement => {
+      this.formRefUpdateRequirement = formRefUpdateRequirement;
+    };
+
+    //eliminar requisitos acciones
+    showModalDeleteRequirement = () => {
+      this.setState({ visibleModalDelete: true });
+    };
+  
+    handleCancelDeleteRequirement = () => {
+      this.setState({ visibleModalDelete: false });
+    };
+  
+    handleCreateDeleteRequirement = (subjectCode, requirementStore) => {
+      const { form } = this.formRefDeleteRequirement.props;
+      form.validateFields((err, values) => {
+        if (err) {
+          return;
+        }  
+        requirementStore.deleteRequirement(subjectCode, values.codigoRequisito);
+        form.resetFields();
+        this.setState({ visibleModalDelete: false });
+      });
+    };
+
+    deleteRequirementAction = (requirementStore, subjectCode, codigoRequisito) => {
+      requirementStore.deleteRequirement(subjectCode, codigoRequisito);
+    };
+  
+    saveFormRefDeleteRequirement = formRefDeleteRequirement => {
+      this.formRefDeleteRequirement = formRefDeleteRequirement;
+    };
+
+    //Mostrar informacion requisito
+    handleVisibleChangePopover = visible => {
+      this.setState({ popoverVisible: visible });
+    };
+
+    clickPrerequisito = async (codigoPrerequisito, mattersStore) => {
+      
+      await mattersStore.getMatterBySniesCode(codigoPrerequisito);
+      this.setState({ subjetBySniesCodeData: mattersStore.subjetBySniesCodeData });
+    
+    };
+
+    // Subir archivo acciones
+    showModalStepChangeControl = () => {
+      this.setState({ visibleModalStepChangeControl: true });
+    };
+
+    cancelModalStepChangeControl = () => {
+      this.setState({ visibleModalStepChangeControl: false });
+    };
+    
+    handleUploadFile = (process) => {
+      process.showMessage('Proceso terminado correctamente', 'success');
+      this.setState({ visibleModalStepChangeControl: false });
+    };
+  
+
+    // Descripcion cambios acciones
+    timelineFormRef = formRefTime => {
+      this.formRefTime = formRefTime;
+    };
+
+    showModalTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: true });
+    };
+
+    cancelModalTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: false });
+    };
+    
+    handleTimelineChangesFolder = () => {
+      this.setState({ visibleModalTimelineChangesControl: false });
+    };
+
+  //Update asignatura Modal items  
+  showModalSubject = () => {
+    this.setState({ visibleUpdateSubject: true });
+  };
+
+  handleCancelSubject = () => {
+    this.setState({ visibleUpdateSubject: false });
+  };
+
+  uploapFormRefFile = formRefFile => {
+    this.formRefFile = formRefFile;
+  };
+
+    handleUpdate = () => {
+
+      const form = this.formRef.props.form;
+      form.validateFields((err, values) => {
+    
+        if (err) {
+          return;
+        }
+        const updateMatterRequestDTO = new UpdateMatterRequestDTO(
+          values.componenteFormacion, 
+          values.nombre,
+          values.creditos,
+          values.horasTeoricas,
+          values.horasLaboratorio,
+          values.horasPracticas,
+          values.trabajoIndependienteEstudiante,
+          values.nivel,
+          values.requisitoNivel
+        );
+        
+        this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO, values.codigo);
+  
+        form.resetFields();
+        this.setState({ visibleUpdateSubject: false });
+  
+      });
+  
+    };
+
+    saveFormRef = (formRef) => {
+      this.formRef = formRef;
+    }
+
+    render() {
+
+      const {
+        visibleSubject, 
+        onCancel, 
+        onCreateSubjectUpdate, 
+        form, 
+        nameSubject, 
+        subjectData, 
+        trainingComponentsData,
+        mattersStore,
+        programId, 
+        inp,
+        requirementStore,
+        process
+      } = this.props;
+
+      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
+   
+      return (
+        <Modal
+          visible={visibleSubject}
+          title={nameSubject}
+          centered
+          width={700}
+          onCancel={onCancel}
+          destroyOnClose={'true'}
+          footer={[
+            <Button type="primary" onClick={onCancel}>Cerrar</Button>
+          ]}
+          
+        >
+         <div>
+    <Row type="flex" justify="center" align="middle">
+      <Col span={18} push={6}>
+      <h3>Codigo</h3>
+      <p>{subjectData.codigo}</p>
+      <Row>
+      <Col span={12}>
+       <h3>Nivel</h3>
+       <p>{subjectData.nivel}</p>
+      </Col>
+      <Col span={12}>
+      <h3>Créditos</h3>
+      <p>{subjectData.creditos}</p>
+      </Col>
+    </Row>
+    <Row>
+      <h3>Horas</h3>
+      <Col span={6}>
+      <h4>Teoricas</h4>
+      <p>{subjectData.horasTeoricas}</p>
+      </Col>
+      <Col span={6}>
+      <h4>Laboratorio</h4>
+      <p>{subjectData.horasLaboratorio}</p>
+      </Col>
+      <Col span={6}>
+      <Tooltip placement="top" title={"Independientes del estudiante"}>
+      <h4>IDE</h4>
+    <p>{subjectData.horasIndependientesDelEstudiante}</p>
+    </Tooltip>
+    </Col>
+      <Col span={6}><h4>Practicas</h4>
+      <p>{subjectData.horasPracticas}</p></Col>
+    </Row>
+    <Row>
+    <h3>Requisitos</h3>
+      <Col span={8}>
+      <p>Requisito de nivel</p>
+      <p>{subjectData.requisitoNivel}</p>
+      </Col>
+      <Col span={8}>
+      <p>Prerequisitos</p>
+      { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
+                .map(prerequisito => 
+                    <Popover
+                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                      title={this.state.subjetBySniesCodeData.nombre}
+                      trigger="click"
+                      onVisibleChange={this.handleVisibleChangePopover}
+                    >
+                    <Tag onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}>
+                        {prerequisito.codigo}
+                    </Tag>
+                    </Popover>
+                ) 
+            }
+      </Col>
+      <Col span={8}>
+      <p>Corequisitos</p>
+      { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
+                .map(prerequisito => 
+                    <Popover
+                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                      title={this.state.subjetBySniesCodeData.nombre}
+                      trigger="click"
+                      onVisibleChange={this.handleVisibleChangePopover}
+                    >
+                    <Tag onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}>
+                        {prerequisito.codigo}
+                    </Tag>
+                    </Popover>
+                ) 
+            }
+      </Col>
+    </Row>
+    <Row>
+      <Col span={8}><Tooltip placement="top" title={"Agregar"}><Button shape="circle" icon="plus" onClick = {() => this.showModalAddRequirement()}/></Tooltip></Col>
+        {!(subjectData.requisitos && (subjectData.requisitos).length === 0) 
+        && <Col span={8}><Tooltip placement="top" title={"Modificar"}><Button shape="circle" icon="edit" onClick = {() => this.showModalUpdateRequirement()}/></Tooltip></Col>
+        }
+        {!(subjectData.requisitos && (subjectData.requisitos).length === 0)
+        && <Col span={8}><Tooltip placement="top" title={"Eliminar"}><Button shape="circle" icon="delete" onClick = {() => this.showModalDeleteRequirement()}/></Tooltip></Col>
+        }
+    </Row>
+      </Col>
+      <Col span={6} pull={18}>
+        
+  <Button
+                type="primary"
+                icon="file-add"
+                onClick = {() => this.showModalStepChangeControl()}
+              >
+              </Button>
+
+              <StepLineChangeControlComponent
+                wrappedComponentRef={this.uploapFormRefFile}
+                visible={this.state.visibleModalStepChangeControl}
+                onCancel={this.cancelModalStepChangeControl}
+                onCreate={() => this.handleUploadFile(process)}
+                process={process}
+                matterStore={mattersStore}
+                subjectData={subjectData}
+              />
+
+              <Button type="primary" onClick = {() => this.showModalTimelineChangesFolder()}><Icon type="history" /></Button>
+              <TimelineChangesFolder
+                wrappedComponentRef={this.timelineFormRef}
+                visible={this.state.visibleModalTimelineChangesControl}
+                onCancel={this.cancelModalTimelineChangesFolder}
+                onCreate={this.handleTimelineChangesFolder}
+                matterStore={mattersStore}
+                subjectData={subjectData}
+              />
+      </Col>
+    </Row>
+  </div>
+       
+  <AddRequirement
+                  wrappedComponentRef={this.saveFormRefAddRequirement}
+                  visible={this.state.visible}
+                  onCancel={this.handleCancelAddRequirement}
+                  onCreateAddRequirement={() => this.handleCreateAddRequirement(subjectData.codigo, requirementStore)}
+                  mattersData={mattersStore.mattersData}
+                  subjectData={subjectData}
+                />
+
+
+<UpdateRequirement
+                  wrappedComponentRef={this.saveFormRefUpdateRequirement}
+                  visible={this.state.visibleModalUpdate}
+                  onCancel={this.handleCancelUpdateRequirement}
+                  onCreate={() => this.handleCreateUpdateRequirement(subjectData.codigo, requirementStore)}
+                  requisitos={subjectData.requisitos}
+                  subjectData={subjectData}
+                />
+
+
+<DeleteRequirement
+                  wrappedComponentRef={this.saveFormRefDeleteRequirement}
+                  visible={this.state.visibleModalDelete}
+                  onCancel={this.handleCancelDeleteRequirement}
+                  onCreate={() => this.handleCreateDeleteRequirement(subjectData.codigo, requirementStore)}
+                  requisitos={subjectData.requisitos}
+                />
+
+
+
+
+
+            <Button
+                  style={{ marginLeft: 12 }}
+                  onClick = {() => this.showModalSubject()}
+                >
+                  Actualizar Asignatura
+                </Button>
+
+            <SubjectDetail 
+            wrappedComponentRef={this.saveFormRef}
+            visibleSubject={this.state.visibleUpdateSubject}
+            nameSubject={nameSubject}
+            subjectData={subjectData}
+            onCancel={this.handleCancelSubject}
+            onCreateSubjectUpdate={this.handleUpdate}
+            trainingComponentsData={trainingComponentsData}
+            mattersStore={mattersStore}
+            programId={programId}
+            inp={inp}
+            requirementStore={requirementStore}
+            process={process}
+          />
+
+        </Modal>
+      );
+    }
+
+  }
+);
+
 const AddRequirement = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
@@ -673,6 +1085,7 @@ const AddRequirement = Form.create({ name: 'form_in_modal' })(
           okText="Agregar Requisito"
           onCancel={onCancel}
           onOk={onCreateAddRequirement}
+          destroyOnClose={'true'}
         >
           <Form layout="vertical">
             <Form.Item label="Tipo de Requisito">
@@ -726,6 +1139,7 @@ const UpdateRequirement = Form.create({ name: 'form_in_modal' })(
           okText="Actualizar Requisito"
           onCancel={onCancel}
           onOk={onCreate}
+          destroyOnClose={'true'}
         >
           <Form layout="vertical">
 
@@ -777,6 +1191,7 @@ const DeleteRequirement = Form.create({ name: 'form_in_modal' })(
           okText="Eliminar Requisito"
           onCancel={onCancel}
           onOk={onCreate}
+          destroyOnClose={'true'}
         >
           <Form layout="vertical">
 
@@ -869,6 +1284,7 @@ class DetailStudyPlan extends React.Component {
 
   state = {
     visible: false,
+    visibleOnlyReadSubject: false,
     visibleSubject: false,
     nameSubject: '', 
     subjectData: {},
@@ -912,51 +1328,19 @@ class DetailStudyPlan extends React.Component {
     });
   };
 
-  showModalSubject = () => {
-    this.setState({ visibleSubject: true });
+
+  showOnlyReadModalSubject = () => {
+    this.setState({ visibleOnlyReadSubject: true });
   };
 
-  handleCancelSubject = () => {
-    this.setState({ visibleSubject: false });
+  handleCancelOnlyReadSubject = () => {
+    this.setState({ visibleOnlyReadSubject: false });
   };
 
-  handleUpdate = () => {
-
-    const form = this.formRef.props.form;
-    form.validateFields((err, values) => {
-  
-      if (err) {
-        return;
-      }
-      const updateMatterRequestDTO = new UpdateMatterRequestDTO(
-        values.componenteFormacion, 
-        values.nombre,
-        values.creditos,
-        values.horasTeoricas,
-        values.horasLaboratorio,
-        values.horasPracticas,
-        values.trabajoIndependienteEstudiante,
-        values.nivel,
-        values.requisitoNivel
-      );
-      
-      this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO, values.codigo);
-
-      form.resetFields();
-      this.setState({ visibleSubject: false });
-
-    });
-
-  };
-
-  openModal = (propiedadesAsignatura) => {
-    this.showModalSubject();
+  openReadOnlyModal = (propiedadesAsignatura) => {
+    this.showOnlyReadModalSubject();
     this.setState({ nameSubject: propiedadesAsignatura.nombre, subjectData: propiedadesAsignatura, trainingComponentsData: this.trainingComponentStore.trainingComponentsData });
   };
-
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
-  }
 
   saveFormRefAddSubject = (formRefAddSubject) => {
     this.formRefAddSubject = formRefAddSubject;
@@ -983,7 +1367,7 @@ class DetailStudyPlan extends React.Component {
       .map((asignatura, index) => {
         const cardAsignatura = { key: index, name: asignatura.nivel };
         cardAsignatura[asignatura.keyIndex] = 
-        <span onClick = {() => this.openModal({...asignatura})}>
+        <span onClick = {() => this.openReadOnlyModal({...asignatura})}>
             <CardMatter {...asignatura} />
         </span>
         return cardAsignatura;
@@ -1063,19 +1447,18 @@ class DetailStudyPlan extends React.Component {
             onCreate={this.handleCreate}
             trainingComponentsData={this.state.trainingComponentsData}
           />
-          <SubjectDetail 
-            wrappedComponentRef={this.saveFormRef}
-            visibleSubject={this.state.visibleSubject}
+          <SubjectDetailReadOnly
+            visibleSubject={this.state.visibleOnlyReadSubject}
             nameSubject={this.state.nameSubject}
             subjectData={this.state.subjectData}
-            onCancel={this.handleCancelSubject}
-            onCreateSubjectUpdate={this.handleUpdate}
+            onCancel={this.handleCancelOnlyReadSubject}
             trainingComponentsData={this.state.trainingComponentsData}
             mattersStore={this.matters}
             programId={this.inpComponentStore.inpData.programId}
             inp={this.inpComponentStore.inpData.id}
             requirementStore={this.requirementStore}
             process={this.process}
+            {...this.props}
           />
         </center>
 
