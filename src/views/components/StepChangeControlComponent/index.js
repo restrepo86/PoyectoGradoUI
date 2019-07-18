@@ -49,7 +49,7 @@ class StepLineChangeControlComponent extends React.Component {
   render() {
 
     const {
-      visible, onCancel, onCreate, process, matterStore, subjectData
+      visible, onCancel, onCreate, process, matterStore, subjectData, stepChangeControlStore
     } = this.props;
 
     const steps = 
@@ -64,7 +64,7 @@ class StepLineChangeControlComponent extends React.Component {
       },
       {
         title: 'Cargar Archivo',
-        content: <DriveViewer { ...subjectData } />
+        content: <DriveViewer { ...subjectData } { ...stepChangeControlStore } />,
       }
     ];
 

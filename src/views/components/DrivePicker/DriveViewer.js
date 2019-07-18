@@ -40,6 +40,7 @@ class DriveViewer extends Component {
                 .setOAuthToken(oauthToken)
                 .setDeveloperKey(PickerConfig.googlePicker.developerKey)
                 .setCallback((data)=>{
+                  console.log('responseGoogle', data)
                   if (data.action === google.picker.Action.PICKED) {
                       var fileUrl = data.docs[0].url;
                       window.open(fileUrl, '_blank');

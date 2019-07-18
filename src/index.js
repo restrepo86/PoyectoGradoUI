@@ -22,6 +22,7 @@ import InpComponentStore from './stores/InpComponentStore';
 import LoginStore from './stores/LoginStore';
 import TrainingComponentStore from './stores/TrainingComponentStore';
 import RequirementStore from './stores/RequirementStore';
+import StepChangeControlStore from './stores/StepChangeControlStore'
 
 
 const process =  new Process();
@@ -33,6 +34,7 @@ const trainingComponentStore = new TrainingComponentStore(trainingComponentServi
 const programsComponentStore = new ProgramsComponentStore();
 const inpComponentStore = new InpComponentStore();
 const requirementStore = new RequirementStore(requirementServices, process);
+const stepChangeControlStore = new StepChangeControlStore(process);
 
 const stores = { 
   programs, 
@@ -43,7 +45,8 @@ const stores = {
   process, 
   inpComponentStore,
   trainingComponentStore,
-  requirementStore
+  requirementStore,
+  stepChangeControlStore
 };
 
 const routes = (

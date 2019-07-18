@@ -16,7 +16,6 @@ import {
   Radio, 
   Row,
   Col,
-  Icon,
   Tag
   } from 'antd';
 import CardMatter from '../CardMatter';
@@ -672,7 +671,8 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
         programId, 
         inp,
         requirementStore,
-        process
+        process,
+        stepChangeControlStore
       } = this.props;
 
       const componenteDeFormacion = { ...subjectData.componenteDeFormacion };
@@ -813,6 +813,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                 process={process}
                 matterStore={mattersStore}
                 subjectData={subjectData}
+                stepChangeControlStore={stepChangeControlStore}
               />
             </Col>                      
             <Col span={8}>
@@ -1077,6 +1078,7 @@ class DetailStudyPlan extends React.Component {
     this.inpComponentStore = this.props.stores.inpComponentStore;
     this.trainingComponentStore = this.props.stores.trainingComponentStore;
     this.requirementStore = this.props.stores.requirementStore;
+    this.stepChangeControlStore = this.props.stores.stepChangeControlStore;
 
   }
   
@@ -1258,6 +1260,7 @@ class DetailStudyPlan extends React.Component {
             requirementStore={this.requirementStore}
             process={this.process}
             {...this.props}
+            stepChangeControlStore={this.stepChangeControlStore}
           />
         </center>
 
