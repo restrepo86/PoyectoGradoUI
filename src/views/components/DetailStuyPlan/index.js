@@ -177,8 +177,7 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       visibleModalDelete: false, 
       visibleModalStepChangeControl: false,
       visibleModalTimelineChangesControl: false,
-      popoverVisible: false, 
-      expand: false,
+      popoverVisible: false,
       subjetBySniesCodeData: {}
     };
   
@@ -300,219 +299,6 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
       this.formRefFile = formRefFile;
     };
 
-    toggle = () => {
-      const { expand } = this.state;
-      this.setState({ expand: !expand });
-    };
-
-    getFields(form, trainingComponentsData, subjectData, mattersStore) {
-
-      const { getFieldDecorator } = form;
-      const children = [];
-      const Option = Select.Option;
-      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
-      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
-      const dateFormat = 'YYYY-MM-DD';
-      const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
-
-     
-      children.push(
-        <Col span={8} key={0} >
-          <Form.Item label="Código">
-            {getFieldDecorator('codigo', {
-              initialValue: subjectData.codigo,
-              rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
-            })(
-              <Input />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-        
-      children.push(
-        <Col span={8} key={1}>
-          <Form.Item label="Nombre">
-            {getFieldDecorator('nombre', {
-              initialValue: subjectData.nombre,
-              rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
-            })(
-              <Input />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-
-      children.push(
-        <Col span={8} key={2} style={{ display: 'block' }}>
-          <Form.Item label="Créditos">
-            {getFieldDecorator('creditos', {
-              initialValue: subjectData.creditos,
-              rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
-            })(
-              <InputNumber min={1} max={10} />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={3} style={{ display: 'block' }}>
-          <Form.Item label="Nivel">
-            {getFieldDecorator('nivel', {
-              initialValue: subjectData.nivel,
-              rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
-            })(
-              <InputNumber onChange={this.handleNivel} min={1} max={10} />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={4} style={{ display: 'block' }}>
-           <Form.Item label="Componente de Formación">
-              {getFieldDecorator('componenteFormacion', {
-                  initialValue: trainingComponentSubject.nombre,
-              })(
-                <Radio.Group buttonStyle="solid">
-                  {
-                    trainingComponentsData.map((trainingComponent, index) =>
-                      <Radio.Button key={index} value={trainingComponent.nombre}>
-                        <Tooltip placement="bottom" title={trainingComponent.nombre}>
-                          {trainingComponent.abreviatura}
-                        </Tooltip>
-                      </Radio.Button>
-                      )
-                  }
-                </Radio.Group>
-              )}
-            </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={5} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Horas Teóricas">
-            {getFieldDecorator('horasTeoricas', {
-              initialValue: subjectData.horasTeoricas,
-              rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
-            })(
-              <InputNumber min={0} max={10} />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={6} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Horas Laboratorio">
-            {getFieldDecorator('horasLaboratorio', {
-              initialValue: subjectData.horasLaboratorio,
-              rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
-            })(
-              <InputNumber min={0} max={10} />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={7} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Horas Prácticas">
-            {getFieldDecorator('horasPracticas', {
-              initialValue: subjectData.horasPracticas,
-              rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
-            })(
-              <InputNumber min={0} max={10} />
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={8} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Horas Trabajo Independiente del Estudiante">
-            {getFieldDecorator('trabajoIndependienteEstudiante', {
-              initialValue: subjectData.horasIndependientesDelEstudiante,
-              rules: [{ required: true, message: 'Por favor ingrese las horas de trabajo independiente del estudiante de la asignatura!' }],  
-            })(
-              <InputNumber disabled = {true}/>
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={9} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Fecha de creacion:">
-            <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={10} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Ultima modificacion:">
-            <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={11} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Requisito de nivel">
-            {getFieldDecorator('requisitoNivel', {
-              initialValue: subjectData.requisitoNivel,
-            })(
-              <Select style={{width:120}}>
-              <Option key={0} value={"No"}>No</Option>
-                { 
-                  requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
-                  <Option key={index+1} value={requisito}>{requisito}</Option>
-                )}
-              </Select>
-            )}
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={12} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Prerequisitos">
-            { requisitos.filter(requisito => requisito.tipo === 'Prerequisito')
-                .map(prerequisito => 
-                    <Popover
-                      content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                      title={this.state.subjetBySniesCodeData.nombre}
-                      trigger="click"
-                      onVisibleChange={this.handleVisibleChangePopover}
-                    >
-                      <Button 
-                        onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}
-                      >
-                        { prerequisito.codigo }
-                      </Button>
-                    </Popover>
-                ) 
-            }
-          </Form.Item>
-        </Col>,
-      );
-      children.push(
-        <Col span={8} key={13} style={{ display: this.state.expand ? 'block' : 'none' }}>
-          <Form.Item label="Corequisitos">
-            { requisitos.filter(requisito => requisito.tipo === 'Corequisito')
-                .map(corequisito => 
-                  <Popover
-                    content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                    title={this.state.subjetBySniesCodeData.nombre}
-                    trigger="click"
-                    onVisibleChange={this.handleVisibleChangePopover}
-                  >
-                    <Button 
-                      onClick = {() => this.clickPrerequisito(corequisito.codigo, mattersStore)}
-                    >
-                      { corequisito.codigo }
-                    </Button>
-                  </Popover>
-                ) 
-            }
-          </Form.Item>
-        </Col>,
-      );
-      return children;
-    }
-
     render() {
 
       const {
@@ -522,15 +308,13 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
         form, 
         nameSubject, 
         subjectData, 
-        trainingComponentsData,
-        mattersStore,
-        programId, 
-        inp,
-        requirementStore,
-        process
+        trainingComponentsData
       } = this.props;
 
-      const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
+      const { getFieldDecorator } = form;
+      const Option = Select.Option;
+      const trainingComponentSubject = { ...subjectData.componenteDeFormacion };
+      const requisitosDeNivel = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5', 'Nivel 6', 'Nivel 7', 'Nivel 8', 'Nivel 9'];
    
       return (
         <Modal
@@ -542,117 +326,123 @@ const SubjectDetail = Form.create({ name: 'form_in_modal' })(
           destroyOnClose={'true'}
           footer={[
             <Button type="primary" onClick={onCancel}>Cerrar</Button>,
-            <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Si" cancelText="No">
-              <Button>Eliminar</Button>
-            </Popconfirm>,
             <Popconfirm placement="top" title={"Estas segur@ que deseas actualizar esta asignatura"} onConfirm={onCreateSubjectUpdate} okText="Si" cancelText="No">
               <Button>Actualizar</Button>
             </Popconfirm>
           ]}
-          
         >
 
           <Form layout="vertical">
+            <Row>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Código">
+                  {getFieldDecorator('codigo', {
+                    initialValue: subjectData.codigo,
+                    rules: [{ required: true, message: 'Por favor ingrese el codigo de la asignatura!' }],
+                  })(
+                    <Input disabled={"true"}/>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Nombre">
+                  {getFieldDecorator('nombre', {
+                    initialValue: subjectData.nombre,
+                    rules: [{ required: true, message: 'Por favor ingrese el nombre de la asignatura!' }],
+                  })(
+                    <Input />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Créditos">
+                  {getFieldDecorator('creditos', {
+                    initialValue: subjectData.creditos,
+                    rules: [{ required: true, message: 'Por favor ingrese los créditos de la asignatura!' }],
+                  })(
+                    <InputNumber min={1} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Nivel">
+                  {getFieldDecorator('nivel', {
+                    initialValue: subjectData.nivel,
+                    rules: [{ required: true, message: 'Por favor ingrese el nivel al que pertenece la asignatura!' }],
+                  })(
+                    <InputNumber onChange={this.handleNivel} min={1} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 6, offset: 1 }} lg={{ span: 14, offset: 2 }}>
+                <Form.Item label="Componente de Formación">
+                  {getFieldDecorator('componenteFormacion', {
+                      initialValue: trainingComponentSubject.nombre,
+                  })(
+                    <Radio.Group buttonStyle="solid">
+                      {
+                        trainingComponentsData.map((trainingComponent, index) =>
+                          <Radio.Button key={index} value={trainingComponent.nombre}>
+                            <Tooltip placement="bottom" title={trainingComponent.nombre}>
+                              {trainingComponent.abreviatura}
+                            </Tooltip>
+                          </Radio.Button>
+                          )
+                      }
+                    </Radio.Group>
+                  )}
+                </Form.Item>
+              </Col>
+            <Col xs={{ span: 6, offset: 1 }} lg={{ span: 14, offset: 2 }}>
+            <Form.Item label="Requisito de nivel">
+              {getFieldDecorator('requisitoNivel', {
+                initialValue: subjectData.requisitoNivel,
+              })(
+                <Select style={{width:120}}>
+                <Option key={0} value={"No"}>No</Option>
+                  { 
+                    requisitosDeNivel.filter(requisito => requisito.substring(6, 7) < subjectData.nivel).map((requisito, index) =>
+                    <Option key={index+1} value={requisito}>{requisito}</Option>
+                  )}
+                </Select>
+              )}
+            </Form.Item>  
+            </Col>
 
-            <center>
-              <Button
-                type="primary"
-                onClick = {() => this.showModalStepChangeControl()}
-              >
-                Cargar Planeador
-              </Button>
-
-              <StepLineChangeControlComponent
-                wrappedComponentRef={this.uploapFormRefFile}
-                visible={this.state.visibleModalStepChangeControl}
-                onCancel={this.cancelModalStepChangeControl}
-                onCreate={() => this.handleUploadFile(process)}
-                process={process}
-                matterStore={mattersStore}
-                subjectData={subjectData}
-              />
-
-              <br/>
-              <br/>
-
-              <Button
-                type="primary"
-                onClick = {() => this.showModalTimelineChangesFolder()}
-              >
-                Ver historico de cambios en planeador
-              </Button>
-
-              <TimelineChangesFolder
-                wrappedComponentRef={this.timelineFormRef}
-                visible={this.state.visibleModalTimelineChangesControl}
-                onCancel={this.cancelModalTimelineChangesFolder}
-                onCreate={this.handleTimelineChangesFolder}
-                matterStore={mattersStore}
-                subjectData={subjectData}
-              />
-
-            </center>
-            <br />
-
-            <Row gutter={24}>{this.getFields(form, trainingComponentsData, subjectData, mattersStore)}</Row>
+            </Row>        
 
             <Row>
-              <Col span={24} style={{ textAlign: 'right' }}>
-
-                <Button
-                  onClick = {() => this.showModalAddRequirement()}
-                >
-                  Agregar Requisito
-                </Button>
-
-                <AddRequirement
-                  wrappedComponentRef={this.saveFormRefAddRequirement}
-                  visible={this.state.visible}
-                  onCancel={this.handleCancelAddRequirement}
-                  onCreateAddRequirement={() => this.handleCreateAddRequirement(subjectData.codigo, requirementStore)}
-                  mattersData={mattersStore.mattersData}
-                  subjectData={subjectData}
-                />
-
-                <Button
-                  style={{ marginLeft: 12 }}
-                  disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
-                  onClick = {() => this.showModalUpdateRequirement()}
-                >
-                  Actualizar Requisito
-                </Button>
-
-                <UpdateRequirement
-                  wrappedComponentRef={this.saveFormRefUpdateRequirement}
-                  visible={this.state.visibleModalUpdate}
-                  onCancel={this.handleCancelUpdateRequirement}
-                  onCreate={() => this.handleCreateUpdateRequirement(subjectData.codigo, requirementStore)}
-                  requisitos={subjectData.requisitos}
-                  subjectData={subjectData}
-                />
-
-
-                <Button
-                  style={{ marginLeft: 12 }}
-                  disabled = {subjectData.requisitos && (subjectData.requisitos).length === 0 }
-                  onClick = {() => this.showModalDeleteRequirement()}
-                >
-                  Eliminar Requisito
-                </Button>
-
-                <DeleteRequirement
-                  wrappedComponentRef={this.saveFormRefDeleteRequirement}
-                  visible={this.state.visibleModalDelete}
-                  onCancel={this.handleCancelDeleteRequirement}
-                  onCreate={() => this.handleCreateDeleteRequirement(subjectData.codigo, requirementStore)}
-                  requisitos={subjectData.requisitos}
-                />
-
-                <a style={{ marginLeft: 25, fontSize: 15 }} onClick={this.toggle}>
-                  Ver Mas Información <Icon type={this.state.expand ? 'up' : 'down'} />
-                </a>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Teóricas">
+                  {getFieldDecorator('horasTeoricas', {
+                    initialValue: subjectData.horasTeoricas,
+                    rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
               </Col>
-            </Row>      
+              <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Laboratorio">
+                  {getFieldDecorator('horasLaboratorio', {
+                    initialValue: subjectData.horasLaboratorio,
+                    rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                <Form.Item label="Horas Prácticas">
+                  {getFieldDecorator('horasPracticas', {
+                    initialValue: subjectData.horasPracticas,
+                    rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+                  })(
+                    <InputNumber min={0} max={10} />
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
           </Form>
         </Modal>
       );
@@ -863,9 +653,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
 
       const {
         visibleSubject, 
-        onCancel, 
-        onCreateSubjectUpdate, 
-        form, 
+        onCancel,
         nameSubject, 
         subjectData, 
         trainingComponentsData,
@@ -877,6 +665,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       } = this.props;
 
       const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
+      const dateFormat = 'YYYY-MM-DD';
    
       return (
         <Modal
@@ -1039,6 +828,16 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
 
 
 
+<Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
+              
+                  <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
+              
+              </Col>
+              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
+              
+                  <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
+              
+              </Col>
 
             <Button
                   style={{ marginLeft: 12 }}
