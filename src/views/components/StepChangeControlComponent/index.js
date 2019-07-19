@@ -13,34 +13,34 @@ class StepLineChangeControlComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      current: 0,
-      descriptionValue: '',
-      statusStep: 'wait'
-    };
+    this.stepChangeControlStore = this.props.stepChangeControlStore;
+  }
+
+  state = {
+    statusStep: 'wait'
   };
 
-  next = async (stepChangeControlStore) => {
+
+
+  next = async () => {
     
-    if (this.state.descriptionValue !== '') {
-      stepChangeControlStore.setDescription(this.state.descriptionValue);
-      stepChangeControlStore.setIsDescription(true);
-      const current = this.state.current + 1;
-      this.setState({ current });
+    if (this.stepChangeControlStore.description !== '') {
+      this.stepChangeControlStore.setIsDescription(true);
+      this.stepChangeControlStore.setCurrent(this.stepChangeControlStore.current + 1);
     } else {
       message.warning('Debe ingresar una descripción del cambio!');
     }
    
   };
 
-  finish = async(process, stepChangeControlStore, matterStore, subjectData) => {
-    console.log(stepChangeControlStore.isUploadFile);
-    if (stepChangeControlStore.isUploadFile && stepChangeControlStore.isDescription) {
+  finish = async(process, matterStore, subjectData) => {
+
+    if (this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription) {
       
-      const descripcionCambioDTO = new DescripcionCambioDTO(this.state.descriptionValue);
+      const descripcionCambioDTO = new DescripcionCambioDTO(this.stepChangeControlStore.description);
       await matterStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
       if (matterStore.addDescriptionResponse) {
-        stepChangeControlStore.setIsUploadFile(false);
+        this.stepChangeControlStore.setIsUploadFile(false);
         process.showMessage('Proceso terminado correctamente', 'success');  
       } else {
         process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
@@ -51,19 +51,14 @@ class StepLineChangeControlComponent extends React.Component {
     
   };
 
-  prev = () => {
-    const current = this.state.current - 1;
-    this.setState({ current });
-  };
-
   handleChangeDescription = (e) => {
-    this.setState({ descriptionValue: e.target.value })
+    this.stepChangeControlStore.setDescription(e.target.value);
   };
   
   render() {
 
     const {
-      visible, onCancel, onCreate, process, matterStore, subjectData, stepChangeControlStore
+      visible, onCancel, process, matterStore, subjectData
     } = this.props;
 
     const steps = 
@@ -78,15 +73,13 @@ class StepLineChangeControlComponent extends React.Component {
       },
       {
         title: 'Cargar Archivo',
-        content: <DriveUpload { ...subjectData } { ...stepChangeControlStore } />,
+        content: <DriveUpload { ...subjectData } { ...this.stepChangeControlStore } />,
       }
     ];
 
-
-    const { current } = this.state;
-
-   
     return (
+
+    
     
       <Modal
         style={{ width: 1000 }}
@@ -94,7 +87,7 @@ class StepLineChangeControlComponent extends React.Component {
         width={1000}
         visible={visible}
         title="Subir Plan de Estudio"
-        destroyOnClose={true}
+      
         onCancel={onCancel}
         footer={[
           <Button type="primary" onClick={onCancel}>Cancelar</Button>
@@ -102,20 +95,20 @@ class StepLineChangeControlComponent extends React.Component {
       >
         
         <div>
-          <Steps current={current} status='wait'>
+          <Steps current={this.stepChangeControlStore.current} status='wait'>
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
             ))}
           </Steps>
-          <div className="steps-content" style={{paddingTop: '0px'}}>{steps[this.state.current].content}</div>
+          <div className="steps-content" style={{paddingTop: '0px'}}>{steps[this.stepChangeControlStore.current].content}</div>
           <div className="steps-action">
-            {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => this.next(stepChangeControlStore)}>
+            {this.stepChangeControlStore.current < steps.length - 1 && (
+              <Button type="primary" onClick={() => this.next()}>
                 Siguiente
               </Button>
             )}
-            {current === steps.length - 1 && (
-              <Button type="primary" disabled={!(stepChangeControlStore.isUploadFile && stepChangeControlStore.isDescription)} onClick={() => this.finish(process, stepChangeControlStore, matterStore, subjectData)}>
+            {this.stepChangeControlStore.current === steps.length - 1 && (
+              <Button type="primary" disabled={!(this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription)} onClick={() => this.finish(process, matterStore, subjectData)}>
                 Finalizar
               </Button>
             )}

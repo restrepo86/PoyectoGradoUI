@@ -480,14 +480,14 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       visibleModalTimelineChangesControl: false,
       popoverVisible: false, 
       expand: false,
-      subjetBySniesCodeData: {}
+      subjetBySniesCodeData: {},
+      current: 0
     };
 
     deleteSubject = (subjectId, mattersStore, programId, inp) => {
       mattersStore.deleteMatterData(programId, inp, subjectId);
     };
 
-   //agregar requisitos acciones
     showModalAddRequirement = () => {
       this.setState({ visible: true });
     };
@@ -513,7 +513,6 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       this.formRefAddRequirement = formRefAddRequirement;
     };
 
-    //actualizar requisitos acciones
     showModalUpdateRequirement = () => {
       this.setState({ visibleModalUpdate: true });
     };
@@ -539,7 +538,6 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       this.formRefUpdateRequirement = formRefUpdateRequirement;
     };
 
-    //eliminar requisitos acciones
     showModalDeleteRequirement = () => {
       this.setState({ visibleModalDelete: true });
     };
@@ -568,7 +566,6 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       this.formRefDeleteRequirement = formRefDeleteRequirement;
     };
 
-    //Mostrar informacion requisito
     handleVisibleChangePopover = visible => {
       this.setState({ popoverVisible: visible });
     };
@@ -580,15 +577,16 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
     
     };
 
-    // Subir archivo acciones
     showModalStepChangeControl = () => {
       this.setState({ visibleModalStepChangeControl: true });
     };
 
-    cancelModalStepChangeControl = () => {
-      const modal = Modal.info();
-      modal.destroy();
-      this.setState({ visibleModalStepChangeControl: false });
+    cancelModalStepChangeControl = (stepChangeControlStore) => {
+      stepChangeControlStore.setCurrent(0);
+      stepChangeControlStore.setDescription('');
+      stepChangeControlStore.setIsUploadFile(false);
+      stepChangeControlStore.setIsDescription(false);
+      this.setState({ visibleModalStepChangeControl: false, current: 0 });
     };
     
     handleUploadFile = async(process, mattersStore, subjectData, stepChangeControlStore) => {
@@ -626,7 +624,6 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
       this.setState({ visibleModalTimelineChangesControl: false });
     };
 
-    //Update asignatura Modal items  
     showModalSubject = () => {
       this.setState({ visibleUpdateSubject: true });
     };
@@ -829,7 +826,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
               <StepLineChangeControlComponent
                 wrappedComponentRef={this.uploapFormRefFile}
                 visible={this.state.visibleModalStepChangeControl}
-                onCancel={this.cancelModalStepChangeControl}
+                onCancel={() => this.cancelModalStepChangeControl(stepChangeControlStore)}
                 onCreate={() => this.handleUploadFile(process, mattersStore, subjectData, stepChangeControlStore)}
                 process={process}
                 matterStore={mattersStore}
