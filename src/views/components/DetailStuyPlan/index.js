@@ -27,6 +27,7 @@ import UpdateRequirementDTO from '../../../dto/UpdateRequirementDTO';
 import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import StepLineChangeControlComponent from '../StepChangeControlComponent';
 import TimelineChangesFolder from '../TimelineChangesFolder';
+import DriveViewer from '../DrivePicker/DriveViewer';
 
 import moment from 'moment';
 
@@ -585,6 +586,8 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
     };
 
     cancelModalStepChangeControl = () => {
+      const modal = Modal.info();
+      modal.destroy();
       this.setState({ visibleModalStepChangeControl: false });
     };
     
@@ -806,7 +809,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
           </div>
           <br/>
           <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
-            <Col span={8}>
+            <Col span={6}>
               <Tooltip placement="bottom" title={"Descripcion de cambios"}>
                 <Button type="primary" shape="circle" icon="history" size="large" onClick = {() => this.showModalTimelineChangesFolder()}></Button>
               </Tooltip>
@@ -819,7 +822,7 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                 subjectData={subjectData}
               />
             </Col>
-            <Col span={8}>
+            <Col span={6}>
               <Tooltip placement="bottom" title={"Subir nuevo archivo"}>
                 <Button type="primary" shape="circle" icon="cloud-upload" size="large" onClick = {() => this.showModalStepChangeControl()}></Button>
               </Tooltip>
@@ -833,8 +836,13 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
                 subjectData={subjectData}
                 stepChangeControlStore={stepChangeControlStore}
               />
+            </Col>
+            <Col span={6}>
+              <Tooltip placement="bottom" title={"Visualizar Planes de Estudio"}>
+                <DriveViewer {...subjectData}/>
+              </Tooltip>
             </Col>                      
-            <Col span={8}>
+            <Col span={6}>
               <Tooltip placement="bottom" title={"Actualizar asignatura"}>
                 <Button type="primary" shape="circle" icon="form" size="large" onClick = {() => this.showModalSubject()}></Button>
               </Tooltip>

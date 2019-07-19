@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GooglePicker from 'react-google-picker';
-import { Icon, Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
 import PickerConfig from '../../../credentials.json';
 
 class DriveViewer extends Component {
@@ -28,35 +28,25 @@ class DriveViewer extends Component {
             .setSelectFolderEnabled(true)
             .setParent(this.props.gDriveFolderId)
             .setMode(listViewMode);
-            
-            const uploadView = new google.picker.DocsUploadView()
-            .setIncludeFolders(true)
-            .setParent(this.props.gDriveFolderId)
 
             const picker = new window.google.picker.PickerBuilder()
             .enableFeature(google.picker.Feature.SIMPLE_UPLOAD_ENABLED)
                 .addView(view)
-                .addView(uploadView)
                 .setOAuthToken(oauthToken)
                 .setDeveloperKey(PickerConfig.googlePicker.developerKey)
                 .setCallback((data)=>{
                   console.log('responseGoogle', data)
                   if (data.action === google.picker.Action.PICKED) {
                       var fileUrl = data.docs[0].url;
-                      if (data.docs[0].uploadState === 'success') {
-                        this.props.setIsUploadFile(true);
-                      }
                       window.open(fileUrl, '_blank');
                   }
                 });
             picker.build().setVisible(true);
           }}
       >
-        <a>
-            <Tooltip placement="top" title={"Planes de Asignatura"}>
-                <Icon type='folder-add' style={{fontSize: '60px', color: '#43985d'}}/>
-            </Tooltip>
-        </a>
+      <Tooltip placement="bottom" title={"Planes de Asignatura"}>
+        <Button type="primary" shape="circle" icon="folder-open" size="large"></Button>
+      </Tooltip>
       </GooglePicker>
 
      );

@@ -1,5 +1,5 @@
 import React from 'react';
-import DriveViewer from '../DrivePicker/DriveViewer';
+import DriveUpload from '../DrivePicker/DriveUpload';
 import { observer } from 'mobx-react';
 import { Steps, Button, Input, Modal, Form, message } from 'antd';
 import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
@@ -78,7 +78,7 @@ class StepLineChangeControlComponent extends React.Component {
       },
       {
         title: 'Cargar Archivo',
-        content: <DriveViewer { ...subjectData } { ...stepChangeControlStore } />,
+        content: <DriveUpload { ...subjectData } { ...stepChangeControlStore } />,
       }
     ];
 
@@ -93,11 +93,12 @@ class StepLineChangeControlComponent extends React.Component {
         bodyStyle={{ width: 1000 }}
         width={1000}
         visible={visible}
-        title="Carga de Planeadores de Asignaturas"
-        okText="Aceptar"
+        title="Subir Plan de Estudio"
         destroyOnClose={true}
         onCancel={onCancel}
-        onOk={onCreate}
+        footer={[
+          <Button type="primary" onClick={onCancel}>Cancelar</Button>
+        ]}
       >
         
         <div>
@@ -114,7 +115,7 @@ class StepLineChangeControlComponent extends React.Component {
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button type="primary" onClick={() => this.finish(process, stepChangeControlStore, matterStore, subjectData)}>
+              <Button type="primary" disabled={!(stepChangeControlStore.isUploadFile && stepChangeControlStore.isDescription)} onClick={() => this.finish(process, stepChangeControlStore, matterStore, subjectData)}>
                 Finalizar
               </Button>
             )}
