@@ -1,6 +1,7 @@
 import React from 'react';
 import DriveUpload from '../DrivePicker/DriveUpload';
 import { observer } from 'mobx-react';
+import { autorun } from 'mobx';
 import { Steps, Button, Input, Modal, Form, message } from 'antd';
 import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import "./index.css";
@@ -14,6 +15,9 @@ class StepLineChangeControlComponent extends React.Component {
   constructor(props) {
     super(props);
     this.stepChangeControlStore = this.props.stepChangeControlStore;
+    this.process = this.props.process;
+    this.matterStore = this.props.matterStore;
+    this.subjectData = this.props.subjectData;
   }
 
   state = {
@@ -33,17 +37,33 @@ class StepLineChangeControlComponent extends React.Component {
    
   };
 
-  finish = async(process, matterStore, subjectData) => {
+  download = autorun(() => {
+    if (this.stepChangeControlStore.isUploadFile) {
+      this.stepChangeControlStore.setIsUploadFile(false);
+      this.stepChangeControlStore.setCurrent(0);
+      this.stepChangeControlStore.setDescription('');
+      this.stepChangeControlStore.setIsUploadFile(false);
+      this.stepChangeControlStore.setIsDescription(false);
+      this.finish()
+    }
+    this.fileBytes = null;
+  });
+
+  finish = async() => {
 
     if (this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription) {
       
       const descripcionCambioDTO = new DescripcionCambioDTO(this.stepChangeControlStore.description);
-      await matterStore.addDescriptionBySubject(subjectData.codigo, descripcionCambioDTO)
-      if (matterStore.addDescriptionResponse) {
-        this.stepChangeControlStore.setIsUploadFile(false);
-        process.showMessage('Proceso terminado correctamente', 'success');  
+      await this.matterStore.addDescriptionBySubject(this.subjectData.codigo, descripcionCambioDTO)
+      this.stepChangeControlStore.setIsUploadFile(false);
+      this.stepChangeControlStore.setCurrent(0);
+      this.stepChangeControlStore.setDescription('');
+      this.stepChangeControlStore.setIsUploadFile(false);
+      this.stepChangeControlStore.setIsDescription(false);
+      if (this.matterStore.addDescriptionResponse) {
+        this.process.showMessage('Proceso terminado correctamente', 'success');  
       } else {
-        process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
+        this.process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
       }
     } else {
       message.warning('Debe cargar un archivo para finalizar!');
@@ -58,7 +78,7 @@ class StepLineChangeControlComponent extends React.Component {
   render() {
 
     const {
-      visible, onCancel, process, matterStore, subjectData
+      visible, onCancel
     } = this.props;
 
     const steps = 
@@ -73,7 +93,12 @@ class StepLineChangeControlComponent extends React.Component {
       },
       {
         title: 'Cargar Archivo',
-        content: <DriveUpload { ...subjectData } { ...this.stepChangeControlStore } />,
+        content: <DriveUpload  
+                    {...this.subjectData} 
+                    stepChangeControlStore={this.stepChangeControlStore }
+                    matterStore={this.matterStore}
+                    process={this.process}
+                  />,
       }
     ];
 
@@ -108,7 +133,7 @@ class StepLineChangeControlComponent extends React.Component {
               </Button>
             )}
             {this.stepChangeControlStore.current === steps.length - 1 && (
-              <Button type="primary" disabled={!(this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription)} onClick={() => this.finish(process, matterStore, subjectData)}>
+              <Button type="primary" disabled={!(this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription)} onClick={() => this.finish()}>
                 Finalizar
               </Button>
             )}

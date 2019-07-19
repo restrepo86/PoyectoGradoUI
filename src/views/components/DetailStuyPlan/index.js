@@ -582,8 +582,8 @@ const SubjectDetailReadOnly = Form.create({ name: 'form_in_modal' })(
     };
 
     cancelModalStepChangeControl = (stepChangeControlStore) => {
-      stepChangeControlStore.setCurrent(0);
       stepChangeControlStore.setDescription('');
+      stepChangeControlStore.setCurrent(0);
       stepChangeControlStore.setIsUploadFile(false);
       stepChangeControlStore.setIsDescription(false);
       this.setState({ visibleModalStepChangeControl: false, current: 0 });

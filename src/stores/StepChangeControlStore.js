@@ -4,7 +4,7 @@ export default class StepChangeControlStore {
 
     @observable isDescription = false;
     @observable isUploadFile = false;
-    @observable description =  '';
+    @observable description = '';
     @observable process;
     @observable current = 0;
     @observable reloadState = false;

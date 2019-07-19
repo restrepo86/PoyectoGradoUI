@@ -1,10 +1,36 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import GooglePicker from 'react-google-picker';
-import { Icon, Tooltip } from "antd";
+import { Icon, Tooltip, message } from "antd";
 import PickerConfig from '../../../credentials.json';
+import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO';
+import { observer } from 'mobx-react';
 
+@observer
 class DriveUpload extends Component {
 
+
+
+  finish = async() => {
+
+    if (this.props.stepChangeControlStore.isUploadFile && this.props.stepChangeControlStore.isDescription) {
+      
+      const descripcionCambioDTO = new DescripcionCambioDTO(this.props.stepChangeControlStore.description);
+      await this.props.matterStore.addDescriptionBySubject(this.props.codigo, descripcionCambioDTO)
+      this.props.stepChangeControlStore.setIsUploadFile(false);
+      this.props.stepChangeControlStore.setCurrent(0);
+      this.props.stepChangeControlStore.setDescription('');
+      this.props.stepChangeControlStore.setIsUploadFile(false);
+      this.props.stepChangeControlStore.setIsDescription(false);
+      if (this.props.matterStore.addDescriptionResponse) {
+        this.props.process.showMessage('Proceso terminado correctamente', 'success');  
+      } else {
+        this.props.process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
+      }
+    } else {
+      message.warning('Debe cargar un archivo para finalizar!');
+    }
+    
+  };
 
   render() {
     return (
@@ -19,7 +45,7 @@ class DriveUpload extends Component {
           authImmediate={false}
           viewId={'DOCS'}
           mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
-          createPicker={ (google, oauthToken) => {
+          createPicker={ (google) => {
             
             const uploadView = new google.picker.DocsUploadView()
             .setIncludeFolders(true)
@@ -31,13 +57,14 @@ class DriveUpload extends Component {
                 .setOAuthToken(sessionStorage.getItem("GAuthorization"))
                 .setDeveloperKey(PickerConfig.googlePicker.developerKey)
                 .setCallback((data)=>{
-                  console.log('responseGoogle', data)
+                  
                   if (data.action === google.picker.Action.PICKED) {
                       var fileUrl = data.docs[0].url;
                       if (data.docs[0].uploadState === 'success') {
-                        this.props.setIsUploadFile(true);
+                        this.props.stepChangeControlStore.setIsUploadFile(true);
+                        this.finish();
                       }
-                      window.open(fileUrl, '_blank');
+                      //window.open(fileUrl, '_blank');
                   }
                 });
             picker.build().setVisible(true);
