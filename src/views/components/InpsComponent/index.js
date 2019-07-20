@@ -17,18 +17,18 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       return (
         <Modal
           visible={visible}
-          title="Agregue un nuevo Plan de Estudio"
+          title="Nuevo Plan de Estudio"
           okText="Agregar"
           onCancel={onCancel}
           onOk={onCreate}
         >
-          <Form layout="vertical">
+          <Form layout="inline">
 
-            <Form.Item label="Ingrese el INP">
+            <Form.Item label="INP">
               {getFieldDecorator('inp', {
                 rules: [{ required: true, message: 'por favor ingrese un INP numérico para el plan de estudio!' }],
               })(
-                <InputNumber  min={0} max={10} />
+                <InputNumber  min={1} max={30} />
               )}
             </Form.Item>
 

@@ -290,20 +290,20 @@ class SubjectDetailModal extends React.Component {
                                 )}
                             </Form.Item>
                         </Col>
-                        <Col  span = {6}>
-                            <Form.Item label="Horas Prácticas">
-                                {getFieldDecorator('horasPracticas', {
-                                    initialValue: subjectData.horasPracticas,
-                                    rules: [{ required: false }],
-                                })(
-                                    <InputNumber min={0} max={10} />
-                                )}
-                            </Form.Item>
-                        </Col>
                         <Col  span = {4}>
                             <Form.Item label="TIE">
                                 {getFieldDecorator('tie', {
                                     initialValue: subjectData.horasIndependientesDelEstudiante,
+                                    rules: [{ required: false }],
+                                })(
+                                    <InputNumber min={0} max={20} />
+                                )}
+                            </Form.Item>
+                        </Col>                        
+                        <Col  span = {6}>
+                            <Form.Item label="Horas Prácticas">
+                                {getFieldDecorator('horasPracticas', {
+                                    initialValue: subjectData.horasPracticas,
                                     rules: [{ required: false }],
                                 })(
                                     <InputNumber min={0} max={10} />

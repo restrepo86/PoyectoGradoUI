@@ -9,8 +9,9 @@ class UpdateMatterRequestDTO {
     trabajoIndependienteEstudiante; 
     nivel;
     requisitoNivel;
+    tie;
 
-    constructor(componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, horasPracticas, trabajoIndependienteEstudiante, nivel, requisitoNivel) {
+    constructor(componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, horasPracticas, trabajoIndependienteEstudiante, nivel, requisitoNivel, tie) {
 
         this.componenteDeFormacion = componenteDeFormacion;
         this.nombre = nombre;
@@ -21,6 +22,7 @@ class UpdateMatterRequestDTO {
         this.trabajoIndependienteEstudiante = trabajoIndependienteEstudiante;
         this.nivel = nivel;
         this.requisitoNivel = requisitoNivel;
+        this.tie = tie;
 
     };
 

@@ -23,18 +23,22 @@ class CardMatter extends Component {
             hoverable={true}
             title={
                 <div style={{display:'flex'}}>
-                    <div 
-                    style={{   
-                            flexGrow: '1', 
-                            color:'#fff', 
-                            backgroundColor:this.props.componenteDeFormacion.color,
-                            fontWeight: 'bold'
-                        }}><Tooltip placement="top" title={"Componente de formacion"}>{this.props.componenteDeFormacion.abreviatura}</Tooltip></div>
-                    <div style={{flexGrow: '1'}}><Tooltip placement="top" title={"Creditos"}>{this.props.creditos}</Tooltip></div>
+                    <Tooltip placement="top" title={"Componente de formacion"}>
+                        <div 
+                            style={{   
+                                flexGrow: '1', 
+                                color:'#fff', 
+                                backgroundColor:this.props.componenteDeFormacion.color,
+                                fontWeight: 'bold'
+                            }}>
+                            {this.props.componenteDeFormacion.abreviatura}
+                        </div>
+                    </Tooltip>
+                    <Tooltip placement="top" title={"Creditos"}><div style={{flexGrow: '1'}}>{this.props.creditos}</div></Tooltip>
                     <Divider type="vertical" style={dividerStyle}/>
-                    <div style={{flexGrow: '1'}}><Tooltip placement="top" title={"Horas teoricas"}>{this.props.horasTeoricas}</Tooltip></div>
+                    <Tooltip placement="top" title={"Horas teoricas"}><div style={{flexGrow: '1'}}>{this.props.horasTeoricas}</div></Tooltip>
                     <Divider type="vertical" style={dividerStyle}/>
-                    <div style={{flexGrow: '1'}} ><Tooltip placement="top" title={"Horas laboratorio"}>{this.props.horasLaboratorio}</Tooltip></div>
+                    <Tooltip placement="top" title={"Horas laboratorio"}><div style={{flexGrow: '1'}} >{this.props.horasLaboratorio}</div></Tooltip>
                  </div>
                 }
                 actions={[

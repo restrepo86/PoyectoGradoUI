@@ -26,7 +26,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       return (
         <Modal
           visible={visible}
-          title="Agregue un nuevo Componente de Formación"
+          title="Nuevo Componente de Formación"
           okText="Agregar"
           onCancel={onCancel}
           onOk={onCreate}
@@ -35,7 +35,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Nombre">
               {getFieldDecorator('nombre', {
-                rules: [{ required: true, message: 'por favor ingrese un nombre para el componente de formación!' }],
+                rules: [{ required: true, whitespace: true, message: 'por favor ingrese un nombre para el componente de formación!' }],
               })(
                 <Input />
               )}
@@ -43,7 +43,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 
             <Form.Item label="Abreviatura">
               {getFieldDecorator('abreviatura', {
-                rules: [{ required: true, message: 'por favor ingrese una abreviatura para el componente de formación!' }],
+                rules: [{ required: true, max: 4, whitespace: true, message: 'por favor ingrese una abreviatura de 4 caracteres como máximo!' }],
               })(
                 <Input />
               )}
@@ -125,7 +125,7 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Nombre">
               {getFieldDecorator('nombre', {
                 initialValue: trainingComponentData.nombre,
-                rules: [{ required: true, message: 'por favor ingrese un nombre para el componente de formación!' }],
+                rules: [{ required: true, whitespace: true, message: 'por favor ingrese un nombre para el componente de formación!' }],
               })(
                 <Input />
               )}
@@ -134,7 +134,7 @@ const UpdateCreateForm = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Abreviatura">
               {getFieldDecorator('abreviatura', {
                 initialValue: trainingComponentData.abreviatura,
-                rules: [{ required: true, message: 'por favor ingrese una abreviatura para el componente de formación!' }],
+                rules: [{ required: true, max: 4, whitespace: true, message: 'por favor ingrese una abreviatura de 4 caracteres como máximo!' }],
               })(
                 <Input />
               )}

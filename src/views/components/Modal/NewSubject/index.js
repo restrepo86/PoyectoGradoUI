@@ -124,18 +124,18 @@ class NewSubjectModal extends React.Component {
                             </Form.Item>
                         </Col>
                         <Col  span={6}>
-                            <Form.Item label="Prácticas">
-                                {getFieldDecorator('horasPracticasAgregar', {
+                            <Form.Item label="TIE">
+                                {getFieldDecorator('tie', {
+                                    initialValue: this.state.horasLaboratorio + this.state.horasTeoricas,
                                     rules: [{ required: false }],
                                 })(
-                                    <InputNumber min={0} max={10} />
+                                    <InputNumber min={0} max={20} />
                                 )}
                             </Form.Item>
                         </Col>
                         <Col  span={6}>
-                            <Form.Item label="TIE">
-                                {getFieldDecorator('tie', {
-                                    initialValue: this.state.horasLaboratorio + this.state.horasTeoricas,
+                            <Form.Item label="Prácticas">
+                                {getFieldDecorator('horasPracticasAgregar', {
                                     rules: [{ required: false }],
                                 })(
                                     <InputNumber min={0} max={10} />

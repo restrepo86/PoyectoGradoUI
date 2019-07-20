@@ -7,7 +7,6 @@ class AsignaturaRequestDTO {
     horasTeoricas;
     horasLaboratorio;
     nivel;
-    requisitos = [];
     horasPracticas;
     trabajoIndependienteEstudiante;
     requisitoNivel;

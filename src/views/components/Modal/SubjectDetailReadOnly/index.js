@@ -22,7 +22,8 @@ import {
   Row,
   Col,
   Tag,
-  message
+  message,
+  Popconfirm
   } from 'antd';
 
 @observer
@@ -219,7 +220,8 @@ class SubjectDetailRead extends React.Component {
         values.horasPracticas,
         values.trabajoIndependienteEstudiante,
         values.nivel,
-        values.requisitoNivel
+        values.requisitoNivel,
+        values.tie
         );
         
         this.matters.updateMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, updateMatterRequestDTO, values.codigo);
@@ -431,7 +433,9 @@ class SubjectDetailRead extends React.Component {
 
                 <Col span={4}>
                     <Tooltip placement="bottom" title={"Eliminar asignatura"}>
-                        <Button type="primary" shape="circle" icon="delete" size="large" onClick = {() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)}></Button>
+                        <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Eliminar" cancelText="Cancelar">
+                            <Button type="primary" shape="circle" icon="delete" size="large"></Button>
+                        </Popconfirm>
                     </Tooltip>
                 </Col>
 
