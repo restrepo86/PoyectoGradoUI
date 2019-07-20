@@ -11,8 +11,9 @@ class AsignaturaRequestDTO {
     horasPracticas;
     trabajoIndependienteEstudiante;
     requisitoNivel;
+    tie;
 
-    constructor(codigo, componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, nivel, horasPracticas, trabajoIndependienteEstudiante, requisitoNivel){
+    constructor(codigo, componenteDeFormacion, nombre, creditos, horasTeoricas, horasLaboratorio, nivel, horasPracticas, trabajoIndependienteEstudiante, requisitoNivel, tie){
 
         this.codigo = codigo;
         this.componenteDeFormacion = componenteDeFormacion;
@@ -24,6 +25,7 @@ class AsignaturaRequestDTO {
         this.horasPracticas = horasPracticas;
         this.trabajoIndependienteEstudiante = trabajoIndependienteEstudiante;
         this.requisitoNivel = requisitoNivel;
+        this.tie = tie;
 
     }
 

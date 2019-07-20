@@ -113,7 +113,8 @@ class DetailStudyPlan extends React.Component {
           values.nivelAgregar,
           values.horasPracticasAgregar,
           values.trabajoIndependienteEstudianteAgregar,
-          values.requisitoNivel);
+          values.requisitoNivel,
+          values.tie);
 
       this.matters.saveMatterData(this.inpComponentStore.inpData.programId, this.inpComponentStore.inpData.inp, asignaturaRequestDTO, this.programId);
 

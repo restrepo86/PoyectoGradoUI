@@ -269,8 +269,8 @@ class SubjectDetailModal extends React.Component {
 
                     </Row>        
 
-                    <Row>
-                        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                    <Row centered>
+                        <Col  xs={{ span: 6, offset: 1 }}>
                             <Form.Item label="Horas Teóricas">
                                 {getFieldDecorator('horasTeoricas', {
                                     initialValue: subjectData.horasTeoricas,
@@ -280,7 +280,7 @@ class SubjectDetailModal extends React.Component {
                                 )}
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                        <Col  span = {6}>
                             <Form.Item label="Horas Laboratorio">
                                 {getFieldDecorator('horasLaboratorio', {
                                     initialValue: subjectData.horasLaboratorio,
@@ -290,11 +290,21 @@ class SubjectDetailModal extends React.Component {
                                 )}
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                        <Col  span = {6}>
                             <Form.Item label="Horas Prácticas">
                                 {getFieldDecorator('horasPracticas', {
                                     initialValue: subjectData.horasPracticas,
-                                    rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
+                                    rules: [{ required: false }],
+                                })(
+                                    <InputNumber min={0} max={10} />
+                                )}
+                            </Form.Item>
+                        </Col>
+                        <Col  span = {4}>
+                            <Form.Item label="TIE">
+                                {getFieldDecorator('tie', {
+                                    initialValue: subjectData.horasIndependientesDelEstudiante,
+                                    rules: [{ required: false }],
                                 })(
                                     <InputNumber min={0} max={10} />
                                 )}

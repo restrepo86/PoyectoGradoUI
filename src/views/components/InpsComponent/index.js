@@ -28,7 +28,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
               {getFieldDecorator('inp', {
                 rules: [{ required: true, message: 'por favor ingrese un INP numérico para el plan de estudio!' }],
               })(
-                <InputNumber />
+                <InputNumber  min={0} max={10} />
               )}
             </Form.Item>
 

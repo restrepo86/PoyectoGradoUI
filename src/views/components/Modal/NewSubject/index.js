@@ -18,12 +18,22 @@ class NewSubjectModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nivelData: 0
+            nivelData: 0,
+            horasLaboratorio: 0,
+            horasTeoricas: 0
         }
     };
     
     handleNivel = (value) => {
         this.setState({ nivelData: value })
+    };
+
+    changeHorasLaboratorio = (horasLaboratorio) => {
+        this.setState({ horasLaboratorio: horasLaboratorio });
+    };
+
+    changeHorasTeoricas = (horasTeoricas) => {
+        this.setState({ horasTeoricas: horasTeoricas });
     };
 
     render() {
@@ -96,47 +106,59 @@ class NewSubjectModal extends React.Component {
                     </Form.Item>
 
                     <Row>
-                    <h3>Horas</h3>
-                    <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                        <Form.Item label="Teóricas">
-                            {getFieldDecorator('horasTeoricasAgregar', {
-                                rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+                        <h3>Horas</h3>
+                        <Col  span={6}>
+                            <Form.Item label="Teóricas">
+                                {getFieldDecorator('horasTeoricasAgregar', {
+                                    rules: [{ required: true, message: 'Por favor ingrese las horas teóricas de la asignatura!' }],
+                                    })(
+                                    <InputNumber min={0} max={10} onChange={this.changeHorasTeoricas} /> 
+                                )}
+                            </Form.Item>
+                        </Col>
+                        <Col  span={6}>
+                            <Form.Item label="Laboratorio">
+                                {getFieldDecorator('horasLaboratorioAgregar', {
+                                rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
+                                })(<InputNumber min={0} max={10} onChange={this.changeHorasLaboratorio} />)}
+                            </Form.Item>
+                        </Col>
+                        <Col  span={6}>
+                            <Form.Item label="Prácticas">
+                                {getFieldDecorator('horasPracticasAgregar', {
+                                    rules: [{ required: false }],
                                 })(
-                                <InputNumber min={0} max={10} /> 
-                            )}
-                        </Form.Item>
-                    </Col>
-                    <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                        <Form.Item label="Laboratorio">
-                            {getFieldDecorator('horasLaboratorioAgregar', {
-                            rules: [{ required: true, message: 'Por favor ingrese las horas de laboratorio de la asignatura!' }],
-                            })(<InputNumber min={0} max={10} />)}
-                        </Form.Item>
-                    </Col>
-                    <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                        <Form.Item label="Prácticas">
-                            {getFieldDecorator('horasPracticasAgregar', {
-                                rules: [{ required: false, message: 'Por favor ingrese las horas prácticas de la asignatura!' }],
-                            })(
-                                <InputNumber min={0} max={10} />
-                            )}
-                        </Form.Item>
-                    </Col>
+                                    <InputNumber min={0} max={10} />
+                                )}
+                            </Form.Item>
+                        </Col>
+                        <Col  span={6}>
+                            <Form.Item label="TIE">
+                                {getFieldDecorator('tie', {
+                                    initialValue: this.state.horasLaboratorio + this.state.horasTeoricas,
+                                    rules: [{ required: false }],
+                                })(
+                                    <InputNumber min={0} max={10} />
+                                )}
+                            </Form.Item>
+                        </Col>
                     </Row>
             
                     <Form.Item label="Seleccione un Componente de Formación">
                         {getFieldDecorator('componenteDeFormacionNombreAgregar', {
-                                rules: [{ required: true, message: 'Por favor seleccione un componente de formacion!' }],
-                            })(
+                            rules: [{ required: true, message: 'Por favor seleccione un componente de formacion!' }],
+                        })(
                             
                             <Radio.Group buttonStyle="solid">
-                            {trainingComponentsData.map((trainingComponent, index) =>
-                            <Radio.Button key={index} value={trainingComponent.nombre}>
-                            <Tooltip placement="bottom" title={trainingComponent.nombre}>
-                            {trainingComponent.abreviatura}
-                            </Tooltip>
-                            </Radio.Button>)}
-                        </Radio.Group>
+                                {trainingComponentsData.map((trainingComponent, index) =>
+                                    <Radio.Button key={index} value={trainingComponent.nombre}>
+                                        <Tooltip placement="bottom" title={trainingComponent.nombre}>
+                                            {trainingComponent.abreviatura}
+                                        </Tooltip>
+                                    </Radio.Button>
+                                )}
+                            </Radio.Group>
+
                         )}
                     </Form.Item>
 
