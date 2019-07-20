@@ -21,7 +21,7 @@ export default class Process {
       notification[this.processDTO.requestState]({
         message: 'Notificación',
         description,
-        duration: 5,
+        duration: 2,
       });
     }
   });
