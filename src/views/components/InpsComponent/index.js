@@ -47,6 +47,7 @@ class InpsComponent extends React.Component {
     super(props);
     this.programsComponentStore = this.props.stores.programsComponentStore;
     this.programId = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData.id : null;
+    this.program = this.programsComponentStore.programClickData ? this.programsComponentStore.programClickData.programData : null;
     this.studyPlan = this.props.stores.studyPlan;
     this.inpComponentStore = this.props.stores.inpComponentStore
   };
@@ -104,9 +105,10 @@ class InpsComponent extends React.Component {
   };
 
   onClickDownloadReport = async (e, inpSelected) => {
-    
+    console.log('program', this.program.nombre)
+    console.log('inpSelected', inpSelected)
     e.stopPropagation();
-    this.studyPlan.getReportSubjectsByInp(inpSelected.programId, inpSelected.inp);
+    this.studyPlan.getReportSubjectsByInp(inpSelected.programId, inpSelected.inp, this.program.nombre);
     
   };
 

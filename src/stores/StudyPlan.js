@@ -8,6 +8,8 @@ export default class StudyPlan {
   @observable studyPlanData = [];
   @observable studyPlanDeleted = false;
   @observable reportSubjectsByInpData;
+  @observable programName = '';
+  @observable inp = '';
 
   constructor(studyPlanService, process) {
     this.studyPlanService = studyPlanService;
@@ -72,8 +74,10 @@ export default class StudyPlan {
   };
 
   @action
-  getReportSubjectsByInp = async (programId, inp) => {
+  getReportSubjectsByInp = async (programId, inp, programName) => {
 
+    this.programName = programName;
+    this.inp = inp;
     await this.studyPlanService.getReportSubjectsByInp(programId, inp)
       .then(response => {
         runInAction(() => {
@@ -92,8 +96,7 @@ export default class StudyPlan {
       const blob = new Blob([this.reportSubjectsByInpData], { 'type': 'application/vnd.ms-excel' });
       FileSaver.saveAs(
          blob,
-          'INFORME_PLAN_DE_ESTUDIO'
-            .concat('.xls')
+         `${this.programName}-INP${this.inp}.xls`
       );
     }
     this.fileBytes = null;
