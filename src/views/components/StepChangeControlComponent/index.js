@@ -1,9 +1,7 @@
 import React from 'react';
 import DriveUpload from '../DrivePicker/DriveUpload';
 import { observer } from 'mobx-react';
-import { autorun } from 'mobx';
 import { Steps, Button, Input, Modal, Form, message } from 'antd';
-import DescripcionCambioDTO from '../../../dto/DescripcionCambioDTO'
 import "./index.css";
 
 const { TextArea } = Input;
@@ -35,40 +33,6 @@ class StepLineChangeControlComponent extends React.Component {
       message.warning('Debe ingresar una descripción del cambio!');
     }
    
-  };
-
-  download = autorun(() => {
-    if (this.stepChangeControlStore.isUploadFile) {
-      this.stepChangeControlStore.setIsUploadFile(false);
-      this.stepChangeControlStore.setCurrent(0);
-      this.stepChangeControlStore.setDescription('');
-      this.stepChangeControlStore.setIsUploadFile(false);
-      this.stepChangeControlStore.setIsDescription(false);
-      this.finish()
-    }
-    this.fileBytes = null;
-  });
-
-  finish = async() => {
-
-    if (this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription) {
-      
-      const descripcionCambioDTO = new DescripcionCambioDTO(this.stepChangeControlStore.description);
-      await this.matterStore.addDescriptionBySubject(this.subjectData.codigo, descripcionCambioDTO)
-      this.stepChangeControlStore.setIsUploadFile(false);
-      this.stepChangeControlStore.setCurrent(0);
-      this.stepChangeControlStore.setDescription('');
-      this.stepChangeControlStore.setIsUploadFile(false);
-      this.stepChangeControlStore.setIsDescription(false);
-      if (this.matterStore.addDescriptionResponse) {
-        this.process.showMessage('Proceso terminado correctamente', 'success');  
-      } else {
-        this.process.showMessage('No se pudo conectar el servicio para subir archivo!', 'error');
-      }
-    } else {
-      message.warning('Debe cargar un archivo para finalizar!');
-    }
-    
   };
 
   handleChangeDescription = (e) => {
@@ -103,8 +67,6 @@ class StepLineChangeControlComponent extends React.Component {
     ];
 
     return (
-
-    
     
       <Modal
         style={{ width: 1000 }}
@@ -132,11 +94,7 @@ class StepLineChangeControlComponent extends React.Component {
                 Siguiente
               </Button>
             )}
-            {this.stepChangeControlStore.current === steps.length - 1 && (
-              <Button type="primary" disabled={!(this.stepChangeControlStore.isUploadFile && this.stepChangeControlStore.isDescription)} onClick={() => this.finish()}>
-                Finalizar
-              </Button>
-            )}
+      
           </div>
         </div>
 

@@ -59,12 +59,12 @@ class DriveUpload extends Component {
                 .setCallback((data)=>{
                   
                   if (data.action === google.picker.Action.PICKED) {
-                      var fileUrl = data.docs[0].url;
+              
                       if (data.docs[0].uploadState === 'success') {
                         this.props.stepChangeControlStore.setIsUploadFile(true);
                         this.finish();
                       }
-                      //window.open(fileUrl, '_blank');
+             
                   }
                 });
             picker.build().setVisible(true);
