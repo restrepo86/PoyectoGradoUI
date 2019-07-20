@@ -10,9 +10,11 @@ import {
 class DeleteRequirementModal extends React.Component {
 
     render() {
+        
         const { visible, onCancel, onCreate, form, requisitos } = this.props;
         const { getFieldDecorator } = form;
         const Option = Select.Option;
+
         return (
             <Modal
                 visible={visible}
