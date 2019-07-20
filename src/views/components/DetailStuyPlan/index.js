@@ -31,7 +31,7 @@ import DriveViewer from '../DrivePicker/DriveViewer';
 
 import moment from 'moment';
 
-const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+const NewSubject = Form.create({ name: 'form_in_modal' })(
 
   class extends React.Component {
 
@@ -1264,7 +1264,7 @@ class DetailStudyPlan extends React.Component {
           >
             Agregar Asignatura
           </Button>
-          <CollectionCreateForm
+          <NewSubject
             wrappedComponentRef={this.saveFormRefAddSubject}
             visible={this.state.visible}
             onCancel={this.handleCancel}
