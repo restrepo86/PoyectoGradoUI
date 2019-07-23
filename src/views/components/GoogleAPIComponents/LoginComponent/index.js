@@ -3,8 +3,9 @@ import { GoogleLogin } from 'react-google-login';
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import LoginUserDTO from '../../../../dto/LoginUserDTO';
-import LogoUco from '../../../../image/logo-uco.png'
+import LogoUco from '../../../../image/universidadcatolicadeorienteuco.jpg'
 import PickerConfig from '../../../../credentials.json';
+import './style.css';
 
 @observer
 class LoginComponent extends React.Component {
@@ -50,10 +51,10 @@ class LoginComponent extends React.Component {
 
         return (
 
-            <div>
+            <div style={{ paddingTop: '100px' }}>
                 <center>
                     <div>
-                        <img src={LogoUco} className="LogoUco" alt="LogoUco" /> <br /> <br /> <br />
+                        <img src={LogoUco}  alt="LogoUco" width="400" height="200" />
                     </div>
                     <div>
                     <GoogleLogin
@@ -62,6 +63,7 @@ class LoginComponent extends React.Component {
                         buttonText="Ingresar"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
+                        className="signInButton"
                     />
                     </div>
                 </center>
