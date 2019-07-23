@@ -12,6 +12,7 @@ import UpdateRequirementDTO from '../../../../dto/UpdateRequirementDTO';
 import AddRequirementDTO from '../../../../dto/AddRequirementDTO';
 import DriveViewer from '../../DrivePicker/DriveViewer';
 import moment from 'moment';
+import "./index.css";
 import { 
   Form, 
   Modal, 
@@ -23,7 +24,8 @@ import {
   Col,
   Tag,
   message,
-  Popconfirm
+  Popconfirm,
+  Icon
   } from 'antd';
 
 @observer
@@ -267,6 +269,85 @@ class SubjectDetailRead extends React.Component {
             destroyOnClose={'true'}
             footer={[<Button type="primary" onClick={onCancel}>Cerrar</Button>]}
         >
+            <div class="center">
+
+            <div class="card">
+            <div class="additional" style={{backgroundColor:componenteDeFormacion.color}}>
+                <div class="user-card">
+                <div class="level center">
+                {componenteDeFormacion.nombre}
+                <br/>{componenteDeFormacion.abreviatura}
+                </div>
+                
+                </div>
+                <div class="more-info">
+                <h1>{subjectData.nombre}</h1>
+                <p>{subjectData.codigo}</p>
+                <div class="coords">
+                    <span>Group Name</span>
+                    <span>Joined January 2019</span>
+                </div>
+                <div class="coords">
+                    <span>Position/Role</span>
+                    <span>City, Country</span>
+                </div>
+                <div class="stats">
+                    <div>
+                    <div class="title">Creditos</div>
+                    <i><Icon type="pie-chart"/></i>
+                    <div class="value">{subjectData.creditos}</div>
+                    </div>
+                    <div>
+                    <div class="title">Horas Teoricas</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">27</div>
+                    </div>
+                    <div>
+                    <div class="title">Horas Laboratorio</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">123</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="general">
+                <h1>{subjectData.nombre}</h1>
+                <p>{subjectData.codigo}</p>
+                <div class="stats">
+                    <div>
+                        <div class="title"> Créditos</div>
+                        <Icon type="pie-chart"/>                   
+                        <div class="value">{subjectData.creditos}</div>
+                    </div>
+                    <div>
+                        <div class="title">Teoricas</div>
+                        <Icon type="read" />
+                        <div class="value">{subjectData.horasTeoricas}</div>
+                    </div>
+                    <div>
+                        <div class="title">Laboratorio</div>
+                        <Icon type="experiment" />
+                        <div class="value">{subjectData.horasLaboratorio}</div>
+                    </div>
+                    <Tooltip placement="top" title={"Trabajo independiente del estudiante"}>
+                    <div>
+                    
+                        <div class="title">TIE</div>
+                        <Icon type="audit" />
+                        <div class="value">{subjectData.horasIndependientesDelEstudiante}</div>
+                    
+                    </div>
+                    </Tooltip>
+                    <div>
+                        <div class="title">Practicas</div>
+                        <Icon type="tool" />
+                        <div class="value">{subjectData.horasPracticas}</div>
+                    </div>
+                </div>
+                <span class="more">Nivel {subjectData.nivel}</span>
+            </div>
+            </div>
+            </div>
             <div>
                 <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
                 <Col span={18} push={3} style={{textAlign:"center"}}>
