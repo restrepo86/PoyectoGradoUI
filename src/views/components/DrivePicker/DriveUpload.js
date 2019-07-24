@@ -71,8 +71,8 @@ class DriveUpload extends Component {
           }}
       >
         <a>
-            <Tooltip placement="top" title={"Planes de Asignatura"}>
-                <Icon type='folder-add' style={{fontSize: '60px', color: '#43985d'}}/>
+            <Tooltip placement="top" title={"Subir plan de asignatura"}>
+                <Icon type='upload' style={{fontSize: '60px', color: '#43985d'}}/>
             </Tooltip>
         </a>
       </GooglePicker>
