@@ -239,6 +239,22 @@ class SubjectDetailRead extends React.Component {
     this.formRef = formRef;
     }
 
+    formatDate = (date) => {
+        const months = ["Enero","Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        const year = date.substring(0,4)
+        const month = date.substring(5,7)
+        const day = date.substring(8,10)
+        const hour = date.substring(11,19)
+        if (month >= 10) {
+           return months[month-1]+" "+day+" de "+year+" "+hour ;
+        }
+        else {
+            const value = date.substring(6,7)
+            return months[value-1]+" "+day+" de "+year+" "+hour;
+        }
+
+    }
+
     render() {
 
     const {
@@ -262,7 +278,6 @@ class SubjectDetailRead extends React.Component {
     return (
         <Modal
             visible={visibleSubject}
-            title={nameSubject}
             centered
             width={700}
             onCancel={onCancel}
@@ -280,247 +295,165 @@ class SubjectDetailRead extends React.Component {
                 </div>
                 
                 </div>
-                <div class="more-info">
-                <h1>{subjectData.nombre}</h1>
-                <p>{subjectData.codigo}</p>
-                <div class="coords">
-                    <span>Group Name</span>
-                    <span>Joined January 2019</span>
-                </div>
-                <div class="coords">
-                    <span>Position/Role</span>
-                    <span>City, Country</span>
-                </div>
-                <div class="stats">
-                    <div>
-                    <div class="title">Creditos</div>
-                    <i><Icon type="pie-chart"/></i>
-                    <div class="value">{subjectData.creditos}</div>
-                    </div>
-                    <div>
-                    <div class="title">Horas Teoricas</div>
-                    <i class="fa fa-gamepad"></i>
-                    <div class="value">27</div>
-                    </div>
-                    <div>
-                    <div class="title">Horas Laboratorio</div>
-                    <i class="fa fa-group"></i>
-                    <div class="value">123</div>
-                    </div>
-                </div>
-                </div>
             </div>
             <div class="general">
                 <h1>{subjectData.nombre}</h1>
                 <p>{subjectData.codigo}</p>
-                <div class="stats">
-                    <div>
-                        <div class="title"> Créditos</div>
-                        <Icon type="pie-chart"/>                   
-                        <div class="value">{subjectData.creditos}</div>
+                <p class="nivel" >Nivel {subjectData.nivel}</p>
+                <div class="params">
+                    <div class="firstStats">
+                        <div>
+                            <div class="title">Horas</div>
+                            <Icon type="clock-circle" />
+                        </div>
                     </div>
-                    <div>
-                        <div class="title">Teoricas</div>
-                        <Icon type="read" />
-                        <div class="value">{subjectData.horasTeoricas}</div>
+                    <div class="stats">
+                        <div>
+                            <div class="title"> Créditos</div>
+                            <Icon type="pie-chart"/>                   
+                            <div class="value">{subjectData.creditos}</div>
+                        </div>
+                        <div>
+                            <div class="title">Teoricas</div>
+                            <Icon type="read" />
+                            <div class="value">{subjectData.horasTeoricas}</div>
+                        </div>
+                        <div>
+                            <div class="title">Laboratorio</div>
+                            <Icon type="experiment" />
+                            <div class="value">{subjectData.horasLaboratorio}</div>
+                        </div>
+                        <Tooltip placement="top" title={"Trabajo independiente del estudiante"}>
+                        <div>
+                        
+                            <div class="title">TIE</div>
+                            <Icon type="audit" />
+                            <div class="value">{subjectData.horasIndependientesDelEstudiante}</div>
+                        
+                        </div>
+                        </Tooltip>
+                        <div>
+                            <div class="title">Practicas</div>
+                            <Icon type="tool" />
+                            <div class="value">{subjectData.horasPracticas}</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="title">Laboratorio</div>
-                        <Icon type="experiment" />
-                        <div class="value">{subjectData.horasLaboratorio}</div>
+                    <div class="requisitos">
+                        <div>
+                            <div class="title"> Requisito de nivel</div>
+                            <div class="value">{subjectData.requisitoNivel}</div>
+                        </div>
+                        <div>
+                            <div class="title">Prerequisito</div>
+                            <div class="value">
+                                { requisitos.filter(requisito => requisito.tipo === 'Prerequisito').map(prerequisito => 
+                                    <Popover
+                                    content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                                    title={this.state.subjetBySniesCodeData.nombre}
+                                    trigger="click"
+                                    onVisibleChange={this.handleVisibleChangePopover}
+                                    >
+                                    <Tag onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}>
+                                        {prerequisito.codigo}
+                                    </Tag>
+                                    </Popover>
+                                )}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Corequisito</div>
+                            <div class="value">
+                                { requisitos.filter(requisito => requisito.tipo === 'Corequisito').map(corequisito => 
+                                    <Popover
+                                    content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
+                                    title={this.state.subjetBySniesCodeData.nombre}
+                                    trigger="click"
+                                    onVisibleChange={this.handleVisibleChangePopover}
+                                    >
+                                    <Tag onClick = {() => this.clickPrerequisito(corequisito.codigo, mattersStore)}>
+                                        {corequisito.codigo}
+                                    </Tag>
+                                    </Popover>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <Tooltip placement="top" title={"Trabajo independiente del estudiante"}>
-                    <div>
-                    
-                        <div class="title">TIE</div>
-                        <Icon type="audit" />
-                        <div class="value">{subjectData.horasIndependientesDelEstudiante}</div>
-                    
-                    </div>
-                    </Tooltip>
-                    <div>
-                        <div class="title">Practicas</div>
-                        <Icon type="tool" />
-                        <div class="value">{subjectData.horasPracticas}</div>
+                    <div class="requisitos actions">
+                        <div><Tooltip placement="top" title={"Agregar requisito"}><Button shape="circle" icon="plus" onClick = {() => this.showModalAddRequirement()}/></Tooltip></div>
+                        {!(subjectData.requisitos && (subjectData.requisitos).length === 0) 
+                        && <div><Tooltip placement="top" title={"Modificar requisito"}><Button shape="circle" icon="edit" onClick = {() => this.showModalUpdateRequirement()}/></Tooltip></div>
+                        }
+                        {!(subjectData.requisitos && (subjectData.requisitos).length === 0)
+                        && <div><Tooltip placement="top" title={"Eliminar requisito"}><Button shape="circle" icon="delete" onClick = {() => this.showModalDeleteRequirement()}/></Tooltip></div>
+                        }
                     </div>
                 </div>
-                <span class="more">Nivel {subjectData.nivel}</span>
-            </div>
-            </div>
-            </div>
-            <div>
-                <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
-                <Col span={18} push={3} style={{textAlign:"center"}}>
-                    <Row>
-                    <Col span={6} style={{backgroundColor:componenteDeFormacion.color, color:"#ffffff", fontWeight:"bold"}}>
-                        [{componenteDeFormacion.abreviatura}] {componenteDeFormacion.nombre}
-                    </Col>
-                    </Row>
-                    <Row>
-                    <br/>
-                    <Col span={8}>
-                        <h3>Codigo</h3>
-                        <p>{subjectData.codigo}</p>
-                    </Col>
-                    <Col span={8}>
-                        <h3>Nivel</h3>
-                        <p>{subjectData.nivel}</p>
-                    </Col>
-                    <Col span={8}>
-                        <h3>Créditos</h3>
-                        <p>{subjectData.creditos}</p>
-                    </Col>
-                    </Row>
-                    <Row>
-                    
-                    <h3>Horas</h3>
-                    <Col span={6}>
-                        <h4>Teoricas</h4>
-                        <p>{subjectData.horasTeoricas}</p>
-                    </Col>
-                    <Col span={6}>
-                        <h4>Laboratorio</h4>
-                        <p>{subjectData.horasLaboratorio}</p>
-                    </Col>
-                    <Col span={6}>
-                        <Tooltip placement="top" title={"Independientes del estudiante"}>
-                        <h4>IDE</h4>
-                        <p>{subjectData.horasIndependientesDelEstudiante}</p>
+                <div class="actions">
+                    <div>
+                        <Tooltip placement="bottom" title={"Descripcion de cambios"}>
+                            <Icon type="history" onClick = {() => this.showModalTimelineChangesFolder()}/>
                         </Tooltip>
-                    </Col>
-                    <Col span={6}>
-                        <h3>Practicas</h3>
-                        <p>{subjectData.horasPracticas}</p>
-                    </Col>
-                    </Row>
-                    <Row>
-                    
-                    <h3>Requisitos</h3>
-                    <Col span={8}>
-                        <h4>Requisito de nivel</h4>
-                        <p>{subjectData.requisitoNivel}</p>
-                    </Col>
-                    <Col span={8}>
-                        <h4>Prerequisitos</h4>
-                        { requisitos.filter(requisito => requisito.tipo === 'Prerequisito').map(prerequisito => 
-                            <Popover
-                            content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                            title={this.state.subjetBySniesCodeData.nombre}
-                            trigger="click"
-                            onVisibleChange={this.handleVisibleChangePopover}
-                            >
-                            <Tag onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}>
-                                {prerequisito.codigo}
-                            </Tag>
-                            </Popover>
-                        )}
-                    </Col>
-                    <Col span={8}>
-                        <h4>Corequisitos</h4>
-                        { requisitos.filter(requisito => requisito.tipo === 'Corequisito').map(prerequisito => 
-                        <Popover
-                            content={`Nivel ${this.state.subjetBySniesCodeData.nivel}`}
-                            title={this.state.subjetBySniesCodeData.nombre}
-                            trigger="click"
-                            onVisibleChange={this.handleVisibleChangePopover}
-                        >
-                        <Tag onClick = {() => this.clickPrerequisito(prerequisito.codigo, mattersStore)}>
-                            {prerequisito.codigo}
-                        </Tag>
-                        </Popover>
-                    )}
-                    </Col>
-                    </Row>
-                    <Row>
-                    <Col span={8}><Tooltip placement="top" title={"Agregar"}><Button shape="circle" icon="plus" onClick = {() => this.showModalAddRequirement()}/></Tooltip></Col>
-                    {!(subjectData.requisitos && (subjectData.requisitos).length === 0) 
-                    && <Col span={8}><Tooltip placement="top" title={"Modificar"}><Button shape="circle" icon="edit" onClick = {() => this.showModalUpdateRequirement()}/></Tooltip></Col>
-                    }
-                    {!(subjectData.requisitos && (subjectData.requisitos).length === 0)
-                    && <Col span={8}><Tooltip placement="top" title={"Eliminar"}><Button shape="circle" icon="delete" onClick = {() => this.showModalDeleteRequirement()}/></Tooltip></Col>
-                    }
-                    </Row>
-                    <br/>
-                    <Row justify="center" align="middle">
-                    <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 5 }}>
-                        <DatePicker defaultValue={moment(subjectData.fechaDeRegistro ? subjectData.fechaDeRegistro : '', dateFormat)} disabled />
-                    </Col>
-                    <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>   
-                        <DatePicker defaultValue={moment(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '', dateFormat)} disabled />
-                    </Col>
-                    </Row>
-                </Col>
-            
-                </Row>
+                        <TimelineChangesFolder
+                            wrappedComponentRef={this.timelineFormRef}
+                            visible={this.state.visibleModalTimelineChangesControl}
+                            onCancel={this.cancelModalTimelineChangesFolder}
+                            onCreate={this.handleTimelineChangesFolder}
+                            matterStore={mattersStore}
+                            subjectData={subjectData}
+                        />
+                    </div>
+                    <div>
+                        <Tooltip placement="bottom" title={"Subir nuevo archivo"}>
+                            <Icon type="cloud-upload" onClick = {() => this.showModalStepChangeControl()}/>
+                        </Tooltip>
+                        <StepLineChangeControlComponent
+                            wrappedComponentRef={this.uploapFormRefFile}
+                            visible={this.state.visibleModalStepChangeControl}
+                            onCancel={() => this.cancelModalStepChangeControl(stepChangeControlStore)}
+                            onCreate={() => this.handleUploadFile(process, mattersStore, subjectData, stepChangeControlStore)}
+                            process={process}
+                            matterStore={mattersStore}
+                            subjectData={subjectData}
+                            stepChangeControlStore={stepChangeControlStore}
+                        />
+                    </div>
+
+                    <div >
+                        <Tooltip placement="bottom" title={"Visualizar Planes de Estudio"}>
+                            <DriveViewer {...subjectData}/>
+                        </Tooltip>
+                    </div> 
+                    <div >
+                        <Tooltip placement="bottom" title={"Actualizar asignatura"}>
+                            <Icon type="form" onClick = {() => this.showModalSubject()}/>
+                        </Tooltip>
+                        <SubjectDetail 
+                            wrappedComponentRef={this.saveFormRef}
+                            visibleSubject={this.state.visibleUpdateSubject}
+                            nameSubject={nameSubject}
+                            subjectData={subjectData}
+                            onCancel={this.handleCancelSubject}
+                            onCreateSubjectUpdate={this.handleUpdate}
+                            trainingComponentsData={trainingComponentsData}
+                            mattersStore={mattersStore}
+                            programId={programId}
+                            inp={inp}
+                            requirementStore={requirementStore}
+                            process={process}
+                        />
+                    </div>
+                    <div >
+                        <Tooltip placement="bottom" title={"Eliminar asignatura"}>
+                            <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Eliminar" cancelText="Cancelar">
+                                <Icon type="delete"/>
+                            </Popconfirm>
+                        </Tooltip>
+                    </div>
+                </div>
+                <span class="more">Ultima Modificación: {this.formatDate(subjectData.fechaDeModificacion ? subjectData.fechaDeModificacion : '')}</span>
             </div>
-            <br/>
-            <Row type="flex" justify="space-between" align="bottom" style={{textAlign:"center"}}>
-                
-                <Col span={4}>
-                    <Tooltip placement="bottom" title={"Descripcion de cambios"}>
-                        <Button type="primary" shape="circle" icon="history" size="large" onClick = {() => this.showModalTimelineChangesFolder()}></Button>
-                    </Tooltip>
-                    <TimelineChangesFolder
-                        wrappedComponentRef={this.timelineFormRef}
-                        visible={this.state.visibleModalTimelineChangesControl}
-                        onCancel={this.cancelModalTimelineChangesFolder}
-                        onCreate={this.handleTimelineChangesFolder}
-                        matterStore={mattersStore}
-                        subjectData={subjectData}
-                    />
-                </Col>
-
-                <Col span={4}>
-                    <Tooltip placement="bottom" title={"Subir nuevo archivo"}>
-                        <Button type="primary" shape="circle" icon="cloud-upload" size="large" onClick = {() => this.showModalStepChangeControl()}></Button>
-                    </Tooltip>
-                    <StepLineChangeControlComponent
-                        wrappedComponentRef={this.uploapFormRefFile}
-                        visible={this.state.visibleModalStepChangeControl}
-                        onCancel={() => this.cancelModalStepChangeControl(stepChangeControlStore)}
-                        onCreate={() => this.handleUploadFile(process, mattersStore, subjectData, stepChangeControlStore)}
-                        process={process}
-                        matterStore={mattersStore}
-                        subjectData={subjectData}
-                        stepChangeControlStore={stepChangeControlStore}
-                    />
-                </Col>
-
-                <Col span={4}>
-                    <Tooltip placement="bottom" title={"Visualizar Planes de Estudio"}>
-                        <DriveViewer {...subjectData}/>
-                    </Tooltip>
-                </Col> 
-
-                <Col span={4}>
-                    <Tooltip placement="bottom" title={"Actualizar asignatura"}>
-                        <Button type="primary" shape="circle" icon="form" size="large" onClick = {() => this.showModalSubject()}></Button>
-                    </Tooltip>
-                    <SubjectDetail 
-                        wrappedComponentRef={this.saveFormRef}
-                        visibleSubject={this.state.visibleUpdateSubject}
-                        nameSubject={nameSubject}
-                        subjectData={subjectData}
-                        onCancel={this.handleCancelSubject}
-                        onCreateSubjectUpdate={this.handleUpdate}
-                        trainingComponentsData={trainingComponentsData}
-                        mattersStore={mattersStore}
-                        programId={programId}
-                        inp={inp}
-                        requirementStore={requirementStore}
-                        process={process}
-                    />
-                </Col>
-
-                <Col span={4}>
-                    <Tooltip placement="bottom" title={"Eliminar asignatura"}>
-                        <Popconfirm placement="top" title={"Estas segur@ que deseas eliminar esta asignatura"} onConfirm={() => this.deleteSubject(subjectData.codigo, mattersStore, programId, inp)} okText="Eliminar" cancelText="Cancelar">
-                            <Button type="primary" shape="circle" icon="delete" size="large"></Button>
-                        </Popconfirm>
-                    </Tooltip>
-                </Col>
-
-            </Row>
+            </div>
+            </div>
 
             <AddRequirement
                 wrappedComponentRef={this.saveFormRefAddRequirement}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GooglePicker from 'react-google-picker';
-import { Button, Tooltip } from "antd";
+import { Icon, Tooltip } from "antd";
 import PickerConfig from '../../../credentials.json';
 
 class DriveViewer extends Component {
@@ -45,7 +45,7 @@ class DriveViewer extends Component {
           }}
       >
       <Tooltip placement="bottom" title={"Planes de Asignatura"}>
-        <Button type="primary" shape="circle" icon="folder-open" size="large"></Button>
+        <a><Icon type="folder-open"/></a>
       </Tooltip>
       </GooglePicker>
 

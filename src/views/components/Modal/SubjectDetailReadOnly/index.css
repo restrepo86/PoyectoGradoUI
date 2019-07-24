@@ -2,11 +2,9 @@
 
 
 .card {
-  height: 250px;
+  height: 520px;
   background-color: #fff;
   background: linear-gradient(#fff, #fff);
-  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
-  border-radius: 6px;
   overflow: hidden;
   position: relative;
 }
@@ -27,10 +25,6 @@
 }
 
 
-.additional:hover {
-  width: 100%;
-  border-radius: 0 5px 5px 0;
-}
 
 .card .additional .user-card {
   width: 150px;
@@ -58,7 +52,6 @@
   font-weight: bold;
   background: rgba(0,0,0,0.15);
   padding: 0.125rem 0.75rem;
-  border-radius: 100px;
   text-align: center;
 }
 
@@ -106,11 +99,86 @@
   float: right;
 }
 
+.card .general p {
+  text-transform: uppercase;
+}
+
+.card .general .nivel{
+  font-size: 0.7em
+}
+
+.card .general .params {
+  left: 1rem;
+  right: 1rem;
+}
+
+.card .general .firstStats {
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  bottom: 13rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #827b7b;
+}
+
+.card .general .actions {
+  font-size: 2rem;
+  display: flex;
+  margin-bottom: 15px;
+  bottom: 2.5rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #43985d
+}
+
+.card .general .actions i:hover {
+  display: block;
+  transform: scale(1.5);
+}
+
+.card .additional .actions button {
+  display: block;
+}
+
+.card .additional .actions i {
+  display: block;
+  transform: scale(1.5);
+}
+
+.card .general .actions > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .general .firstStats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .general .firstStats i {
+  display: block;
+}
+
+.card .general .firstStats div.title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .general .firstStats div.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
 
 .card .general .stats {
     display: flex;
-    position: absolute;
-    bottom: 4.5rem;
+    margin-bottom: 15px;
+    bottom: 9.0rem;
     left: 1rem;
     right: 1rem;
     top: auto;
@@ -136,6 +204,35 @@
     font-size: 1.5rem;
     font-weight: bold;
     line-height: 1.5rem;
+  }
+
+  .card .general .requisitos {
+    display: flex;
+    bottom: 5.0rem;
+    margin-bottom: 15px;
+    left: 1rem;
+    right: 1rem;
+    top: auto;
+    color: #827b7b;
+  }
+
+.card .general .requisitos > div {
+    flex: 1;
+    text-align: center;
+  }
+
+.card .general .requisitos i {
+    display: block;
+  }
+
+.card .general .requisitos div.title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+  
+.card .general .requisitos div.value {
+    line-height: 1.5rem;
+    text-transform: uppercase;
   }
 
 .card .additional .stats {
@@ -194,7 +291,7 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  font-size: 0.9em;
+  font-size: 0.7em;
 }
 
 
