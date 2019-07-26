@@ -11,17 +11,13 @@ import UpdateMatterRequestDTO from '../../../../dto/UpdateMatterRequestDTO';
 import UpdateRequirementDTO from '../../../../dto/UpdateRequirementDTO';
 import AddRequirementDTO from '../../../../dto/AddRequirementDTO';
 import DriveViewer from '../../DrivePicker/DriveViewer';
-import moment from 'moment';
 import "./index.css";
 import { 
   Form, 
   Modal, 
   Button, 
   Popover,  
-  DatePicker, 
   Tooltip, 
-  Row,
-  Col,
   Tag,
   message,
   Popconfirm,
@@ -273,7 +269,6 @@ class SubjectDetailRead extends React.Component {
 
     const componenteDeFormacion = { ...subjectData.componenteDeFormacion };
     const requisitos = subjectData.requisitos ? subjectData.requisitos : [];
-    const dateFormat = 'YYYY-MM-DD HH:mm:ss';
     
     return (
         <Modal
