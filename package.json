@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "npm": "5.7.1",
-    "node": "9.5.0"
+    "node": "10.13.0"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.0",
@@ -76,7 +76,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "postinstall": "npm run build",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "node scripts/test.js --env=jsdom"
