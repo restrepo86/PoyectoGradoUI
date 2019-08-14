@@ -122,7 +122,7 @@
         "module-resolver",
         {
           "root": [
-            "./src"
+            "./app/src"
           ],
           "alias": {
             "test": "./test",
