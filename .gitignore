@@ -11,8 +11,6 @@
 # production
 /build
 
-/src/credentials.json
-credentials.json
 # misc
 .DS_Store
 .env.local
