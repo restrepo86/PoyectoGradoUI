@@ -5,7 +5,7 @@ const Settings = {
     URL_PROJECT_NAME: process.env.REACT_APP_PROJECT_NAME !== '' ? process.env.REACT_APP_PROJECT_NAME : ''
 };
   
-Settings.URL_WEBAPI = 'http://localhost:8080';
+Settings.URL_WEBAPI = 'https://gestion-programas-uco.herokuapp.com';
 
 
 export default Settings;
